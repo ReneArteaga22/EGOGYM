@@ -85,7 +85,6 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                           <li><a class="dropdown-item" href="#">Perfil</a></li>
-                          <li><a class="dropdown-item" href="#">Historial</a></li>
                         </ul>
                       </li>
                 </ul>
@@ -101,10 +100,10 @@
           Informacion Personal
         </div>
         <div class="card-body row">
-            <div class="col-lg-6 col-xs-12 text-center">
+            <div class="col-lg-6 col-xs-12  col-sm-12 col-md-6 text-center">
             <img src="../../images/class/boxwax.jpg" class="rounded-circle" alt="..." style="width: 60%;">
           </div>
-            <div class="col-lg-6 col-xs-12">
+            <div class="col-lg-6 col-xs-12 col-sm-12 col-md-6">
                 <p class="fst-monospace">Nombre: Anahi Alvarez Holguin</p>
                 <p>Correo: alvarezholguin4@gmail.com</p>
                 <p>Telefono: 8714023742</p>
@@ -122,26 +121,80 @@
         <div class="card-header bg-dark text-white">
           Historial de Citas
         </div>
+        <div class="row">
         <div class="card-body row justify-content-center">
-          <div class="card w-75 border-ligth">
-            <div class="card-body">
-              <p>Id Cita: 500</p>
-              <p>Fecha: 05/07/2023 &nbsp; &nbsp; Hora: 14:00</p>
-              <p>Motivo: Esguince  &nbsp; &nbsp; &nbsp; &nbsp;Servicio: Fisioterapia</p>
+          <div class="card border-ligth col-lg-9 col-11">
+            <div class="card-body row">
+              <div class="col-lg-4 col-5">
+                <p>Id Cita: 500</p>
+              </div>
+              <div class="col-lg-4 col-7">
+                <p>Fecha: 05/07/2023 </p>
+              </div>
+              <div class="col-lg-4 col-5">
+                <p>Hora: 14:00</p>
+              </div>
+              <div class="col-lg-4 col-7">
+                <p>Motivo: Esguince </p>
+              </div>
+              <div class="col-lg-4 col-6">
+                <p>Servicio: Fisioterapia</p>
+              </div>
+              <div class="col-lg-4 col-6">
+                <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#membershipForm">Ver Detalles</button>
+              </div>
             </div>
           </div>
-          <div class="card w-75 border-ligth">
-            <div class="card-body">
-              <p>Id Cita: 500</p>
-              <p>Fecha: 05/07/2023 &nbsp; &nbsp; Hora: 14:00</p>
-              <p>Motivo: Esguince  &nbsp; &nbsp; &nbsp; &nbsp;Servicio: Fisioterapia</p>
+
+
+          
+          <div class="card border-ligth col-lg-9 col-11" style="margin-top: 10px;">
+            <div class="card-body row">
+              <div class="col-lg-4 col-5">
+                <p>Id Cita: 500</p>
+              </div>
+              <div class="col-lg-4 col-7">
+                <p>Fecha: 05/07/2023 </p>
+              </div>
+              <div class="col-lg-4 col-5">
+                <p>Hora: 14:00</p>
+              </div>
+              <div class="col-lg-4 col-7">
+                <p>Motivo: Esguince </p>
+              </div>
+              <div class="col-lg-4 col-6">
+                <p>Servicio: Fisioterapia</p>
+              </div>
+              <div class="col-lg-4 col-6">
+                <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#membershipForm">Ver Detalles</button>
+              </div>
             </div>
           </div>
-          
-          
+          </div>
         </div>
       </div>
- 
+
+
+<!-- Modal -->
+<div class="modal fade" id="membershipForm" tabindex="-1" role="dialog" aria-labelledby="membershipFormLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h2 class="modal-title" id="membershipFormLabel">Ficha Medica</h2>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+       <p></p>
+      </div>
+
+      <div class="modal-footer"></div>
+      
 </div>
 
 </body>
