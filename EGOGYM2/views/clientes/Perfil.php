@@ -71,11 +71,6 @@
                     </li>
                 </ul>
 
-                <ul class="social-icon ml-lg-3 d-none d-lg-flex">
-                    <li><a href="https://fb.com/tooplate" class="fa fa-facebook"></a></li>
-                    <li><a href="#" class="fa fa-twitter"></a></li>
-                    <li><a href="#" class="fa fa-instagram"></a></li>
-                </ul>
 
                 <ul class="navbar-nav ml-lg-2">
                     <li class="nav-item dropdown">
