@@ -33,7 +33,7 @@
     --white-color:          #ffffff;
     --dark-color:           #171819;
     --about-bg-color:       #f9f9f9;
-
+    --egogym-yellow: goldenrod;
     --gray-color:           #909090;
     --link-color:           #404040;
     --p-color:              #666262;
@@ -145,7 +145,7 @@
   }
 
   .custom-btn:hover {
-    color: var(--primary-color);
+    color: var(--egogym-yellow);
   }
 
   .custom-btn:focus {
@@ -159,16 +159,16 @@
   .custom-btn.bg-color:focus {
     background: var(--white-color);
     border-color: transparent;
-    color: var(--primary-color);
+    color: var(--egogym-yellow);
   }
 
   .bordered {
-    border: 1px solid var(--primary-color);
-    color: var(--primary-color);
+    border: 1px solid var(--egogym-yellow);
+    color: var(--egogym-yellow);
   }
 
   .bg-color {
-    background: var(--primary-color);
+    background: var(--egogym-yellow);
     color: var(--white-color);
   }
 
@@ -201,7 +201,7 @@
   a:hover, 
   a:active, 
   a:focus {
-    color: var(--primary-color);
+    color: var(--egogym-yellow);
     outline: none;
     text-decoration: none;
   }
@@ -238,7 +238,7 @@
   }
 
   .membership-form a {
-    color: var(--primary-color);
+    color: var(--egogym-yellow);
   }
 
 
@@ -359,7 +359,7 @@
   -----------------------------------------*/
 
   .hero {
-    background-image: url('../images/hero-bg.jpg');
+    background-image: url('../images/class/team/portada.jpg');
     background-size: cover;
     background-position: top;
     background-repeat: no-repeat;
@@ -390,7 +390,7 @@
   }
 
   .class-price {
-    background: var(--primary-color);
+    background: var(--egogym-yellow);
     border-radius: var(--border-radius-large);
     color: var(--white-color);
     font-weight: var(--font-weight-bold);
@@ -446,7 +446,7 @@
 
   .table .thead-light th,
   .schedule-table tr td:first-child {
-    background: var(--primary-color);
+    background: var(--egogym-yellow);
     border: 1px solid #212122;
     color: var(--white-color);
   }
@@ -544,7 +544,7 @@
   }
 
   button#submit-button:hover {
-    background: var(--primary-color);
+    background: var(--egogym-yellow);
   }
 
   .contact h2 + p {
@@ -594,17 +594,18 @@
     position: relative;
     padding: 0;
     margin: 5px 0 0 0;
+    height: 100px;
   }
 
   .social-icon li {
-    display: inline-block;
+    display:flex;
     list-style: none;
   }
 
   .social-icon li a {
     text-decoration: none;
-    display: inline-block;
-    color: var(--p-color);
+    display: flex;
+    color: var(--egogym-yellow);
     font-size: var(--p-font-size);
     font-weight: var(--font-weight-bold);
     margin: 5px 10px;
@@ -612,7 +613,7 @@
   }
 
   .social-icon li a:hover {
-    color: var(--primary-color);
+    color: var(--egogym-yellow);
   }
 
 

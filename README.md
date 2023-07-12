@@ -1,2 +1,0 @@
-# EGOGYM
-Proyecto
