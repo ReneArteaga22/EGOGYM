@@ -95,9 +95,11 @@
           Informacion Personal
         </div>
         <div class="card-body row">
-            <div class="col-lg-6 col-xs-12  col-sm-12 col-md-6 text-center">
+            <div class="col-lg-7 col-xs-12  col-sm-12 col-md-7 text-center">
             <img src="../../images/class/boxwax.jpg" class="rounded-circle" alt="..." style="width: 60%;">
+            <input class="form-control form-control-sm" id="formFileSm" type="file" form="../../scripts/actualizarPerfil.php" method="post">
           </div>
+
 
         <?php
         include '../../scripts/database.php';
@@ -113,127 +115,30 @@
         $datos_per = $conexion ->seleccionar($consulta);
 
 
-
+        
         foreach($datos_per as $registro)
         {
-            echo "<div class='col-lg-6 col-xs-12 col-sm-12 col-md-6'>";
+            echo "<form action='../../scripts/actualizarPerfil.php' method='POST'>";
+            echo "<div class='col-lg-12 col-xs-12 col-sm-12 col-md-12'>";
             echo "<p>Nombre: $registro->nombre </p>";
-            echo "<p>Correo: $registro->correo </p>";
-            echo "<p>Telefono: $registro->telefono </p>";
+            echo "<input type='mail' value='$registro->correo' class='form-control w-75' name='correo'>";
+            echo "<input type='text' value='$registro->telefono' class='form-control w-50' name='telefono'>";
             echo "<p>Fecha de nacimiento: $registro->fecha_nacimiento </p>";
             echo "<p>Sexo: $registro->sexo </p>";
-            echo "<p>Contraseña: $registro->contraseña </p>";
+            echo "<input type='password' value='$registro->contraseña' class='form-control w-50' name='contra'>";
             echo "<p>Plan: $registro->plan </p>";
             echo "<p>Periodo: $registro->periodo </p>";
-            echo "<a href='editarPerfil.php'>Editar Perfil</a>";
-            echo "</div>";
 
         }    
         ?>
+        <div class="text-center"> 
+        <button type="submit" class="btn btn-success btn-sm">Guardar</button>
         </div>
+      </div>
+        </div>
+      </form>
     </div>
-
-
-      <div class="card bg-light" style="margin-top: 40px;">
-        <div class="card-header bg-dark text-white">
-          Historial de Citas
-        </div>
-        <div class="row">
-        <div class="card-body row justify-content-center">
-          <div class="card border-ligth col-lg-9 col-11">
-            <div class="card-body row">
-
-            <?php 
-
-            
-            $consulta = "select citas.id_cita, citas.fecha, citas.hora, ficha_nutri.motivo, servicios.nombre as servicio
-            from ficha_nutri
-            inner join citas on ficha_nutri.cita = citas.id_cita
-            inner join servicios_empleados on citas.serv_emp = servicios_empleados.id_empserv
-            inner join servicios on servicios_empleados.servicio = servicios.codigo
-            where citas.cliente = 106 and citas.estado= 'completada'";
-            $cita = $conexion -> seleccionar($consulta);
-
-            foreach($cita as $dato)
-            {
-              echo "<div class='col-lg-4 col-5'>";
-              echo "<p>Id Cita: $dato->id_cita</p>";
-              echo "</div>";
-              echo "<div class='col-lg-4 col-7'>";
-              echo "<p>Fecha: $dato->fecha </p>";
-              echo "</div>";
-              echo "<div class='col-lg-4 col-5'>";
-              echo "<p>Hora: $dato->hora</p>";
-              echo "</div>";
-              echo "<div class='col-lg-4 col-7'>";
-              echo "<p>Motivo: $dato->motivo </p>";
-              echo "</div>";
-              echo "<div class='col-lg-4 col-6'>";
-              echo "<p>Servicio: $dato->servicio</p>";
-              echo "</div>";
-              
-            }
-          
-            ?>
-              
-              <div class="col-lg-4 col-6">
-                <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#membershipForm">Ver Detalles</button>
-              </div>
-            </div>
-          </div>
-
-
-          
-          
-          </div>
-        </div>
-      </div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="membershipForm" tabindex="-1" role="dialog" aria-labelledby="membershipFormLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-
-    <div class="modal-content">
-      <div class="modal-header">
-
-        <h2 class="modal-title" id="membershipFormLabel">Ficha Medica</h2>
-        
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-
-      <?php 
-      $consulta = "select ficha_nutri.edad, ficha_nutri.objetivo, ficha_nutri.motivo, ficha_nutri.peso,
-      ficha_nutri.altura, ficha_nutri.med_cintura, ficha_nutri.med_cadera, ficha_nutri.med_cuello,
-      ficha_nutri.porc_grasa_corporal, ficha_nutri.masa_corp_magra, ficha_nutri.observaciones
-      from ficha_nutri 
-      where ficha_nutri.cita= 501";
-      $ficha = $conexion->seleccionar($consulta);
-
-      foreach($ficha as $fila)
-      {
-      echo "<div class='modal-body' style='margin-top:15px;'>";
-      echo "<p>Edad: $fila->edad</p>";
-      echo "<p>Objetivo: $fila->objetivo</p>";
-      echo "<p>Motivo: $fila->motivo</p>";
-      echo "<p>Peso: $fila->peso</p>";
-      echo "<p>Altura: $fila->altura</p>";
-      echo "<p>Cintura: $fila->med_cintura</p>";
-      echo "<p>Cadera: $fila->med_cadera</p>";
-      echo "<p>Cuello: $fila->med_cuello</p>";
-      echo "<p>Grasa Corporal: $fila->porc_grasa_corporal</p>";
-      echo "<p>Masa Corporal Magra: $fila->masa_corp_magra</p>";
-      echo "<p>Observaciones: $fila->observaciones</p>";
-      echo "</div>";
-      }
-      ?>
-      
-
-      <div class="modal-footer"></div>
-      
-</div>
+    </div>
 
 </body>
 </html>

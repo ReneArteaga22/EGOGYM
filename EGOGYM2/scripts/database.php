@@ -44,11 +44,11 @@ class Database
         }
     }
 
-    function ejecutarSQL($consulta)
+    function ejecutarSQL($cadena)
     {
         try
         {
-            $this->PDOLocal->query($consulta);
+            $this->PDOLocal->query($cadena);
         }
         catch(PDOException $e)
         {
