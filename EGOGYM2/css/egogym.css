@@ -65,6 +65,7 @@
     font-family: var(--base-font-family);
   }
 
+ 
 
   /*---------------------------------------
      TYPOGRAPHY              
@@ -240,6 +241,9 @@
   .membership-form a {
     color: var(--egogym-yellow);
   }
+
+  
+  
 
 
   /*---------------------------------------
@@ -664,3 +668,4 @@
       display: block;
     }
   }
+

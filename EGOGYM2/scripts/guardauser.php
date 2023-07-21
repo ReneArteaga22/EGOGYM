@@ -17,19 +17,14 @@
         $hash = password_hash($contraseña, PASSWORD_DEFAULT);
       
         
-      
- 
-         //DATE: YYYY-MM-DD
-        
-        //2021-10-08
-        $cadena= "INSERT INTO persona(nombre, apellido_paterno, apellido_materno, correo,contraseña,sexo,fecha_nacimiento,telefono,tipo_usuario)
-         values('$nombre','$ap_paterno','$ap_materno','$correo','$hash','$sexo','$ap_paterno',$fecha_nacimiento,null)";
+        $cadena= "INSERT INTO persona(id_persona,nombre, apellido_paterno, apellido_materno, correo,contraseña,sexo,fecha_nacimiento,telefono,tipo_usuario)
+         values('','$nombre','$ap_paterno','$ap_materno','$correo','$hash','$sexo',$fecha_nacimiento,$telefono,1)";
 
         $conexion->ejecutarSQL($cadena);
         $conexion->desconectarDB();
 
          echo"<div class='alert alert-success'>Cliente Registrado</>";
-        header("refresh:20 ../views/formlogin.php");
+        header("refresh:2 ../index.html");
 
         ?>
 
