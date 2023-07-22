@@ -27,6 +27,19 @@
 
 </head>
 <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
+<?php
+    session_start();
+    
+    if(isset($_SESSION["correo"]) )
+    {
+      
+    }
+    else 
+    {
+        header("Location:../../First.php");
+    }
+
+    ?>
 
     <!-- MENU BAR -->
     <nav class="navbar navbar-expand-lg fixed-top">
@@ -42,7 +55,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="../clientes/Primera.html" class="nav-link smoothScroll">Home</a>
+                        <a href="Primera.html" class="nav-link smoothScroll">Home</a>
                     </li>
 
                     <li class="nav-item">
@@ -52,21 +65,11 @@
                     <li class="nav-item">
                         <a href="#serv" class="nav-link smoothScroll">Servicios</a>
                     </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false">
-                          Agendar Cita
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <li><a class="dropdown-item" href="#">Spinning</a></li>
-                          <li><a class="dropdown-item" href="#">Fisioterapeuta</a></li>
-                          <li><a class="dropdown-item" href="#">Nutriologia</a></li>
-                        </ul>
-                      </li>
-                
                     <li class="nav-item">
-                        <a href="#serv" class="nav-link smoothScroll">Buscar</a>
+                        <a href="citas.php" class="nav-link smoothScroll">Agendar Cita</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="staff.php" class="nav-link smoothScroll">Staff</a>
                     </li>
                 </ul>
 
@@ -75,10 +78,11 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false" >
-                          Hola Usuario
+                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                           <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
+                          <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
                       </li>
                 </ul>

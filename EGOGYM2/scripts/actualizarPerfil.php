@@ -13,8 +13,13 @@ $conexion = new Database();
 $conexion->conectarDB();
 extract($_POST);
 
+session_start();
+isset($_SESSION["correo"]);
+
+$email = $_SESSION["correo"];
+
 $pase = false;
-$cadena= "update persona set correo='$correo', telefono='$telefono', contraseña='$contra' where id_persona= 106";    
+$cadena= "update persona set correo='$correo', telefono='$telefono', contraseña='$contra' where correo= '$email' ";    
 while($conexion->ejecutarSQL($cadena))
 {
     $pase=true;

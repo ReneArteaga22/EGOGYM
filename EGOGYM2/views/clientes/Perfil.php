@@ -28,6 +28,18 @@
 
 </head>
 <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
+<?php
+    session_start();
+    if(isset($_SESSION["correo"]))
+    {
+      
+    }
+    else 
+    {
+        header("Location:../../First.php");
+    }
+
+    ?>
 
     <!-- MENU BAR -->
     <nav class="navbar navbar-expand-lg fixed-top">
@@ -43,31 +55,22 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="../clientes/Primera.html" class="nav-link smoothScroll">Home</a>
+                        <a href="../clientes/Primera.php" class="nav-link smoothScroll">Home</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="#about" class="nav-link smoothScroll">Sobre Nosotros</a>
+                        <a href="Primera.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="#serv" class="nav-link smoothScroll">Servicios</a>
+                        <a href="Primera.php#serv" class="nav-link smoothScroll">Servicios</a>
                     </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false">
-                          Agendar Cita
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <li><a class="dropdown-item" href="#">Spinning</a></li>
-                          <li><a class="dropdown-item" href="#">Fisioterapeuta</a></li>
-                          <li><a class="dropdown-item" href="#">Nutriologia</a></li>
-                        </ul>
-                      </li>
+                    <li class="nav-item">
+                        <a href="citas.php" class="nav-link smoothScroll">Agendar Cita</a>
+                    </li>
                 
                     <li class="nav-item">
-                        <a href="#serv" class="nav-link smoothScroll">Buscar</a>
+                        <a href="staff.php" class="nav-link smoothScroll">Staff</a>
                     </li>
                 </ul>
 
@@ -76,10 +79,11 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false" >
-                          Hola Usuario
+                          <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <li><a class="dropdown-item" href="#">Perfil</a></li>
+                          <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
+                          <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
                       </li>
                 </ul>
@@ -104,12 +108,14 @@
         $conexion = new Database();
         $conexion->conectarDB();
 
+        $email = $_SESSION["correo"];
+
         $consulta = "select concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
-        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña, plan.nombre as plan,
+        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, plan.nombre as plan,
         concat(cliente.fecha_ini,'  ','de','  ',cliente.fecha_fin) as periodo from persona
-        inner join cliente on persona.id_persona = cliente.id_cliente
-        inner join plan on cliente.codigo_plan = plan.codigo
-        where id_persona = 106";
+        left join cliente on persona.id_persona = cliente.id_cliente
+        left join plan on cliente.codigo_plan = plan.codigo
+        where persona.correo = '$email'";
         $datos_per = $conexion ->seleccionar($consulta);
 
 
@@ -122,7 +128,6 @@
             echo "<p>Telefono: $registro->telefono </p>";
             echo "<p>Fecha de nacimiento: $registro->fecha_nacimiento </p>";
             echo "<p>Sexo: $registro->sexo </p>";
-            echo "<p>Contraseña: $registro->contraseña </p>";
             echo "<p>Plan: $registro->plan </p>";
             echo "<p>Periodo: $registro->periodo </p>";
             echo "<a href='editarPerfil.php'>Editar Perfil</a>";
@@ -140,45 +145,90 @@
         </div>
         <div class="row">
         <div class="card-body row justify-content-center">
-          <div class="card border-ligth col-lg-9 col-11">
-            <div class="card-body row">
-
             <?php 
 
             
-            $consulta = "select citas.id_cita, citas.fecha, citas.hora, ficha_nutri.motivo, servicios.nombre as servicio
-            from ficha_nutri
-            inner join citas on ficha_nutri.cita = citas.id_cita
-            inner join servicios_empleados on citas.serv_emp = servicios_empleados.id_empserv
-            inner join servicios on servicios_empleados.servicio = servicios.codigo
-            where citas.cliente = 106 and citas.estado= 'completada'";
-            $cita = $conexion -> seleccionar($consulta);
+              $consulta = "select citas.id_cita, citas.fecha, citas.hora, ficha_nutri.motivo, servicios.nombre as servicio
+              from persona
+              inner join cliente on persona.id_persona=cliente.id_cliente
+              inner join citas on cliente.id_cliente=citas.cliente
+              inner join ficha_nutri on citas.id_cita=ficha_nutri.cita
+              inner join servicios_empleados on citas.serv_emp = servicios_empleados.id_empserv
+              inner join servicios on servicios_empleados.servicio = servicios.codigo
+              where persona.correo = '$email' and citas.estado= 'completada'";
+              $cita = $conexion -> seleccionar($consulta);
 
-            foreach($cita as $dato)
-            {
-              echo "<div class='col-lg-4 col-5'>";
-              echo "<p>Id Cita: $dato->id_cita</p>";
-              echo "</div>";
-              echo "<div class='col-lg-4 col-7'>";
-              echo "<p>Fecha: $dato->fecha </p>";
-              echo "</div>";
-              echo "<div class='col-lg-4 col-5'>";
-              echo "<p>Hora: $dato->hora</p>";
-              echo "</div>";
-              echo "<div class='col-lg-4 col-7'>";
-              echo "<p>Motivo: $dato->motivo </p>";
-              echo "</div>";
-              echo "<div class='col-lg-4 col-6'>";
-              echo "<p>Servicio: $dato->servicio</p>";
-              echo "</div>";
+              foreach($cita as $dato)
+              {
+                echo "<div class='card w-75' style='margin-top:10px;'>";
+                echo "<div class='card-body'>";
+                echo "<div class='row'>";
+                echo "<div class='col-lg-4 col-5'>";
+                echo "<p>Id Cita: $dato->id_cita</p>";
+                echo "</div>";
+                echo "<div class='col-lg-4 col-7'>";
+                echo "<p>Fecha: $dato->fecha </p>";
+                echo "</div>";
+                echo "<div class='col-lg-4 col-5'>";
+                echo "<p>Hora: $dato->hora</p>";
+                echo "</div>";
+                echo "<div class='col-lg-4 col-7'>";
+                echo "<p>Motivo: $dato->motivo </p>";
+                echo "</div>";
+                echo "<div class='col-lg-4 col-6'>";
+                echo "<p>Servicio: $dato->servicio</p>";
+                echo "</div>";
+                echo "<div class='col-lg-4 col-6'>
+                <button type='button' class='btn btn-outline-info btn-sm' data-toggle='modal' data-target='#fichamedicanutri'>Ver Detalles</button>
+                </div>";
+                echo "</div>";
+                echo "</div>";
+                echo "</div>";
+              }
+              ?>
               
-            }
-          
-            ?>
+              <?php
+                $consulta = "select citas.id_cita, citas.fecha, citas.hora, ficha_fisio.motivo, servicios.nombre as servicio
+                from persona
+                inner join cliente on persona.id_persona=cliente.id_cliente
+                inner join citas on cliente.id_cliente=citas.cliente
+                inner join ficha_fisio on citas.id_cita=ficha_fisio.cita
+                inner join servicios_empleados on citas.serv_emp = servicios_empleados.id_empserv
+                inner join servicios on servicios_empleados.servicio = servicios.codigo
+                where persona.correo = '$email' and citas.estado= 'completada'";
+              $cita = $conexion -> seleccionar($consulta);
+
+              foreach($cita as $dato)
+              {
+                echo "<div class='card w-75' style='margin-top:10px;'>";
+                echo "<div class='card-body'>";
+                echo "<div class='row'>";
+                echo "<div class='col-lg-4 col-5'>";
+                echo "<p>Id Cita: $dato->id_cita</p>";
+                echo "</div>";
+                echo "<div class='col-lg-4 col-7'>";
+                echo "<p>Fecha: $dato->fecha </p>";
+                echo "</div>";
+                echo "<div class='col-lg-4 col-5'>";
+                echo "<p>Hora: $dato->hora</p>";
+                echo "</div>";
+                echo "<div class='col-lg-4 col-7'>";
+                echo "<p>Motivo: $dato->motivo </p>";
+                echo "</div>";
+                echo "<div class='col-lg-4 col-6'>";
+                echo "<p>Servicio: $dato->servicio</p>";
+                echo "</div>";
+                echo "<div class='col-lg-4 col-6'>
+                <button type='button' class='btn btn-outline-info btn-sm' data-toggle='modal' data-target='#fisio'>Ver Detalles</button>
+                </div>";
+                echo "</div>";
+                echo "</div>";
+                echo "</div>";
+                
+              }
+
+              ?>
               
-              <div class="col-lg-4 col-6">
-                <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#membershipForm">Ver Detalles</button>
-              </div>
             </div>
           </div>
 
@@ -190,8 +240,8 @@
       </div>
 
 
-<!-- Modal -->
-<div class="modal fade" id="membershipForm" tabindex="-1" role="dialog" aria-labelledby="membershipFormLabel" aria-hidden="true">
+<!-- Modal Ficha Medica Nutri -->
+<div class="modal fade" id="fichamedicanutri" tabindex="-1" role="dialog" aria-labelledby="membershipFormLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
 
     <div class="modal-content">
@@ -232,6 +282,40 @@
       
 
       <div class="modal-footer"></div>
+      
+</div>
+  </div>
+</div>
+
+
+<!-- Modal Ficha Medica Fisio -->
+<div class="modal fade" id="fisio" tabindex="-1" role="dialog" aria-labelledby="membershipFormLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h2 class="modal-title" id="membershipFormLabel">Ficha Medica</h2>
+        
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+          <?php 
+        echo "<div class='modal-body' style='margin-top:15px;'>";
+        echo "<p>Edad: $fila->edad</p>";
+        echo "<p>Motivo: $fila->motivo</p>";
+        echo "<p>Peso: $fila->peso</p>";
+        echo "<p>Altura: $fila->altura</p>";
+        echo "<p>Observaciones: $fila->observaciones</p>";
+        echo "</div>";
+          ?>
+      
+
+      <div class="modal-footer"></div>
+    </div>
+  </div>
       
 </div>
 
