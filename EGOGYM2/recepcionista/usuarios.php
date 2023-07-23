@@ -72,8 +72,7 @@
         $conexion->conectarDB();
 
         $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) as nombre,
-        persona.tipo_usuario as tipo,persona.telefono as contacto,
-        cliente.estatus_plan as estatus, persona.id_persona as ID
+        persona.tipo_usuario as tipo,persona.telefono as contacto, persona.id_persona 
         from persona 
         inner join cliente on
         cliente.id_cliente=persona.id_persona;";
@@ -107,14 +106,9 @@
          foreach ($tabla as $registro)
          {
              echo "<tr>";
-             echo "<td> $registro->nombre</td> ";
+             echo "<td><a href='perfiluser.php?id=" . $registro->id_persona . "'>" . $registro->nombre . "</a></td>";
              echo "<td> $registro->tipo</td> ";
              echo "<td> $registro->contacto</td> ";
-             echo "<td> $registro->estatus</td> ";
-             echo "<form method='POST' action='../recepcionista/perfil.php'>";
-                echo "<input type='hidden' value='".$registro->ID."'>";
-                echo "<td><button class='btn'>Ver perfil</button>";
-                echo "</form>";
          }
          echo "</tbody>
          </table>";
@@ -127,7 +121,7 @@
             $conexion->conectarDB();
         
             $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) as nombre_emp, 
-            persona.tipo_usuario as tipo_us, persona.telefono as contacto_emp, servicios.nombre as servicio_emp, persona.id_persona as ID
+            persona.tipo_usuario as tipo_us, persona.telefono as contacto_emp, servicios.nombre as servicio_emp, persona.id_persona
             from persona 
             inner join empleado on
             empleado.id_empleado=persona.id_persona
@@ -165,14 +159,10 @@
             foreach ($tabla as $registro)
             {
                 echo "<tr>";
-                echo "<td>$registro->nombre_emp</td> ";
+                echo "<td><a href='perfiluser.php?id=" . $registro->id_persona . "'>" . $registro->nombre_emp . "</a></td>";
                 echo "<td> $registro->tipo_us</td> ";
                 echo "<td> $registro->contacto_emp</td> ";
                 echo "<td> $registro->servicio_emp</td> ";
-                echo "<form method='POST' action='../recepcionista/perfil.php'>";
-                echo "<input type='hidden' value='".$registro->ID."'>";
-                echo "<td><button class='btn'>Ver perfil</button>";
-                echo "</form>";
             }
             echo "</tbody>
             </table>";
@@ -184,7 +174,7 @@
             $conexion = new database();
             $conexion->conectarDB();
         
-            $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) as Usuario, persona.telefono as contacto, persona.tipo_usuario as tipo, persona.id_persona as ID
+            $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) as nombre, persona.telefono as contacto, persona.tipo_usuario as tipo, persona.id_persona 
             from persona where persona.tipo_usuario IS NULL;";
             $conexion->seleccionar($consulta);
             $tabla = $conexion->seleccionar($consulta);
@@ -214,13 +204,9 @@
             {
                 
                 echo "<tr>";
-                echo "<td>$registro->Usuario</td> ";
+                echo "<td><a href='perfiluser.php?id=" . $registro->id_persona . "'>" . $registro->nombre . "</a></td>";
                 echo "<td>$registro->contacto</td> ";
                 echo "<td> $registro->tipo</td> ";
-                echo "<form method='POST' action='../recepcionista/perfil.php'>";
-                echo "<input type='hidden' value='".$registro->ID."' name='ID'>";
-                echo "<td><button class='btn' type='submit'>Ver perfil</button>";
-                echo "</form>";
             }
             echo "</tbody>
             </table>";

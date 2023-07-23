@@ -26,11 +26,11 @@
      <!--Calendario-->
      <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-
-  <script>
-  $(function(){
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+    <script type="text/javascript">
+         $(function(){
     var today = new Date();
       var dd = String(today.getDate()).padStart(2, '0');
       var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -44,11 +44,12 @@
       selectOtherMonths: true,
       dateFormat: 'yy-mm-dd',
       minDate: new Date(),
-      maxDate: '+7D'
-    });
-  } )
-  ;
-  </script>
+      maxDate: '+9D',
+      beforeShowDay: $.datepicker.noWeekends
+    });} 
+    );
+    </script>
+  
   <script>
      $ (function updateAvailableHours() {
           // Aquí puedes obtener las horas disponibles según la fecha seleccionada.
@@ -241,7 +242,7 @@
             <input type="text" id="datepicker" required name="fecha_cita">
             </div>
             <h5 style="color: white;">Seleccionar hora</h5>
-            <select class="form-select" id="timeSelect">
+            <select class="form-select" id="timeSelect" name="hora">
               <option value="">Seleccione una hora</option>
             </select>
 

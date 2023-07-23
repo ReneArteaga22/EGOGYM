@@ -23,22 +23,29 @@
      <link rel="stylesheet" href="../css/egogym.css">
     </head>
     <body>
-    <body>
-    <div class="container">
-    <?php
-        include '../scripts/database_gym.php';
-        $db= new database();
-        $db->conectarDB();
+      <?php
+      include '../scripts/database_gym.php';
+      $conexion = new Database();
+      $conexion->conectarDB();
 
-        extract($_POST);
-        $cadena = "call restriccion_citas_3($servicio,$cliente_op,'$fecha_cita','$hora')";
-        $db->ejecutarSQL($cadena);
-        $db->desconectarBD();
-        header("refresh:3; ../recepcionista/citas.php");
-   
+      $idPersona = $_GET['id'];
+      $consulta="SELECT nombre FROM persona WHERE persona.id_persona = $idPersona";
+      $parametros = array(':id'=> $idPersona);
+      $persona =$conexion->seleccionar($consulta, $parametros);
 
-        ?>
-    </div>
-</body>
+      if($persona)
+      {
+        echo "<h1>Perfil de ".$persona[0]->nombre."</h1>";
+        $conexion = new Database();
+        $conexion->conectarDB();
+        $consulta = "SELECT ";
+      }
+      else
+      {
+        echo "Persona no encontrada";
+      }
+      
+      $conexion->desconectarBD();
+      ?>
     </body>
 </html>

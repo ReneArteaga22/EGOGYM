@@ -80,47 +80,12 @@
             <div class="input-group date">
             <input type="date" class="form-control" name="fecha_nacimiento">
             </div>
-            <script>
-        // Inicializar el selector de fecha
-        $('#datepicker').datepicker({
-          format: "yyyy-mm-dd",
-          todayBtn: "linked",
-          language: "es",
-          autoclose: true,
-          todayHighlight: true
-        }).on('changeDate', function (e) {
-          // Cuando cambia la fecha, actualizar las horas disponibles
-          updateAvailableHours(e.date);
-        });
-      
-        // Función para actualizar las horas disponibles en el campo de selección de horas
-        function updateAvailableHours(selectedDate) {
-          // Aquí puedes obtener las horas disponibles según la fecha seleccionada.
-          // Por ejemplo, en este caso, se generarán opciones de horas para cada hora de 8 AM a 6 PM.
-          const hoursSelect = $('#timeSelect');
-          hoursSelect.empty();
-          hoursSelect.append('<option value="">Seleccione una hora</option>');
-          
-          const startHour = 8;
-          const endHour = 18;
-          for (let hour = startHour; hour <= endHour; hour++) {
-            const formattedHour = hour.toString().padStart(2, '0') + ':00';
-            hoursSelect.append(`<option value="${formattedHour}">${formattedHour}</option>`);
-          }
-      
-          // Actualizar el selector de horas después de cambiar las opciones
-          hoursSelect.selectpicker('refresh');
-        }
-      
-        // Inicializar el selector de hora
-        $('#timeSelect').selectpicker();
-      </script>
 
-                    <label style="color: white;">Tipo de usuario</label><br>
-                    <select name="tipo_usuario">
-                        <option value="1">Cliente</option>
-                        <option value="2">Empleado</option>
-                    </select>
+             <label style="color: white;">Tipo de usuario</label><br>
+             <select name="tipo_usuario">
+                <option value="1">Cliente</option>
+                <option value="2">Empleado</option>
+             </select>
                     <br>
                  </div>
                 </div>

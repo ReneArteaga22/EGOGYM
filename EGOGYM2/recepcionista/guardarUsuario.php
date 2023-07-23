@@ -26,7 +26,7 @@
     <body>
     <div class="container">
         <?php
-        include '../recepcionista/database_gym.php';
+        include '../scripts/database_gym.php';
         $db= new database();
         $db->conectarDB();
 
