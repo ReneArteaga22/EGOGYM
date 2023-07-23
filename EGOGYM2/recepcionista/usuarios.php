@@ -67,7 +67,7 @@
      <div class="tab-content">
   <div id="clientes" class="tab-pane fade in active">
   <?php
-        include '../recepcionista/database_gym.php';
+        include '../scripts/database_gym.php';
         $conexion = new database();
         $conexion->conectarDB();
 
