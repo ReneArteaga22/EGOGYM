@@ -23,8 +23,36 @@
      <link rel="stylesheet" href="css/aos.css">
 
      <!-- MAIN CSS -->
-     <link rel="stylesheet" href="../EGOGYM2/css/egogym.css">
+     <link rel="stylesheet" href="css/egogym.css">
 
+     <style>
+        .zoomable {
+          transition: transform 0.3s;
+        }
+    
+        .zoomable:hover {
+          transform: scale(1.06);
+        }
+    
+        .button {
+        position: bottom;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: orange;
+        padding: 10px 20px;
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+        }
+
+        .class-thumb:hover .service-info a {
+        color: orange; /* Cambia el color a tu elección */
+        }
+
+</style>
+
+  
 </head>
 <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
 
@@ -143,43 +171,43 @@
      <section class="about section" id="about">
                <div class="container">
                     <div class="row">
+                    <div class="mt-lg-5 mb-lg-0 mb-4 col-lg-5 col-md-10 mx-auto col-12">
+                            <h2 class="mb-4" data-aos="fade-up" data-aos-delay="300">Contamos con profesionales en el ambito deportivo</h2>
 
-                            <div class="mt-lg-5 mb-lg-0 mb-4 col-lg-5 col-md-10 mx-auto col-12">
-                                <h2 class="mb-4" data-aos="fade-up" data-aos-delay="300">Contamos con profesionales en el ambito deportivo</h2>
+                            <p data-aos="fade-up" data-aos-delay="400">Ven y entrena en nuestra area de pesas, con nuestros entrenadores de box o agenda una cita en cualquiera de nuestros servicios<p>
 
-                                <p data-aos="fade-up" data-aos-delay="400">Ven y entrena en nuestra area de pesas, con nuestros entrenadores de box o agenda una cita en cualquiera de nuestros servicios<p>
+                            
 
-                                
+                        </div>
 
-                            </div>
+                        <div class="ml-lg-auto col-lg-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="700">
+                            <div class="team-thumb">
+                                <img src="images/class/boxwax.jpg" class="img-fluid" alt="Trainer">
 
-                            <div class="ml-lg-auto col-lg-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="700">
-                                <div class="team-thumb">
-                                    <img src="images/class/boxwax.jpg" class="img-fluid" alt="Trainer">
+                                <div class="team-info d-flex flex-column">
 
-                                    <div class="team-info d-flex flex-column">
+                                    <h3>WAX Guerrero</h3>
+                                    <span>Entrenador de Box</span>
 
-                                        <h3>WAX Guerrero</h3>
-                                        <span>Entrenador de Box</span>
-
-                                       
-                                    </div>
+                                   
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="mr-lg-auto mt-5 mt-lg-0 mt-md-0 col-lg-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="800">
-                                <div class="team-thumb">
-                                    <img src="images/class/eliasego.jpg" class="img-fluid" alt="Trainer">
+                        <div class="mr-lg-auto mt-5 mt-lg-0 mt-md-0 col-lg-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="800">
+                            <div class="team-thumb">
+                                <img src="images/class/eliasego.jpg" class="img-fluid" alt="Trainer">
 
-                                    <div class="team-info d-flex flex-column">
+                                <div class="team-info d-flex flex-column">
 
-                                        <h3>Elias Hurtado</h3>
-                                        <span>Entrenador y preparador físico</span>
+                                    <h3>Elias Hurtado</h3>
+                                    <span>Entrenador y preparador físico</span>
 
-                                        
-                                    </div>
+                                    
                                 </div>
                             </div>
+                        </div>
+
 
                     </div>
                </div>
@@ -188,65 +216,64 @@
 
      <!-- CLASS -->
      <section class="class section" id="serv">
-               <div class="container">
-                    <div class="row">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12 col-12 text-center mb-3">
+              <h2 data-aos="fade-up" data-aos-delay="200">Toma control e inscribete a nuestros servicios</h2>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="400">
+              <div class="class-thumb zoomable">
+                <div class="service-wrapper">
+                  <a href="views/noUser/nutriologo.html">
+                  <img src="images/class/nutri.jpg" class="img-fluid" alt="Class">
+                  <div class="service-info">
+                    <a href="views/noUser/nutriologo.html"><h3 class="mb-1">Nutricion</h3></a>
+                    <span><strong>Nutriólogo:</strong> - Cesar Ruiz</span>
+                    <span class="class-price">$100</span>
+                    <p class="mt-3">Los suplementos alimenticios se han convertido en un recurso muy popular. Con grandes avances e investigacion...</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+              
+    
+            <div class="mt-5 mt-lg-0 mt-md-0 col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="500">
+              <div class="class-thumb zoomable">
+                <div class="service-wrapper">
+                  <a href="views/noUser/fisioterapia.html">
+                  <img src="images/class/fisio.jpg" class="img-fluid" alt="Class">
+                  <div class="service-info">
+                    <a href="views/noUser/fisioterapia.html"><h3 class="mb-1">Fisioterapia</h3></a>
+                    <span><strong>Fisioterapeuta:</strong> - Cesar Ruiz</span>
+                    <span class="class-price">$100</span>
+                    <p class="mt-3">Un fisioterapeuta deportivo no sólo cura sobre la lesión, sino que asesorar a los deportistas ... </p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-                            <div class="col-lg-12 col-12 text-center mb-5">
-                                
+            <div class="mt-5 mt-lg-0 col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="600">
+              <div class="class-thumb zoomable">
+                <div class="service-wrapper">
+                  <a href="views/noUser/spinning.html">
+                  <img src="images/class/spinm.jpg" class="img-fluid" alt="Class">
+                  <div class="service-info">
+                    <a href="views/noUser/spinning.html"><h3 class="mb-1">Spinning</h3></a>
+                    <span><strong>Entrenador:</strong> Marcos Camacho</span>
+                    <span class="class-price">$100</span>
+                    <p class="mt-3">El spinning es un ejercicio cardiovascular y aeróbico que se lleva a cabo utilizando una bicicleta estática ...</p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-                                <h2 data-aos="fade-up" data-aos-delay="200">Nuestros servicios</h2>
-                             </div>
+    
+          </div>
+        </div>
+      </section>
 
-                            <div class="col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="400">
-                                <div class="class-thumb">
-                                    <img src="images/class/nutri.jpg" class="img-fluid" alt="Class">
-
-                                    <div class="class-info">
-                                        <h3 class="mb-1">Nutricion</h3>
-
-                                        <span><strong>Nutriologo:</strong> - Cesar</span>
-
-                                        <span class="class-price">$100</span>
-
-                                        <p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mt-5 mt-lg-0 mt-md-0 col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="500">
-                                <div class="class-thumb">
-                                    <img src="images/class/fisio.jpg" class="img-fluid" alt="Class">
-
-                                    <div class="class-info">
-                                        <h3 class="mb-1">Fisioterapia</h3>
-
-                                        <span><strong>Fisioterapeuta:</strong> - No me se su nombre aun</span>
-
-                                        <span class="class-price">$100</span>
-
-                                        <p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mt-5 mt-lg-0 col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="600">
-                                <div class="class-thumb">
-                                    <img src="images/class/spinm.jpg" class="img-fluid" alt="Class">
-
-                                    <div class="class-info">
-                                        <h3 class="mb-1">Spinning</h3>
-
-                                        <span><strong>Entrenador:</strong> - quien sabe quien sea</span>
-
-
-                                        <p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                    </div>
-               </div>
-     </section>
 
 
      <!-- SCHEDULE -->
@@ -378,20 +405,24 @@
                </div>
      </section>
 
-
      <!-- CONTACT -->
      <section class="contact section" id="contact">
           <div class="container">
                <div class="row">
 
-                    <div class="ml-auto col-lg-5 col-md-6 col-12">
-                        
+                     
+                    <div class="mx-auto mt-4 mt-lg-0 mt-md-0 col-lg-5 col-md-6 col-12">
+                      <h2 class="mb-4" data-aos="fade-up" data-aos-delay="600">Tu opinion <span>nos interesa</span></h2>
                       
                 <ul class="social-icon ml-lg-3">
                     <li><a href="https://www.facebook.com/egogymclub" class="fa fa-facebook" style="color: goldenrod;"></a>Facebook EGOGYM</li>
                     <li><a href="#" class="fa fa-twitter" style="color: goldenrod;"></a>Twitter EGOGYM</li>
                     <li><a href="#" class="fa fa-instagram" style="color: goldenrod;"></a>Siguenos en instagram</li>
                 </ul>
+
+                <br>
+                
+                <img src="images/class/Sugerencias y quejas.jpg" class="img-fluid" alt="Class">
                     </div>
 
                     <div class="mx-auto mt-4 mt-lg-0 mt-md-0 col-lg-5 col-md-6 col-12">
@@ -414,16 +445,30 @@
      </section>
 
 
-     <!-- FOOTER -->
-     <footer class="site-footer">
-          <div class="container">
-               <div class="row">
-
-                   
-                    
-               </div>
+     <footer class="site-footer" style="background-color: #0c0c0c;">
+      <div class="container">
+          <div class="row">
+              <div class="col-12 text-center">
+                  <!-- Enlace del logotipo que te llevará al inicio de la página -->
+                  <a href="index.html" class="logo-link" style="display: flex; justify-content: center;">
+                      <div style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden;">
+                          <img src="images/class/logo4.jpg" alt="Logo EGOGYM" style="width: 100%; height: 100%; object-fit: cover;">
+                      </div>
+                  </a>
+              </div>
           </div>
-     </footer>
+          <div class="row">
+              <div class="col-12 text-center">
+                  <!-- Texto de derechos reservados -->
+                  <p class="rights-text" style="color: white;">Todos los derechos reservados EGOGYM 2023</p>
+              </div>
+          </div>
+      </div>
+  </footer>
+  
+  
+  
+  
 
     <!-- Modal -->
     <div class="modal fade" id="membershipForm" tabindex="-1" role="dialog" aria-labelledby="membershipFormLabel" aria-hidden="true">
@@ -477,11 +522,11 @@
             <d class="modal-body">
               <form class="membership-form webform" role="form" action="scripts/guardauser.php" method="post">
                   
-                  <input type="text" class="form-control" name="nombre" placeholder="Nombre" required>
-                  <input type="text" class="form-control" name="ap_paterno" placeholder="Apellido Paterno" required>
-                  <input type="text" class="form-control" name="ap_materno" placeholder="Apellido Materno" required>
-                  <input type="email" class="form-control" name="correo" placeholder="Escribe tu correo" required>
-                  <input type="password" class="form-control" name="contraseña" placeholder="Escribe tu contraseña" required>
+                  <input type="text" class="form-control" name="nombre" placeholder="Nombre">
+                  <input type="text" class="form-control" name="ap_paterno" placeholder="Apellido Paterno">
+                  <input type="text" class="form-control" name="ap_materno" placeholder="Apellido Materno">
+                  <input type="email" class="form-control" name="correo" placeholder="Escribe tu correo">
+                  <input type="text" class="form-control" name="contraseña" placeholder="Escribe tu contraseña">
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="sexo" id="inlineRadio1" value="1">
                     <label class="form-check-label" for="inlineRadio1">Hombre</label>

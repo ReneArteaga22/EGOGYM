@@ -111,7 +111,7 @@ class Database
            
         
            
-            header("refresh:2 ../First.php#membershipForm");
+            header("refresh:20 ../First.php#membershipForm");
         }
         
         } 

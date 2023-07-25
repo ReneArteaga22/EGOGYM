@@ -89,7 +89,7 @@
 
     ?>
 
-    <nav class="navbar navbar-expand-lg fixed-top">
+<nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
             <a class="navbar-brand" href="index.html">EGO GYM</a>
@@ -102,19 +102,24 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="../clientes/Primera.html" class="nav-link smoothScroll">Home</a>
+                        <a href="Primera.php#home" class="nav-link smoothScroll">Home</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="#about" class="nav-link smoothScroll">Sobre Nosotros</a>
+                        <a href="Primera.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="#serv" class="nav-link smoothScroll">Servicios</a>
+                        <a href="Primera.php#serv" class="nav-link smoothScroll">Servicios</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="citas.php" class="nav-link smoothScroll">Agendar Cita</a>
-                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" > Citas</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="citas.php">Agendar Cita</a></li>
+                          <li><a class="dropdown-item" href="vercitas.php">Ver Citas</a></li>
+                        </ul>
+                      </li>
                     <li class="nav-item">
                         <a href="staff.php" class="nav-link smoothScroll">Staff</a>
                     </li>
@@ -139,46 +144,34 @@
     </nav>
 
 
-    <!--Crea pills para todas las citas, citas canceladas, confirmadas, completadas, en las tres
-     filtrar citas por fecha, entrenador, servicio-->
-    <div class="container" style="padding-top: 15%;">
-        <ul class="nav nav-tabs">
-    <li><a data-toggle="tab" href="#agendar" style="margin-left: 20px;">Servicios</a></li>
-    <li><a data-toggle="tab" href="#agendar" style="margin-left: 20px;">Clases</a></li>
-        </ul>
-    </div>
-   <div class="container" >
-    <div class="tab-content">
-    <div id="agendar" class="tab-pane fade">
+
+    <div id="agendar" class="container" style="padding-top: 15%;">
         <br>
-        <div class="container">
-            <form action="../recepcionista/guardarCitas.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:5%">
+        <div class="container" style="padding: 5%;">
+        <form method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:5%">
             <div class="row">
-                  <legend class="form-label" style="color: goldenrod;">Agendar Cita</legend>
+                  <legend class="form-label" style="color: goldenrod;">Agendar Cita Spinning</legend>
                   <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
                   <div class="col-12 col-lg-6">
                     <?php
                     include '../../scripts/database.php';
-                     $db=new database();
-                     $db->conectarDB();
-                     
-                    ?>              
-
-                    <?php
-                    $db=new database();
+                    $db = new database();
                     $db->conectarDB();
-                    $cadena="SELECT servicios_empleados.id_empserv as empleado, servicios.nombre 
+                    $cadena="SELECT servicios_empleados.id_empserv as empleado, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) as nombre
                     from servicios_empleados
-                     inner join servicios on servicios.codigo=servicios_empleados.servicio
-                     where servicios.nombre not in(select servicios.nombre from servicios where servicios.nombre='spinning');";
+                     inner join empleado on
+                     empleado.id_empleado=servicios_empleados.empleado
+                     inner join persona on
+                     persona.id_persona=empleado.id_empleado
+                     where empleado.id_empleado in(select entrenador.id_ent from entrenador)";
                     $reg =$db->seleccionar($cadena);
                     
                     echo 
                     "<div class='mb-3' style='width: 30%;'>
                     <label class='control-label' style='color:white;'>
-                    Servicio
+                    Entrenador
                     </label>
-                    <select name='servicio' class='form-select'>
+                    <select name='entrenador' class='form-select'>
                     ";
 
                     foreach($reg as $value)
@@ -190,88 +183,88 @@
                     </div>";
                     $db->desconectarBD();
                     ?>
+                    
 
                   </div>
 
                  <div class="col-12 col-lg-6">
                  <label style="color:white">Fecha</label>
-            <div class="input-group date">
-            <input type="text" id="datepicker" required name="fecha_cita">
-            </div>
-            <h5 style="color: white;">Seleccionar hora</h5>
-            <select class="form-select" id="timeSelect">
-              <option value="">Seleccione una hora</option>
-            </select>
-
+                 <div class="input-group date">
+                 <input type="text" id="datepicker" required name="fecha_cita">
+                </div>
+                <label style="color: white;">Seleccionar hora</label><br>
+                <select class="form-select" id="timeSelect" required name="hora">
+                 <option value="">Seleccione una hora</option>
+                </select>
                  </div>
                 </div>
             <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
             <button type="reset" value="Limpiar" class="btn btn-secondary">Borrar cambios</button>
-            <button type="submit"name="Registrar" class="btn btn-warning">Agendar</button>            
-            
+            <button type="submit"name="Registrar" class="btn btn-warning">Agendar</button>  
+                </div>          
+        </form>
+
+        <?php
+        if($_SERVER["REQUEST_METHOD"]=== "POST") {
+            extract($_POST);
+            $db = new Database();
+            $db->conectarDB();
+            $disponibilidad = "SELECT count(citas_spinning.id_cita) as count, cliente.id_cliente as id, citas_spinning.fecha as fecha from citas_spinning 
+            inner join cliente on citas_spinning.cliente = cliente.id_cliente 
+            where (citas_spinning.fecha='".$fecha_cita."' and citas_spinning.hora='".$hora."' and citas_spinning.estado='confirmada')
+            or (citas_spinning.fecha='".$fecha_cita."' and citas_spinning.estado= 'confirmada') ";
+            $resultDispo = $db->seleccionar($disponibilidad);
+            foreach($resultDispo as $datos)
+            {
+            $id_cli = $datos->id;
+            $citasAgendadas = $datos->count;
+            }
 
 
-            </form>
+            if($citasAgendadas < 7){
+                $mail= $_SESSION["correo"];
+                $consulta = "SELECT * from persona where correo= '$mail'";
+                $tabla = $db->seleccionar($consulta);
+                foreach($tabla as $registro)
+                {
+                    $cliente=$registro->id_persona;
+                }
+                if($cliente == $id_cli)
+                {
+                    echo '<script type="text/javascript">';
+                    echo ' alert("Ya tiene una cita agendada para este dia")';  //not showing an alert box.
+                    echo '</script>';
+                }
+                else
+                {
+                    $insertCita = "INSERT INTO citas_spinning 
+                    VALUES ('','$fecha_cita','$hora','confirmada',$cliente ,$entrenador)";
+                    $db->ejecutarSQL($insertCita);
+                    // header("refresh:3; ../recepcionista/citas.php");
+                    echo '<script type="text/javascript">';
+                     echo ' alert("Tu cita ha sido agendada")'; //not showing an alert box.
+                     echo '</script>';
+                }
+       
+            } 
+            else {
+                echo '<script type="text/javascript">';
+                echo ' alert("Todas las citas han sido reservadas, seleccione otra fecha y horario")';  //not showing an alert box.
+                echo '</script>';
+            }
+           // $cadena = "call restriccion_citas($servicio,$cliente_op,'$fecha_cita','$hora')";
+           // $db->ejecutarSQL($cadena);
+            $db->desconectarBD();
+            //header("refresh:3; ../Views/citas_spinning.php");
+        }
+        else{}
+
+        ?>
+
+
+
         </div>
     </div>
-
-    <div id="clases" class="tab-pane fade">
-                        <?php
-                        $conexion = new database();
-                        $conexion->conectarDB();
-
-                        $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente, e.empleado AS
-                        empleado, e.servicio as servicio, concat(clases.dia,' ',clases.hora) as horario from citas_spin INNER JOIN cliente ON cliente.id_cliente= citas_spin.cliente
-                        INNER JOIN persona ON persona.id_persona = cliente.id_cliente INNER JOIN clases on clases.id_clase=citas_spin.clase
-                        INNER JOIN
-                        (
-                        SELECT id_empserv, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS empleado,
-                        servicios.nombre as servicio 
-                        FROM servicios_empleados 
-                        INNER JOIN servicios ON servicios.codigo=servicios_empleados.servicio
-                        INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
-                        INNER JOIN persona ON empleado.id_empleado = persona.id_persona
-                        ) AS e ON citas_spin.serv_emp = e.id_empserv;";
-                        $conexion->seleccionar($consulta);
-                        $tabla = $conexion->seleccionar($consulta);
-
-                        echo 
-                        "
-                        <table class='table' style='border-radius: 5px;'>
-                        <thead class='table-dark'>
-                            <tr>
-                            <br>
-                                <th style='color: goldenrod;'>
-                                Cliente
-                                </th>
-                                <th style='color: goldenrod;'>
-                                Fecha
-                                </th>
-                                <th style='color: goldenrod;'>
-                                Servicio
-                                </th>
-                                <th style='color: goldenrod;'>
-                                Empleado
-                                </th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody>";
-                        foreach ($tabla as $registro)
-                        {
-                            echo "<tr>";
-                            echo "<td> $registro->cliente</td> ";
-                            echo "<td> $registro->horario</td> ";
-                            echo "<td> $registro->servicio</td> ";
-                            echo "<td> $registro->empleado</td> ";
-                        }
-                        echo "</tbody>
-                        </table>";
-                        ?> 
-        
-    </div>
-    </div>
-   </div>
 
     </body>
 </html>

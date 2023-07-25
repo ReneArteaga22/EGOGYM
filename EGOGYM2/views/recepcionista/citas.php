@@ -26,11 +26,11 @@
      <!--Calendario-->
      <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-
-  <script>
-  $(function(){
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+    <script type="text/javascript">
+         $(function(){
     var today = new Date();
       var dd = String(today.getDate()).padStart(2, '0');
       var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -44,11 +44,12 @@
       selectOtherMonths: true,
       dateFormat: 'yy-mm-dd',
       minDate: new Date(),
-      maxDate: '+7D'
-    });
-  } )
-  ;
-  </script>
+      maxDate: '+9D',
+      beforeShowDay: $.datepicker.noWeekends
+    });} 
+    );
+    </script>
+  
   <script>
      $ (function updateAvailableHours() {
           // Aquí puedes obtener las horas disponibles según la fecha seleccionada.
@@ -78,7 +79,7 @@
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../recepcionista/index.php">EGO GYM</a>
+            <a class="navbar-brand" href="../recepcionista/principal.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -88,7 +89,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                        <a href="../recepcionista/index.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="../recepcionista/principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
 
                     <li class="nav-item">
@@ -100,7 +101,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="../recepcionista/registrar_usuarios.php" class="nav-link smoothScroll">Registrar Nuevo Usuario</a>
+                        <a href="../recepcionista/registrarusu.php" class="nav-link smoothScroll">Registrar Nuevo Usuario</a>
                     </li>
                 </ul>
 
@@ -241,7 +242,7 @@
             <input type="text" id="datepicker" required name="fecha_cita">
             </div>
             <h5 style="color: white;">Seleccionar hora</h5>
-            <select class="form-select" id="timeSelect">
+            <select class="form-select" id="timeSelect" name="hora">
               <option value="">Seleccione una hora</option>
             </select>
 
@@ -263,7 +264,7 @@
                         $conexion->conectarDB();
 
                         $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente, e.empleado AS
-                        empleado, e.servicio as servicio, concat(clases.dia,' ',clases.hora) as horario from citas_spin INNER JOIN cliente ON cliente.id_cliente= citas_spin.cliente
+                        empleado, e.servicio as servicio, concat(clases.dia,' ',clases.hora) as horario from citas_spinning INNER JOIN cliente ON cliente.id_cliente= citas_spinning.cliente
                         INNER JOIN persona ON persona.id_persona = cliente.id_cliente INNER JOIN clases on clases.id_clase=citas_spin.clase
                         INNER JOIN
                         (
@@ -273,7 +274,7 @@
                         INNER JOIN servicios ON servicios.codigo=servicios_empleados.servicio
                         INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
                         INNER JOIN persona ON empleado.id_empleado = persona.id_persona
-                        ) AS e ON citas_spin.serv_emp = e.id_empserv;";
+                        ) AS e ON citas_spinning.serv_emp = e.id_empserv;";
                         $conexion->seleccionar($consulta);
                         $tabla = $conexion->seleccionar($consulta);
 

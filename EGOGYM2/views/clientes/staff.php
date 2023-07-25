@@ -119,47 +119,60 @@
     ?>
 
     <!-- MENU BAR -->
-<nav class="navbar navbar-expand-lg fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
+
             <a class="navbar-brand" href="index.html">EGO GYM</a>
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="Primera.php" class="nav-link smoothScroll">Home</a>
+                        <a href="Primera.php#home" class="nav-link smoothScroll">Home</a>
                     </li>
+
                     <li class="nav-item">
                         <a href="Primera.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
                     </li>
+
                     <li class="nav-item">
                         <a href="Primera.php#serv" class="nav-link smoothScroll">Servicios</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="citas.php" class="nav-link smoothScroll">Agendar Cita</a>
-                    </li>
-                   
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" > Citas</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="citas.php">Agendar Cita</a></li>
+                          <li><a class="dropdown-item" href="vercitas.php">Ver Citas</a></li>
+                        </ul>
+                      </li>
                     <li class="nav-item">
                         <a href="staff.php" class="nav-link smoothScroll">Staff</a>
                     </li>
                 </ul>
+
+
                 <ul class="navbar-nav ml-lg-2">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false" >
-                          <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
+                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
+                          <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
                           <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
                       </li>
                 </ul>
             </div>
+
         </div>
     </nav>
+
 
 <div class="container" id="cards">
     <div class="row" style="align-self: center;">

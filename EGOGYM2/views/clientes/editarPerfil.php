@@ -55,7 +55,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="../clientes/Primera.php" class="nav-link smoothScroll">Home</a>
+                        <a href="Primera.php#home" class="nav-link smoothScroll">Home</a>
                     </li>
 
                     <li class="nav-item">
@@ -65,10 +65,14 @@
                     <li class="nav-item">
                         <a href="Primera.php#serv" class="nav-link smoothScroll">Servicios</a>
                     </li>
-                  
-                    <li class="nav-item">
-                        <a href="citas.php" class="nav-link smoothScroll">Agendar Cita</a>
-                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" > Citas</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="citas.php">Agendar Cita</a></li>
+                          <li><a class="dropdown-item" href="vercitas.php">Ver Citas</a></li>
+                        </ul>
+                      </li>
                     <li class="nav-item">
                         <a href="staff.php" class="nav-link smoothScroll">Staff</a>
                     </li>
@@ -79,17 +83,19 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false" >
-                          <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
+                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
-                        <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>                        </ul>
+                          <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
+                          <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
+                        </ul>
                       </li>
                 </ul>
             </div>
 
         </div>
     </nav>
+
 
 <div class="container">
 

@@ -24,6 +24,32 @@
 
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
+     <style>
+        .zoomable {
+          transition: transform 0.3s;
+        }
+    
+        .zoomable:hover {
+          transform: scale(1.06);
+        }
+    
+        .button {
+        position: bottom;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: orange;
+        padding: 10px 20px;
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+        }
+
+        .class-thumb:hover .service-info a {
+        color: orange; /* Cambia el color a tu elección */
+        }
+
+</style>
 
 </head>
 <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
@@ -55,19 +81,24 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="Primera.html" class="nav-link smoothScroll">Home</a>
+                        <a href="Primera.php#home" class="nav-link smoothScroll">Home</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="#about" class="nav-link smoothScroll">Sobre Nosotros</a>
+                        <a href="Primera.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="#serv" class="nav-link smoothScroll">Servicios</a>
+                        <a href="Primera.php#serv" class="nav-link smoothScroll">Servicios</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="citas.php" class="nav-link smoothScroll">Agendar Cita</a>
-                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" > Citas</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="citas.php">Agendar Cita</a></li>
+                          <li><a class="dropdown-item" href="vercitas.php">Ver Citas</a></li>
+                        </ul>
+                      </li>
                     <li class="nav-item">
                         <a href="staff.php" class="nav-link smoothScroll">Staff</a>
                     </li>
@@ -169,65 +200,63 @@
 
  <!-- CLASS -->
  <section class="class section" id="serv">
-           <div class="container">
-                <div class="row">
-
-                        <div class="col-lg-12 col-12 text-center mb-5">
-                            
-
-                            <h2 data-aos="fade-up" data-aos-delay="200">Nuestros servicios</h2>
-                         </div>
-
-                        <div class="col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="400">
-                            <div class="class-thumb">
-                                <img src="../../images/class/nutri.jpg" class="img-fluid" alt="Class">
-
-                                <div class="class-info">
-                                    <h3 class="mb-1">Nutricion</h3>
-
-                                    <span><strong>Nutriologo:</strong> - Cesar</span>
-
-                                    <span class="class-price">$100</span>
-
-                                    <p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-5 mt-lg-0 mt-md-0 col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="500">
-                            <div class="class-thumb">
-                                <img src="../../images/class/fisio.jpg" class="img-fluid" alt="Class">
-
-                                <div class="class-info">
-                                    <h3 class="mb-1">Fisioterapia</h3>
-
-                                    <span><strong>Fisioterapeuta:</strong> - No me se su nombre aun</span>
-
-                                    <span class="class-price">$100</span>
-
-                                    <p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-5 mt-lg-0 col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="600">
-                            <div class="class-thumb">
-                                <img src="../../images/class/spinm.jpg" class="img-fluid" alt="Class">
-
-                                <div class="class-info">
-                                    <h3 class="mb-1">Spinning</h3>
-
-                                    <span><strong>Entrenador:</strong> - quien sabe quien sea</span>
-
-
-                                    <p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
-                                </div>
-                            </div>
-                        </div>
-
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12 col-12 text-center mb-3">
+              <h2 data-aos="fade-up" data-aos-delay="200">Toma control e inscribete a nuestros servicios</h2>
+            </div>
+            
+            <div class="col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="400">
+              <div class="class-thumb zoomable">
+                <div class="service-wrapper">
+                  <a href="../noUser/nutriologo.html">
+                  <img src="../../images/class/nutri.jpg" class="img-fluid" alt="Class">
+                  <div class="service-info">
+                    <a href="../noUser/nutriologo.html"><h3 class="mb-1">Nutricion</h3></a>
+                    <span><strong>Nutriólogo:</strong> - Cesar Ruiz</span>
+                    <span class="class-price">$100</span>
+                    <p class="mt-3">Los suplementos alimenticios se han convertido en un recurso muy popular. Con grandes avances e investigacion...</p>
+                  </div>
                 </div>
-           </div>
- </section>
+              </div>
+            </div>
+            
+              
+    
+            <div class="mt-5 mt-lg-0 mt-md-0 col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="500">
+              <div class="class-thumb zoomable">
+                <div class="service-wrapper">
+                  <a href="../noUser/fisioterapia.html">
+                  <img src="../../images/class/fisio.jpg" class="img-fluid" alt="Class">
+                  <div class="service-info">
+                    <a href="../noUser/fisioterapia.html"><h3 class="mb-1">Fisioterapia</h3></a>
+                    <span><strong>Fisioterapeuta:</strong> - Cesar Ruiz</span>
+                    <span class="class-price">$100</span>
+                    <p class="mt-3">Un fisioterapeuta deportivo no sólo cura sobre la lesión, sino que asesorar a los deportistas ... </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-5 mt-lg-0 col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="600">
+              <div class="class-thumb zoomable">
+                <div class="service-wrapper">
+                  <a href="../noUser/spinning.html">
+                  <img src="../../images/class/spinm.jpg" class="img-fluid" alt="Class">
+                  <div class="service-info">
+                    <a href="../noUser/spinning.html"><h3 class="mb-1">Spinning</h3></a>
+                    <span><strong>Entrenador:</strong> Marcos Camacho</span>
+                    <span class="class-price">$100</span>
+                    <p class="mt-3">El spinning es un ejercicio cardiovascular y aeróbico que se lleva a cabo utilizando una bicicleta estática ...</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+    
+          </div>
+        </div>
+      </section>
 
 
  <!-- SCHEDULE -->
