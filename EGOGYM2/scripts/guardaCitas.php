@@ -26,15 +26,15 @@
     <body>
     <div class="container">
     <?php
-        include '../scripts/database_gym.php';
+        include 'database.php';
         $db= new database();
         $db->conectarDB();
 
         extract($_POST);
-        $cadena = "call restriccion_citas_3($servicio,$cliente_op,'$fecha_cita','$hora')";
+        $cadena = "call restriccion_citas_3($servicio, $cliente_op,'$fecha_cita','$hora')";
         $db->ejecutarSQL($cadena);
         $db->desconectarBD();
-        header("refresh:3; ../recepcionista/citas.php");
+        header("refresh:3; ../views/recepcionista/citas.php");
    
 
         ?>

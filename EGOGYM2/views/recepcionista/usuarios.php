@@ -9,24 +9,24 @@
      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
      <title>Inicio</title>
       <!-- SCRIPTS -->
-      <script src="../js/jquery.min.js"></script>
-      <script src="../js/bootstrap.min.js"></script>
-      <script src="../js/aos.js"></script>
-      <script src="../js/smoothscroll.js"></script>
-      <script src="../js/custom.js"></script>
+      <script src="../../js/jquery.min.js"></script>
+      <script src="../../js/bootstrap.min.js"></script>
+      <script src="../../js/aos.js"></script>
+      <script src="../../js/smoothscroll.js"></script>
+      <script src="../../js/custom.js"></script>
 
-     <link rel="stylesheet" href="../css/bootstrap.min.css">
-     <link rel="stylesheet" href="../css/font-awesome.min.css">
-     <link rel="stylesheet" href="../css/aos.css">
+     <link rel="stylesheet" href="../../css/bootstrap.min.css">
+     <link rel="stylesheet" href="../../css/font-awesome.min.css">
+     <link rel="stylesheet" href="../../css/aos.css">
 
      <!-- MAIN CSS -->
-     <link rel="stylesheet" href="../css/egogym.css">
+     <link rel="stylesheet" href="../../css/egogym.css">
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../recepcionista/index.php">EGO GYM</a>
+            <a class="navbar-brand" href="../recepcionista/principal.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -36,7 +36,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="../recepcionista/index.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="../recepcionista/principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
 
                     <li class="nav-item">
@@ -48,7 +48,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="../recepcionista/registrar_usuarios.php" class="nav-link smoothScroll">Registrar Nuevo Usuario</a>
+                        <a href="../recepcionista/registrarusu.php" class="nav-link smoothScroll">Registrar Nuevo Usuario</a>
                     </li>
                 </ul>
             </div>
@@ -67,7 +67,7 @@
      <div class="tab-content">
   <div id="clientes" class="tab-pane fade in active">
   <?php
-        include '../scripts/database_gym.php';
+        include '../../scripts/database.php';
         $conexion = new database();
         $conexion->conectarDB();
 
@@ -116,7 +116,7 @@
         ?> 
   </div>
   <div id="empleados" class="tab-pane fade">
-            <?php
+  <?php
             $conexion = new database();
             $conexion->conectarDB();
         

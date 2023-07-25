@@ -9,24 +9,24 @@
      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
      <title>Inicio</title>
       <!-- SCRIPTS -->
-      <script src="../js/jquery.min.js"></script>
-      <script src="../js/bootstrap.min.js"></script>
-      <script src="../js/aos.js"></script>
-      <script src="../js/smoothscroll.js"></script>
-      <script src="../js/custom.js"></script>
+      <script src="../../js/jquery.min.js"></script>
+      <script src="../../js/bootstrap.min.js"></script>
+      <script src="../../js/aos.js"></script>
+      <script src="../../js/smoothscroll.js"></script>
+      <script src="../../js/custom.js"></script>
 
-     <link rel="stylesheet" href="../css/bootstrap.min.css">
-     <link rel="stylesheet" href="../css/font-awesome.min.css">
-     <link rel="stylesheet" href="../css/aos.css">
+     <link rel="stylesheet" href="../../css/bootstrap.min.css">
+     <link rel="stylesheet" href="../../css/font-awesome.min.css">
+     <link rel="stylesheet" href="../../css/aos.css">
 
      <!-- MAIN CSS -->
-     <link rel="stylesheet" href="../css/egogym.css">
+     <link rel="stylesheet" href="../../css/egogym.css">
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../recepcionista/index.php">EGO GYM</a>
+            <a class="navbar-brand" href="../recepcionista/principal.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -36,19 +36,19 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="../recepcionista/index.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="../recepcionista/principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="../recepcionista/citas.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="citas.php" class="nav-link smoothScroll">Citas</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="../recepcionista/usuarios.php" class="nav-link smoothScroll">Usuarios</a>
+                        <a href="usuarios.php" class="nav-link smoothScroll">Usuarios</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="../recepcionista/registrar_usuarios.php" class="nav-link smoothScroll">Registrar Nuevo Usuario</a>
+                        <a href="registrarusu.php" class="nav-link smoothScroll">Registrar Nuevo Usuario</a>
                     </li>
                 </ul>
             </div>
@@ -64,7 +64,7 @@
     </div>
     <div class="container">
         <?php
-        include '../scripts/database_gym.php';
+        include '../../scripts/database.php';
         $conexion = new database();
         $conexion->conectarDB();
 
@@ -84,15 +84,14 @@
          where citas.fecha = curdate()
          group by cliente;
         ";
-         $conexion->seleccionar($consulta);
          $tabla = $conexion->seleccionar($consulta);
          foreach($tabla as $registro)
          {
-             $registro->cantidad;
+             $cant = $registro->cantidad;
 
              $cant = $registro;
          }
-         if(isset($cant) != '0')
+         if($cant != '0')
          {
             echo"<h3 data-aos='fade-right'>Citas del día de hoy</h3>";
             echo 
