@@ -105,6 +105,7 @@
             </thead>
 
         <?php
+        session_start();
         include '../recepcionista/database_gym.php';
         $conexion = new database();
         $conexion->conectarDB();
@@ -112,10 +113,23 @@
         $db= new database();
         $db->conectarDB();
 
+        if(isset($_SESSION["correo"]) )
+        {
+      
+        }
+        else 
+        {
+        header("Location:../index.html");
+        }
+        $correo=$_SESSION["correo"];
+        $querycliente="SELECT id_persona from persona where correo=$correo";
+        $resulcliente=$db->seleccionar($querycliente);
+        $id_cliente=$resulcliente[0]->id_persona;
+
         $queryCitas = "SELECT c.id_citaspin, c.fecha, c.hora, concat (pc.nombre, ' ' , pc.apellido_paterno) as cliente, concat (p.nombre, ' ' , p.apellido_paterno) as entrenador, c.estado from citas_spin c join servicios_empleados se on
         c.serv_emp=se.id_empserv join persona p on se.empleado=p.id_persona
         JOIN persona pc on c.cliente=pc.id_persona
-        where c.cliente =100 and c.fecha>=CURRENT_DATE;";
+        where c.cliente =$id_cliente and c.fecha>=CURRENT_DATE;";
 
         $resultCitas = $db->seleccionar($queryCitas);
 
