@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <head>
+<head>
     <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=Edge">
      <meta name="description" content="">
@@ -46,51 +46,51 @@
         </div>
     </nav>
 
-    <!--Inicio de recepcionista-->
-    <div class="container" style="padding-top: 10%;">
-        <h1 style="text-align: center;" data-aos="fade-right">¡Hola!</h1>
-        <!--Tablas de citas registradas para el día actual-->
-    </div>
     <div class="container">
-        <div class="card-header" style="color:black;">
-          Tu información
-        </div>
 
+        <div class="card bg-light" style="margin-top: 99px;">
+        <div class="card-header bg-dark text-white">
+          Informacion Personal
+        </div>
         <div class="card-body row">
-            <div class="col-lg-6 col-xs-12  col-sm-12 col-md-6 text-center">
+            <div class="col-lg-6 col-xs-12  col-sm-12 col-md-7 text-center">
             <img src="../../images/class/boxwax.jpg" class="rounded-circle" alt="..." style="width: 60%;">
+            <input class="form-control form-control-sm" id="formFileSm" type="file" form="../../scripts/actualizarPerfil.php" method="post">
           </div>
+
+
         <?php
         include '../../scripts/database.php';
         $conexion = new Database();
         $conexion->conectarDB();
 
-        $consulta = "SELECT concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre, persona.id_persona,
-        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña,FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad from persona
-        where persona.id_persona in (select nutricionista.id_nutri from nutricionista)";
+        $idPersona = $_GET['id'];
+
+        $consulta = "SELECT concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
+        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña from persona 
+        where persona.id_persona=$idPersona";
         $datos_per = $conexion ->seleccionar($consulta);
 
         foreach($datos_per as $registro)
         {
-            echo "<div class='col-lg-6 col-xs-12 col-sm-12 col-md-6'>";
+            echo "<form action='../../scripts/actualizarPerfil.php' method='POST'>";
+            echo "<div class='col-lg-12 col-12 col-sm-12 col-md-12'>";
             echo "<p>Nombre: $registro->nombre </p>";
-            echo "<p>Correo: $registro->correo </p>";
-            echo "<p>Telefono: $registro->telefono </p>";
-            echo "<p>Edad: ".$registro->edad." años </p>";
+            echo "<input type='mail' value='$registro->correo' class='form-control w-75' name='correo'>";
+            echo "<input type='text' value='$registro->telefono' class='form-control w-50' name='telefono'>";
+            echo "<p>Fecha de nacimiento: $registro->fecha_nacimiento </p>";
             echo "<p>Sexo: $registro->sexo </p>";
-            echo "</div>";
+            echo "<p>Contraseña:</p><input type='password' value='$registro->contraseña' class='form-control w-50' name='contra'>";
 
-            echo "<a href='editarNutri.php?id=".$registro->id_persona."' style='margin:auto; font-size:15px; color:goldenrod ; font-style:oblique;'>
-            Editar perfil
-          </a>";
-
-        } 
-        
+        }    
         ?>
-
+       
+       <button type="reset" value="Limpiar" class="btn btn-secondary">Borrar cambios</button>
+            <button type="submit"name="Guardar" class="btn btn-warning">Guardar cambios</button>      
+      </div>
+        </div>
+      </form>
         </div>
     </div>
-    <br>
-    <br>
     </body>
 </html>
