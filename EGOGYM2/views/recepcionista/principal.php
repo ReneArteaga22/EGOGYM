@@ -91,7 +91,7 @@
 
              $cant = $registro;
          }
-         if($cant != '0')
+         if(isset($cant) != '0')
          {
             echo"<h3 data-aos='fade-right'>Citas del día de hoy</h3>";
             echo 

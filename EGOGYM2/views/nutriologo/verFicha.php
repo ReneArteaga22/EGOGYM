@@ -47,6 +47,7 @@
     </nav>
 
     <div class="container" style="padding-top: 10%;">
+
     
     <?php
       include '../../scripts/database.php';
@@ -54,7 +55,8 @@
       $conexion->conectarDB();
 
       $idFicha = $_GET['id'];
-      $consulta="SELECT concat(nombre,' ',apellido_paterno,' ',apellido_materno) as nombre, citas.fecha FROM persona INNER JOIN cliente on cliente.id_cliente=persona.id_persona
+      $consulta="SELECT concat(nombre,' ',apellido_paterno,' ',apellido_materno) as nombre, citas.fecha, 
+      FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad FROM persona INNER JOIN cliente on cliente.id_cliente=persona.id_persona
       INNER JOIN citas on citas.cliente=cliente.id_cliente INNER JOIN ficha_nutri 
       ON ficha_nutri.cita=citas.id_cita WHERE ficha_nutri.id_ficha=$idFicha";
       $parametros = array(':id'=> $idFicha);
@@ -62,11 +64,14 @@
 
       if($persona)
       {
-        echo "<div class='container'>
-        <div class='card-body row justify-content-center'>";
-        echo "<h5>Cliente: ".$persona[0]->nombre."</h5>";
-        echo "<h6>Fecha de la cita: ".$persona[0]->fecha."</h6>";
 
+        echo "<div class='container' style='padding-top:5%'>
+        <div class='container text-center'><h3>Ficha médica</<h3></div>
+        <div class='card-header' style='color:grey; float: right'><h5> Fecha: ".$persona[0]->fecha."</h5></div>
+         <div class='card-header'><h5>Cliente: ".$persona[0]->nombre."</h5></div>";
+        
+        echo"<div class='card'>";
+      
         $consulta = "SELECT ficha_nutri.objetivo, ficha_nutri.motivo, ficha_nutri.peso,
         ficha_nutri.altura, ficha_nutri.med_cintura, ficha_nutri.med_cadera, ficha_nutri.med_cuello,
         ficha_nutri.porc_grasa_corporal, ficha_nutri.masa_corp_magra, ficha_nutri.observaciones
@@ -76,23 +81,38 @@
 
         foreach($ficha as $fila)
         {
-        echo "Hey";
-        echo "<div class='modal-body' style='margin-top:15px;'>";
-        echo "<p>Objetivo: $fila->objetivo</p>";
-        echo "<p>Motivo: $fila->motivo</p>";
-        echo "<p>Peso: $fila->peso</p>";
-        echo "<p>Altura: $fila->altura</p>";
-        echo "<p>Cintura: $fila->med_cintura</p>";
-        echo "<p>Cadera: $fila->med_cadera</p>";
-        echo "<p>Cuello: $fila->med_cuello</p>";
+        echo "<div class='row'>";
+
+        echo "<div class='col-lg-6 col-6'>";
+        echo "<div class='modal-body' style='padding: 3%'>";
+        echo "<h6 style='font-weight:bold;color:black; opacity:0.7;'>Datos del paciente</h6><br>"; 
+        echo "<p>Edad: ".$persona[0]->edad." años</p>";  
+        echo "<p>Altura: ".$fila->altura." m</p>";
+        echo "<p>Peso: ".$fila->peso." kg</p>";
+        echo "<p>Cintura: ".$fila->med_cintura." cm</p>";
+        echo "<p>Cadera: ".$fila->med_cadera." cm</p>";
+        echo "<p>Cuello: ".$fila->med_cuello." cm</p>";
+        echo "</div>";
+        echo "</div>";
+
+        echo "<div class='col-lg-6 col-6'>";
+        echo "<div class='modal-body' style='padding: 3%'>";
+        echo "<h6 style='font-weight:bold;color:black; opacity:0.7;'>Detalles: </h6><br>"; 
         echo "<p>Grasa Corporal: $fila->porc_grasa_corporal</p>";
         echo "<p>Masa Corporal Magra: $fila->masa_corp_magra</p>";
+        echo "<p>Objetivo: ". $fila->objetivo." kg</p>";
+        echo "<p>Motivo: $fila->motivo</p>";
         echo "<p>Observaciones: $fila->observaciones</p>";
+        echo "</div>";
+        echo "</div>";
+
         echo "</div>";
         }
         echo "</div>
         </div>";
 
+        echo "</div>
+        </div>";
 
       }
       else
@@ -102,6 +122,9 @@
       
       $conexion->desconectarBD();
       ?>
+        
+    
+   
     </div>
      
     </body>

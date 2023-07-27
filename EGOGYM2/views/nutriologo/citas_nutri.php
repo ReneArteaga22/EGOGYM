@@ -81,7 +81,7 @@
                 INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
                 INNER JOIN persona ON empleado.id_empleado = persona.id_persona
                 ) AS e ON citas.serv_emp = e.id_empserv 
-                where e.servicio='nutricion' AND concat(citas.fecha,citas.hora) < now()
+                where e.servicio='nutricion' AND concat(citas.fecha,' ',citas.hora) < now()
                 ";
                 $conexion->seleccionar($consulta);
                 $tabla = $conexion->seleccionar($consulta);

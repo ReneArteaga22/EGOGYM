@@ -26,7 +26,7 @@
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../fisioterapeuta/principal.php">EGO GYM</a>
+            <a class="navbar-brand" href="../fisioterapeuta/principal.php" >EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -46,13 +46,15 @@
         </div>
     </nav>
     
-      <?php
+
+        <?php
       include '../../scripts/database.php';
       $conexion = new Database();
       $conexion->conectarDB();
 
       $idFicha = $_GET['id'];
-      $consulta="SELECT concat(nombre,' ',apellido_paterno,' ',apellido_materno) as nombre, citas.fecha FROM persona INNER JOIN cliente on cliente.id_cliente=persona.id_persona
+      $consulta="SELECT concat(nombre,' ',apellido_paterno,' ',apellido_materno) as nombre, citas.fecha, 
+        FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad FROM persona INNER JOIN cliente on cliente.id_cliente=persona.id_persona
       INNER JOIN citas on citas.cliente=cliente.id_cliente INNER JOIN ficha_fisio
       ON ficha_fisio.cita=citas.id_cita WHERE ficha_fisio.id_ficha=$idFicha";
       $parametros = array(':id'=> $idFicha);
@@ -60,11 +62,14 @@
 
       if($persona)
       {
-        echo "<div class='container'>
-        <div class='card-body row justify-content-center'>";
-        echo "<h5>Cliente: ".$persona[0]->nombre."</h5>";
-        echo "<h6>Fecha de la cita: ".$persona[0]->fecha."</h6>";
 
+        echo "<div class='container' style='padding-top:15%'>
+        <div class='container text-center'><h3>Ficha médica</<h3></div>
+        <div class='card-header' style='color:grey; float: right'><h5> Fecha: ".$persona[0]->fecha."</h5></div>
+         <div class='card-header'><h5>Cliente: ".$persona[0]->nombre."</h5></div>";
+        
+        echo"<div class='card'>";
+      
         $consulta = "SELECT ficha_fisio.altura, ficha_fisio.peso, ficha_fisio.observaciones, ficha_fisio.motivo
         from ficha_fisio 
         where ficha_fisio.id_ficha= $idFicha";
@@ -72,16 +77,32 @@
 
         foreach($ficha as $fila)
         {
-        echo "<div class='modal-body' style='margin-top:15px;'>";
-           echo "<p>Altura: $fila->altura</p>";
-        echo "<p>Peso: $fila->peso</p>";
-      echo "<p>Motivo: $fila->motivo</p>";
-        echo "<p>Observaciones: $fila->observaciones</p>";
+        echo "<div class='row'>";
+
+        echo "<div class='col-lg-6 col-6'>";
+        echo "<div class='modal-body' style='padding: 3%'>";
+        echo "<h6 style='font-weight:bold;color:black; opacity:0.7;'>Datos del paciente</h6><br>"; 
+        echo "<p>Edad: ".$persona[0]->edad." años</p>";  
+        echo "<p>Altura: $fila->altura</p>";
+        echo "<p>Peso: ".$fila->peso." kg</p>";
+        echo "</div>";
+        echo "</div>";
+
+        echo "<div class='col-lg-6 col-6'>";
+        echo "<div class='modal-body' style='padding: 3%'>";
+        echo "<h6 style='font-weight:bold;color:black; opacity:0.7;'>Detalles: </h6><br>"; 
+        echo "<p>Motivo: $fila->motivo</p>";
+        echo "<p>Observaciones: ".$fila->observaciones."</p>";
+        echo "</div>";
+        echo "</div>";
+
         echo "</div>";
         }
         echo "</div>
         </div>";
 
+        echo "</div>
+        </div>";
 
       }
       else
@@ -91,5 +112,10 @@
       
       $conexion->desconectarBD();
       ?>
+        
+
+    </div>
+    
+
     </body>
 </html>

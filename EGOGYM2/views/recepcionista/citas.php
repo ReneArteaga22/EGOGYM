@@ -164,9 +164,11 @@
     <li><a data-toggle="tab" href="#agendar_fisio" style="margin-left: 20px;">Agendar cita (fisioterapia)</a></li>
         </ul>
     </div>
-   <div class="container" >
+  <div class="container">
     <div class="tab-content">
-         <div id="citas" class="tab-pane fade">
+
+    <!--Citas-->
+    <div id="citas" class="tab-pane fade">
          <?php
         include '../../scripts/database.php';
         $conexion = new database();
@@ -220,12 +222,11 @@
          echo "</tbody>
          </table>";
          ?> 
-        
     </div>
 
-    <div id="agendar_nutri" class="tab-pane fade">
-        <div class="container">
-            <form action="../../scripts/guardaCitas.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:5%">
+    <!--Agendar citas nutri-->
+         <div id="agendar_nutri" class="tab-pane fade">
+         <form action="../../scripts/guardaCitas.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:5%">
             <div class="row">
                   <legend class="form-label" style="color: goldenrod;">Agendar Cita</legend>
                   <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
@@ -298,17 +299,13 @@
             <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
             <button type="reset" value="Limpiar" class="btn btn-secondary">Borrar cambios</button>
             <button type="submit"name="Registrar" class="btn btn-warning">Agendar</button>            
-            
-
-
+          
             </form>
-        </div>
-    </div>
+         </div>
 
-    <!--AGENDAR CITA CON FISIO-->
-    <div id="agendar_fisio" class="tab-pane fade">
-    <div class="container">
-            <form action="../../scripts/guardaCitas.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:5%">
+    <!--Agendar cita fisio-->
+      <div id="agendar_fisio" class="tab-pane fade">
+      <form action="../../scripts/guardaCitas.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:5%">
             <div class="row">
                   <legend class="form-label" style="color: goldenrod;">Agendar Cita</legend>
                   <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
@@ -385,13 +382,11 @@
 
 
             </form>
-        </div>
-    </div>
-
-    </div>
-
-    <div id="clases" class="tab-pane fade">
-             <?php
+      </div>
+    
+      <!--Clases spinning-->
+      <div id="clases" class="tab-pane fade">
+                        <?php
                         $conexion = new database();
                         $conexion->conectarDB();
 
@@ -442,10 +437,14 @@
                         }
                         echo "</tbody>
                         </table>";
-                 ?> 
+                        ?> 
+        
     </div>
+
+
     </div>
-   </div>
+
+  </div>
 
     </body>
 </html>
