@@ -106,7 +106,7 @@
          foreach ($tabla as $registro)
          {
              echo "<tr>";
-             echo "<td><a href='perfiluser.php?id=" . $registro->id_persona . "'>" . $registro->nombre . "</a></td>";
+             echo "<td><a href='perfilCliente.php?id=" . $registro->id_persona . "'>" . $registro->nombre . "</a></td>";
              echo "<td> $registro->tipo</td> ";
              echo "<td> $registro->contacto</td> ";
          }
@@ -159,7 +159,7 @@
             foreach ($tabla as $registro)
             {
                 echo "<tr>";
-                echo "<td><a href='perfiluser.php?id=" . $registro->id_persona . "'>" . $registro->nombre_emp . "</a></td>";
+                echo "<td><a href='perfilEmpleado.php?id=" . $registro->id_persona . "'>" . $registro->nombre_emp . "</a></td>";
                 echo "<td> $registro->tipo_us</td> ";
                 echo "<td> $registro->contacto_emp</td> ";
                 echo "<td> $registro->servicio_emp</td> ";
@@ -204,7 +204,7 @@
             {
                 
                 echo "<tr>";
-                echo "<td><a href='perfiluser.php?id=" . $registro->id_persona . "'>" . $registro->nombre . "</a></td>";
+                echo "<td><a href='perfilNuevo.php?id=" . $registro->id_persona . "'>" . $registro->nombre . "</a></td>";
                 echo "<td>$registro->contacto</td> ";
                 echo "<td> $registro->tipo</td> ";
             }

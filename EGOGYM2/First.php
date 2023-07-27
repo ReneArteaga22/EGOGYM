@@ -490,7 +490,7 @@
 
                 <input type="email" class="form-control" name="email" placeholder="Escribe tu correo">
 
-                <input type="text" class="form-control" name="contraseña" placeholder="Escribe tu contraseña">
+                <input type="password" class="form-control" name="contraseña" placeholder="Escribe tu contraseña">
 
 
                 <button type="submit" class="form-control" id="submit-button" name="submit">Ingresar</button>
@@ -526,7 +526,7 @@
                   <input type="text" class="form-control" name="ap_paterno" placeholder="Apellido Paterno">
                   <input type="text" class="form-control" name="ap_materno" placeholder="Apellido Materno">
                   <input type="email" class="form-control" name="correo" placeholder="Escribe tu correo">
-                  <input type="text" class="form-control" name="contraseña" placeholder="Escribe tu contraseña">
+                  <input type="password" class="form-control" name="contraseña" placeholder="Escribe tu contraseña">
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="sexo" id="inlineRadio1" value="1">
                     <label class="form-check-label" for="inlineRadio1">Hombre</label>

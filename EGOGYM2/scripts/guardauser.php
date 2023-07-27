@@ -7,7 +7,7 @@
 <body>
     <div class="container">
         <?php
-        include 'database.php';
+        include '../scripts/database.php';
         $conexion = new Database();
         $conexion->conectarDB();
 
@@ -22,10 +22,10 @@
         //2021-10-08
 
         $cadena= "INSERT INTO persona(nombre, apellido_paterno, apellido_materno, correo,contraseña,sexo,fecha_nacimiento,telefono,tipo_usuario)
-         values('$nombre','$ap_paterno','$ap_materno','$correo','$hash','$sexo','$ap_paterno',$fecha_nacimiento,null)";
+         values('$nombre','$ap_paterno','$ap_materno','$correo','$hash','$sexo','$ap_paterno','$fecha_nacimiento',null)";
 
         $conexion->ejecutarSQL($cadena);
-        $conexion->desconectarDB();
+        $conexion->desconectarBD();
 
          echo"<div class='alert alert-success'>Cliente Registrado</>";
         header("refresh:20 ../views/formlogin.php");

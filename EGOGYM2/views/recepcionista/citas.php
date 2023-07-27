@@ -50,6 +50,27 @@
     );
     </script>
   
+   
+  <script type="text/javascript">
+         $(function(){
+    var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+
+      today = yyyy + '/' + mm + '/' + dd;
+  })
+  $( function() {
+    $( "#datepicker_fisio" ).datepicker({
+      showOtherMonths: true,
+      selectOtherMonths: true,
+      dateFormat: 'yy-mm-dd',
+      minDate: new Date(),
+      maxDate: '+9D',
+      beforeShowDay: $.datepicker.noWeekends
+    });} 
+    );
+    </script>
   <script>
      $ (function updateAvailableHours() {
           // Aquí puedes obtener las horas disponibles según la fecha seleccionada.
@@ -71,6 +92,28 @@
       
         // Inicializar el selector de hora
         $('#timeSelect').selectpicker();
+  </script>
+   <script>
+     $ (function updateAvailableHours() {
+          // Aquí puedes obtener las horas disponibles según la fecha seleccionada.
+          // Por ejemplo, en este caso, se generarán opciones de horas para cada hora de 8 AM a 6 PM.
+          const hoursSelect = $('#timeSelect_fisio');
+          hoursSelect.empty();
+          hoursSelect.append('<option value="">Seleccione una hora</option>');
+          
+          const startHour = 8;
+          const endHour = 18;
+          for (let hour = startHour; hour <= endHour; hour++) {
+            const formattedHour = hour.toString().padStart(2, '0') + ':00';
+            hoursSelect.append(`<option value="${formattedHour}">${formattedHour}</option>`);
+          }
+      
+          // Actualizar el selector de horas después de cambiar las opciones
+          hoursSelect.selectpicker('refresh');
+        })
+      
+        // Inicializar el selector de hora
+        $('#timeSelect_fisio').selectpicker();
   </script>
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
@@ -117,7 +160,8 @@
         <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#citas">Todas las citas</a></li>
     <li><a data-toggle="tab" href="#clases" style="margin-left: 20px;">Clases agendadas</a></li>
-    <li><a data-toggle="tab" href="#agendar" style="margin-left: 20px;">Agendar una cita</a></li>
+    <li><a data-toggle="tab" href="#agendar_nutri" style="margin-left: 20px;">Agendar cita (nutriólogo)</a></li>
+    <li><a data-toggle="tab" href="#agendar_fisio" style="margin-left: 20px;">Agendar cita (fisioterapia)</a></li>
         </ul>
     </div>
    <div class="container" >
@@ -178,8 +222,8 @@
          ?> 
         
     </div>
-    <div id="agendar" class="tab-pane fade">
-        <br>
+
+    <div id="agendar_nutri" class="tab-pane fade">
         <div class="container">
             <form action="../../scripts/guardaCitas.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:5%">
             <div class="row">
@@ -210,10 +254,13 @@
                     <?php
                     $db=new database();
                     $db->conectarDB();
-                    $cadena="SELECT servicios_empleados.id_empserv as empleado, servicios.nombre 
+                    $cadena="SELECT servicios_empleados.id_empserv as empleado, 
+                    concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) as nombre
                     from servicios_empleados
                      inner join servicios on servicios.codigo=servicios_empleados.servicio
-                     where servicios.nombre not in(select servicios.nombre from servicios where servicios.nombre='spinning');";
+                     inner join empleado on empleado.id_empleado=servicios_empleados.empleado
+                     inner join persona on persona.id_persona=empleado.id_empleado
+                     where servicios.nombre='nutricion'";
                     $reg =$db->seleccionar($cadena);
                     
                     echo 
@@ -256,6 +303,91 @@
 
             </form>
         </div>
+    </div>
+
+    <!--AGENDAR CITA CON FISIO-->
+    <div id="agendar_fisio" class="tab-pane fade">
+    <div class="container">
+            <form action="../../scripts/guardaCitas.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:5%">
+            <div class="row">
+                  <legend class="form-label" style="color: goldenrod;">Agendar Cita</legend>
+                  <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
+                  <div class="col-12 col-lg-6">
+                  <label style='color: white;'>Cliente</label><br>
+                    <?php
+                     $db=new database();
+                     $db->conectarDB();
+                     $cadena="SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente,
+                     cliente.id_cliente from persona inner join cliente on cliente.id_cliente=persona.id_persona;";
+                     $reg = $db->seleccionar($cadena);
+                     echo 
+                     "
+                     <div class='mb-3' style='width: 30%;'>
+                    <select name='cliente_op' class='form-select'>
+                     ";
+                     foreach($reg as $value)
+                    {
+                        echo "<option value='".$value->id_cliente."'>".$value->cliente."</option>";
+                    }
+
+                    echo "</select>
+                    </div>";
+                    ?>              
+
+                    <?php
+                    $db=new database();
+                    $db->conectarDB();
+                    $cadena="SELECT servicios_empleados.id_empserv as empleado, 
+                    concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) as nombre
+                    from servicios_empleados
+                     inner join servicios on servicios.codigo=servicios_empleados.servicio
+                     inner join empleado on empleado.id_empleado=servicios_empleados.empleado
+                     inner join persona on persona.id_persona=empleado.id_empleado
+                     where servicios.nombre='fisioterapia'";
+                    $reg =$db->seleccionar($cadena);
+                    
+                    echo 
+                    "<div class='mb-3' style='width: 30%;'>
+                    <label class='control-label' style='color:white;'>
+                    Servicio
+                    </label>
+                    <select name='servicio' class='form-select'>
+                    ";
+
+                    foreach($reg as $value)
+                    {
+                        echo "<option value='".$value->empleado."'>".$value->nombre."</option>";
+                    }
+
+                    echo "</select>
+                    </div>";
+                    $db->desconectarBD();
+                    ?>
+
+                  </div>
+
+                 <div class="col-12 col-lg-6">
+                 <label style="color:white">Fecha</label>
+            <div class="input-group date">
+            <input type="text" id="datepicker_fisio" required name="fecha_cita">
+            </div>
+            <h5 style="color: white;">Seleccionar hora</h5>
+            <select class="form-select" id="timeSelect_fisio" name="hora">
+              <option value="">Seleccione una hora</option>
+            </select>
+
+                 </div>
+                </div>
+            <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
+            <button type="reset" value="Limpiar" class="btn btn-secondary">Borrar cambios</button>
+            <button type="submit"name="Registrar" class="btn btn-warning">Agendar</button>            
+            
+
+
+            </form>
+        </div>
+    </div>
+
     </div>
 
     <div id="clases" class="tab-pane fade">
