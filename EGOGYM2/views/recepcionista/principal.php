@@ -26,7 +26,7 @@
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../recepcionista/index.php">EGO GYM</a>
+            <a class="navbar-brand" href="../recepcionista/principal.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -36,11 +36,14 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="../recepcionista/index.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="../recepcionista/principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
 
                     <li class="nav-item">
                         <a href="citas.php" class="nav-link smoothScroll">Citas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="citas.php" class="nav-link smoothScroll">Agendar Cita</a>
                     </li>
 
                     <li class="nav-item">

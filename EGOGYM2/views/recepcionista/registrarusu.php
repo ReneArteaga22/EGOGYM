@@ -58,7 +58,7 @@
     </nav>
 
     <div class="container" style="padding: 15%;">
-    <form action="../../scripts/guardauser.php" method="post" style="background-color: black; opacity: 0.8; border-radius: 5px; padding: 5%;margin: auto; width: 80%;">
+    <form action="../../scripts/guardausu(rec).php" method="post" style="background-color: black; opacity: 0.8; border-radius: 5px; padding: 5%;margin: auto; width: 80%;">
                 <div class="row">
                   <legend class="form-label" style="color: goldenrod;">Registrar usuario</legend>
                   <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
@@ -69,6 +69,8 @@
               <input type="text" placeholder="" name="apellido_paterno" required><br>
               <label style="color: white;" >Apellido Materno</label><br>
               <input type="text" placeholder="" name="apellido_materno" required><br>
+              <label style="color: white;" >Correo electrónico</label><br>
+              <input type="mail" placeholder="" name="correo" required><br>
                   </div>
                  <div class="col-12 col-lg-6">
                  <label style="color: white; margin-top: 10px;">Sexo</label><br>
@@ -88,32 +90,10 @@
           language: "es",
           autoclose: true,
           todayHighlight: true
-        }).on('changeDate', function (e) {
-          // Cuando cambia la fecha, actualizar las horas disponibles
-          updateAvailableHours(e.date);
-        });
+        })
       
-        // Función para actualizar las horas disponibles en el campo de selección de horas
-        function updateAvailableHours(selectedDate) {
-          // Aquí puedes obtener las horas disponibles según la fecha seleccionada.
-          // Por ejemplo, en este caso, se generarán opciones de horas para cada hora de 8 AM a 6 PM.
-          const hoursSelect = $('#timeSelect');
-          hoursSelect.empty();
-          hoursSelect.append('<option value="">Seleccione una hora</option>');
-          
-          const startHour = 8;
-          const endHour = 18;
-          for (let hour = startHour; hour <= endHour; hour++) {
-            const formattedHour = hour.toString().padStart(2, '0') + ':00';
-            hoursSelect.append(`<option value="${formattedHour}">${formattedHour}</option>`);
-          }
-      
-          // Actualizar el selector de horas después de cambiar las opciones
-          hoursSelect.selectpicker('refresh');
-        }
-      
-        // Inicializar el selector de hora
-        $('#timeSelect').selectpicker();
+        
+    
       </script>
 
                     <label style="color: white;">Tipo de usuario</label><br>

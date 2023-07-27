@@ -44,7 +44,8 @@
       selectOtherMonths: true,
       dateFormat: 'yy-mm-dd',
       minDate: new Date(),
-      maxDate: '+7D'
+      maxDate: '+9D',
+      beforeShowDay: $.datepicker.noWeekends
     });
   } )
   ;
@@ -57,8 +58,8 @@
           hoursSelect.empty();
           hoursSelect.append('<option value="">Seleccione una hora</option>');
           
-          const startHour = 8;
-          const endHour = 18;
+          const startHour = 7;
+          const endHour = 10;
           for (let hour = startHour; hour <= endHour; hour++) {
             const formattedHour = hour.toString().padStart(2, '0') + ':00';
             hoursSelect.append(`<option value="${formattedHour}">${formattedHour}</option>`);
