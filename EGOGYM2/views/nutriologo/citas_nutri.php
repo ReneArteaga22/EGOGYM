@@ -27,23 +27,10 @@
      <link rel="stylesheet" href="../../css/egogym.css">
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
-    <?php
-    session_start();
-    
-    if(isset($_SESSION["correo"]) )
-    {
-      $email = $_SESSION["correo"];
-    }
-    else 
-    {
-        header("Location:../../First.php");
-    }
-
-    ?>
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../fisioterapeuta/principal.php">EGO GYM</a>
+            <a class="navbar-brand" href="../nutriologo/principal.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -53,22 +40,12 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                        <a href="principal.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="../nutriologo/principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="citasfisio.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="../nutriologo/citas_nutri.php" class="nav-link smoothScroll">Citas</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav ml-lg-2">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false" >
-                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
-                          <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
-                        </ul>
             </div>
         </div>
     </nav>
@@ -92,9 +69,9 @@
                 $conexion->conectarDB();
                 $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente, 
                 e.servicio as servicio,e.empleado AS empleado, citas.hora as hora, citas.fecha as fecha, citas.estado as estado, citas.id_cita as num,
-                ficha_fisio.id_ficha from citas INNER JOIN cliente ON cliente.id_cliente= citas.cliente
+                ficha_nutri.id_ficha from citas INNER JOIN cliente ON cliente.id_cliente= citas.cliente
                 INNER JOIN persona ON persona.id_persona = cliente.id_cliente
-                INNER JOIN ficha_fisio on ficha_fisio.cita=citas.id_cita
+                INNER JOIN ficha_nutri on ficha_nutri.cita=citas.id_cita
                 INNER JOIN
                 (
                 SELECT id_empserv, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS empleado,
@@ -104,7 +81,7 @@
                 INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
                 INNER JOIN persona ON empleado.id_empleado = persona.id_persona
                 ) AS e ON citas.serv_emp = e.id_empserv 
-                where e.servicio='fisioterapia' AND concat(citas.fecha,' ',citas.hora) < now()
+                where e.servicio='nutricion' AND concat(citas.fecha,' ',citas.hora) < now()
                 ";
                 $conexion->seleccionar($consulta);
                 $tabla = $conexion->seleccionar($consulta);
@@ -140,7 +117,7 @@
                     echo "<td> $registro->cliente</td> ";
                     echo "<td> $registro->fecha </td> ";
                     echo "<td> $registro->hora</td> ";
-                    echo "<td><a href='verFichaFisio.php?id=" . $registro->id_ficha . "'>Ver ficha médica</a></td>";
+                    echo "<td><a href='verFicha.php?id=" . $registro->id_ficha . "'>Ver ficha médica</a></td>";
                     echo "</tr>";
                 }
                 echo "</tbody>
@@ -157,7 +134,7 @@
              servicios_empleados.id_empserv=citas.serv_emp
              inner join servicios on
              servicios.codigo=servicios_empleados.servicio
-             where citas.fecha= curdate() AND servicios.nombre='fisioterapia'
+             where citas.fecha= curdate() AND servicios.nombre='nutricion'
               group by servicio;
              ";
               $conexion->seleccionar($consulta);
@@ -173,20 +150,19 @@
                 $conexion = new database();
                     $conexion->conectarDB();    
                     $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente, 
-                    e.servicio as servicio,e.empleado AS empleado, citas.hora as hora, citas.fecha as fecha, citas.estado as estado, citas.id_cita as num,
-                    ficha_fisio.id_ficha from citas INNER JOIN cliente ON cliente.id_cliente= citas.cliente
+                    e.servicio as servicio,e.empleado AS empleado, citas.hora as hora
+                    from citas INNER JOIN cliente ON cliente.id_cliente= citas.cliente
                     INNER JOIN persona ON persona.id_persona = cliente.id_cliente
-                    INNER JOIN ficha_fisio on ficha_fisio.cita=citas.id_cita
                     INNER JOIN
                     (
                     SELECT id_empserv, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS empleado,
-                    servicios.nombre as servicio 
+                    servicios.nombre as servicio
                     FROM servicios_empleados 
                     INNER JOIN servicios ON servicios.codigo=servicios_empleados.servicio
                     INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
                     INNER JOIN persona ON empleado.id_empleado = persona.id_persona
                     ) AS e ON citas.serv_emp = e.id_empserv 
-                    where citas.fecha = curdate() AND e.servicio='fisioterapia'
+                    where citas.fecha = curdate() AND e.servicio='nutricion'
                     ";
                     echo 
                     "
@@ -215,7 +191,7 @@
                         echo "<tr>";
                         echo "<td> $registro->cliente</td> ";
                         echo "<td> $registro->hora</td> ";
-                        echo "<td><a href='verFichaFisio.php?id=" . $registro->id_ficha . "'>Generar ficha médica</a></td>";
+                        echo "<td><a href='modFicha.php?id=" . $registro->id_ficha . "'>Generar ficha médica</a></td>";
                         echo "</tr>";
                     }
                     echo "</tbody>
@@ -239,7 +215,7 @@
              servicios_empleados.id_empserv=citas.serv_emp
              inner join servicios on
              servicios.codigo=servicios_empleados.servicio
-             where citas.fecha > curdate() AND servicios.nombre='fisioterapia'
+             where citas.fecha > curdate() AND servicios.nombre='nutricion'
              group by servicio;
              ";
               $conexion->seleccionar($consulta);
@@ -268,7 +244,7 @@
                     INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
                     INNER JOIN persona ON empleado.id_empleado = persona.id_persona
                     ) AS e ON citas.serv_emp = e.id_empserv 
-                    where citas.fecha > curdate() AND e.servicio='fisioterapia'
+                    where citas.fecha > curdate() AND e.servicio='nutricion'
                     ";
                     echo 
                     "

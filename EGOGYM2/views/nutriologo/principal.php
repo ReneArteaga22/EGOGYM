@@ -7,7 +7,7 @@
      <meta name="keywords" content="">
      <meta name="author" content="">
      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-     <title>Inicio fisio</title>
+     <title>Inicio nutri</title>
       <!-- SCRIPTS -->
       <script src="../../js/jquery.min.js"></script>
       <script src="../../js/bootstrap.min.js"></script>
@@ -39,7 +39,7 @@
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="principal.php">EGO GYM</a>
+            <a class="navbar-brand" href="../nutriologo/principal.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -49,22 +49,12 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                        <a href="principal.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="../nutriologo/principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="citasfisio.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="../nutriologo/citas_nutri.php" class="nav-link smoothScroll">Citas</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav ml-lg-2">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false" >
-                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
-                          <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
-                        </ul>
             </div>
         </div>
     </nav>
@@ -88,11 +78,9 @@
         $conexion = new Database();
         $conexion->conectarDB();
 
-        $consulta = "SELECT concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
-        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña, persona.id_persona,
-        FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad 
-         from persona
-        where persona.id_persona in (select fisioterapeuta.id_fisio from fisioterapeuta) AND persona.correo='$email'";
+        $consulta = "SELECT concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre, persona.id_persona,
+        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña,FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad from persona
+        where persona.id_persona in (select nutricionista.id_nutri from nutricionista) AND persona.correo='$email'";
         $datos_per = $conexion ->seleccionar($consulta);
 
         foreach($datos_per as $registro)
@@ -101,16 +89,17 @@
             echo "<p>Nombre: $registro->nombre </p>";
             echo "<p>Correo: $registro->correo </p>";
             echo "<p>Telefono: $registro->telefono </p>";
-            echo "<p>Edad: ".$registro->edad." años</p>";
+            echo "<p>Edad: ".$registro->edad." años </p>";
             echo "<p>Sexo: $registro->sexo </p>";
             echo "</div>";
 
-            echo "<a href='editarFisio.php?id=".$registro->id_persona."' style='margin:auto; font-size:15px; color:goldenrod ; font-style:oblique;'>
+            echo "<a href='editarNutri.php?id=".$registro->id_persona."' style='margin:auto; font-size:15px; color:goldenrod ; font-style:oblique;'>
             Editar perfil
           </a>";
-        }    
+
+        } 
+        
         ?>
-       
 
         </div>
     </div>

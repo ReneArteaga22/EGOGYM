@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="author" content="">
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+     <title>Ficha médica</title>
+      <!-- SCRIPTS -->
+      <script src="../../js/jquery.min.js"></script>
+      <script src="../../js/bootstrap.min.js"></script>
+      <script src="../../js/aos.js"></script>
+      <script src="../../js/smoothscroll.js"></script>
+      <script src="../../js/custom.js"></script>
+
+     <link rel="stylesheet" href="../../css/bootstrap.min.css">
+     <link rel="stylesheet" href="../../css/font-awesome.min.css">
+     <link rel="stylesheet" href="../../css/aos.css">
+
+     <!-- MAIN CSS -->
+     <link rel="stylesheet" href="../../css/egogym.css">
+    </head>
+    <body>
+    <?php
+    session_start();
+    
+    if(isset($_SESSION["correo"]) )
+    {
+      $email = $_SESSION["correo"];
+    }
+    else 
+    {
+        header("Location:../../First.php");
+    }
+
+    ?>
+
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+
+            <a class="navbar-brand" href="../nutriologo/principal.php">EGO GYM</a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-lg-auto">
+                <li class="nav-item">
+                        <a href="../nutriologo/principal.php" class="nav-link smoothScroll">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="../nutriologo/citas_nutri.php" class="nav-link smoothScroll">Citas</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="padding-top: 10%;">
+    
+    <?php
+      include '../../scripts/database.php';
+      $conexion = new Database();
+      $conexion->conectarDB();
+
+      $consulta="SELECT concat(nombre,' ',apellido_paterno,' ',apellido_materno) as nombre, citas.fecha FROM persona INNER JOIN cliente on cliente.id_cliente=persona.id_persona
+      INNER JOIN citas on citas.cliente=cliente.id_cliente INNER JOIN ficha_nutri 
+      ON ficha_nutri.cita=citas.id_cita WHERE ficha_nutri.id_ficha=$idFicha";
+      $parametros = array(':id'=> $idFicha);
+      $persona =$conexion->seleccionar($consulta, $parametros);
+
+      if($persona)
+      {
+        echo "<div class='container'>
+        <div class='card-body row justify-content-center'>";
+        echo "<h5>Cliente: ".$persona[0]->nombre."</h5>";
+        echo "<h6>Fecha de la cita: ".$persona[0]->fecha."</h6>";
+
+        $consulta = "SELECT ficha_nutri.objetivo, ficha_nutri.motivo, ficha_nutri.peso,
+        ficha_nutri.altura, ficha_nutri.med_cintura, ficha_nutri.med_cadera, ficha_nutri.med_cuello,
+        ficha_nutri.porc_grasa_corporal, ficha_nutri.masa_corp_magra, ficha_nutri.observaciones
+        from ficha_nutri 
+        where ficha_nutri.id_ficha= $idFicha";
+        $ficha = $conexion->seleccionar($consulta);
+
+        foreach($ficha as $fila)
+        {
+        echo "Hey";
+        echo "<div class='modal-body' style='margin-top:15px;'>";
+        echo "<p>Objetivo: $fila->objetivo</p>";
+        echo "<p>Motivo: $fila->motivo</p>";
+        echo "<p>Peso: $fila->peso</p>";
+        echo "<p>Altura: $fila->altura</p>";
+        echo "<p>Cintura: $fila->med_cintura</p>";
+        echo "<p>Cadera: $fila->med_cadera</p>";
+        echo "<p>Cuello: $fila->med_cuello</p>";
+        echo "<p>Grasa Corporal: $fila->porc_grasa_corporal</p>";
+        echo "<p>Masa Corporal Magra: $fila->masa_corp_magra</p>";
+        echo "<p>Observaciones: $fila->observaciones</p>";
+        echo "</div>";
+        }
+        echo "</div>
+        </div>";
+
+
+      }
+      else
+      {
+        echo "¡Esta cita no tiene una ficha médica!";
+      }
+      
+      $conexion->desconectarBD();
+      ?>
+    </div>
+     
+    </body>
+</html>

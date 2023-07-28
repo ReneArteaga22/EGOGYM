@@ -23,6 +23,19 @@
      <link rel="stylesheet" href="../../css/egogym.css">
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
+    <?php
+    session_start();
+    
+    if(isset($_SESSION["correo"]) )
+    {
+      $email = $_SESSION["correo"];
+    }
+    else 
+    {
+        header("Location:../../First.php");
+    }
+
+    ?>
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
@@ -36,12 +49,22 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                        <a href="../fisioterapeuta/principal.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="../fisioterapeuta/citas_fisio.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="citasfisio.php" class="nav-link smoothScroll">Citas</a>
                     </li>
                 </ul>
+                <ul class="navbar-nav ml-lg-2">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" >
+                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
+                          <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
+                        </ul>
             </div>
         </div>
     </nav>

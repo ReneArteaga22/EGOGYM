@@ -36,12 +36,17 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="principal.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="../recepcionista/principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="citas.php" class="nav-link smoothScroll">Citas</a>
-                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" > Citas</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="citas.php">Agendar Cita</a></li>
+                          <li><a class="dropdown-item" href="vercitas.php">Ver Citas</a></li>
+                        </ul>
+                      </li>
 
                     <li class="nav-item">
                         <a href="usuarios.php" class="nav-link smoothScroll">Usuarios</a>
@@ -50,6 +55,19 @@
                     <li class="nav-item">
                         <a href="registrarusu.php" class="nav-link smoothScroll">Registrar Nuevo Usuario</a>
                     </li>
+                    
+                </ul>
+
+                <ul class="navbar-nav ml-lg-2">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" >
+                         Hola Recepcionista
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
+                        </ul>
+                      </li>
                 </ul>
             </div>
         </div>
@@ -61,7 +79,6 @@
   <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#clientes">Clientes</a></li>
   <li><a data-toggle="tab" href="#empleados" style="margin-left: 10px;">Empleados</a></li>
-  <li><a data-toggle="tab" href="#usuarios" style="margin-left: 10px;">Nuevos usuarios</a></li>
 </ul>
      <div class="container">
      <div class="tab-content">
@@ -94,19 +111,13 @@
                  <th style='color: goldenrod;'>
                  Contacto
                  </th>
-                 <th style='color: goldenrod;'>
-                 Estatus de membresía
-                 </th>
-                 <th>
-                    </th>
-                 
              </tr>
          </thead>
          <tbody>";
          foreach ($tabla as $registro)
          {
              echo "<tr>";
-             echo "<td><a href='perfil.php?id=" . $registro->id_persona . "'>" . $registro->nombre . "</a></td>";
+             echo "<td><a href='perfilCliente.php?id=" . $registro->id_persona . "'>" . $registro->nombre . "</a></td>";
              echo "<td> $registro->tipo</td> ";
              echo "<td> $registro->contacto</td> ";
          }
@@ -127,7 +138,7 @@
             empleado.id_empleado=persona.id_persona
             left join servicios_empleados on
             servicios_empleados.empleado=empleado.id_empleado
-            left join servicios on 
+            inner join servicios on 
             servicios.codigo=servicios_empleados.servicio";
             $conexion->seleccionar($consulta);
             $tabla = $conexion->seleccionar($consulta);
@@ -159,7 +170,7 @@
             foreach ($tabla as $registro)
             {
                 echo "<tr>";
-                echo "<td><a href='perfil.php?id=" . $registro->id_persona . "'>" . $registro->nombre_emp . "</a></td>";
+                echo "<td><a href='perfilEmpleado.php?id=" . $registro->id_persona . "'>" . $registro->nombre_emp . "</a></td>";
                 echo "<td> $registro->tipo_us</td> ";
                 echo "<td> $registro->contacto_emp</td> ";
                 echo "<td> $registro->servicio_emp</td> ";
@@ -169,50 +180,7 @@
             ?> 
         </div>
 
-        <div id="usuarios" class="tab-pane fade">
-        <?php
-            $conexion = new database();
-            $conexion->conectarDB();
         
-            $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) as nombre, persona.telefono as contacto, persona.tipo_usuario as tipo, persona.id_persona 
-            from persona where persona.tipo_usuario IS NULL;";
-            $conexion->seleccionar($consulta);
-            $tabla = $conexion->seleccionar($consulta);
-        
-            echo 
-            "
-            <table class='table' style='border-radius: 5px;'>
-            <thead class='table-dark'>
-                <tr>
-                <br>
-                    <th style='color: goldenrod;'>
-                    Nombre
-                    </th>
-                    <th style='color: goldenrod;'>
-                    Contacto
-                    </th>
-                    <th style='color: goldenrod;'>
-                    Tipo de usuario
-                    </th>
-                    <th>
-                    </th>
-                    
-                </tr>
-            </thead>
-            <tbody>";
-            foreach ($tabla as $registro)
-            {
-                
-                echo "<tr>";
-                echo "<td><a href='perfilNuevo.php?id=" . $registro->id_persona . "'>" . $registro->nombre . "</a></td>";
-                echo "<td>$registro->contacto</td> ";
-                echo "<td> $registro->tipo</td> ";
-            }
-            echo "</tbody>
-            </table>";
-            $conexion->desconectarBD();
-            ?> 
-        </div>
      </div>
   </div>
 

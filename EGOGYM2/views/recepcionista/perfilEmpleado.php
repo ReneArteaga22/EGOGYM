@@ -35,25 +35,43 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
-                <li class="nav-item">
+                    <li class="nav-item">
                         <a href="../recepcionista/principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" > Citas</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="citas.php">Agendar Cita</a></li>
+                          <li><a class="dropdown-item" href="vercitas.php">Ver Citas</a></li>
+                        </ul>
+                      </li>
+
                     <li class="nav-item">
-                        <a href="../recepcionista/citas.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="usuarios.php" class="nav-link smoothScroll">Usuarios</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="../recepcionista/usuarios.php" class="nav-link smoothScroll">Usuarios</a>
+                        <a href="registrarusu.php" class="nav-link smoothScroll">Registrar Nuevo Usuario</a>
                     </li>
+                    
+                </ul>
 
-                    <li class="nav-item">
-                        <a href="../recepcionista/registrarusu.php" class="nav-link smoothScroll">Registrar Nuevo Usuario</a>
-                    </li>
+                <ul class="navbar-nav ml-lg-2">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" >
+                         Hola Recepcionista
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
+                        </ul>
+                      </li>
                 </ul>
             </div>
         </div>
-      </nav>
+    </nav>
 
 
       
@@ -129,8 +147,9 @@
                 $idPersona = $_GET['id'];
 
                 $consulta = "SELECT id_persona as matricula,concat(persona.nombre,' ',persona.apellido_paterno,' ', persona.apellido_materno) as usuario, correo, 
-                telefono, fecha_nacimiento, persona.tipo_usuario, 
-                FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad FROM persona
+                telefono, fecha_nacimiento, empleado.tipo_empleado as tipo,
+                FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad FROM persona 
+                inner join empleado on empleado.id_empleado=persona.id_persona
                 WHERE id_persona = $idPersona";
                 $parametros = array(':id' => $idPersona);
                 $persona = $conexion->seleccionar($consulta, $parametros);
@@ -171,7 +190,7 @@
                         echo"<h6 class='mb-0'>Edad</h6>";
                       echo"</div>";
                       echo"<div class='col-sm-9 text-secondary'>";
-                      echo "<h4>" . $persona[0]->edad . " años</h4>";
+                      echo "<h4>" . $persona[0]->edad .  " años</h4>";
                       echo"</div>";
                     echo"</div>";
                     echo"<hr>";

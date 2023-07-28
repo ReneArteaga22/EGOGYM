@@ -62,7 +62,7 @@ class Database
         try 
         {
         $pase = false;
-        $query = "SELECT * from persona  inner join cliente on persona.id_persona = cliente.id_cliente
+        $query = "SELECT * from persona  left join cliente on persona.id_persona = cliente.id_cliente
         where correo ='$email'";
         $consulta=$this->PDOLocal->query($query);
        
@@ -99,13 +99,17 @@ class Database
                     $resu = $this->PDOLocal->query($consulta1);
                         $fila = $resu->fetch(PDO::FETCH_ASSOC);
     
-                    if($fila['tipo_empleado'] == 'recepcionista')
+                    if($fila['tipo_empleado'] === 'recepcionista')
                     {
                         header("Location: ../views/recepcionista/principal.php");
                     }
-                    if ($fila['tipo_empleado'] == 'fisio')
+                    else if ($fila['tipo_empleado'] === 'fisio')
                     {
                         header("Location: ../views/fisioterapeuta/principal.php");
+                    }
+                    else if ($fila['tipo_empleado'] === 'nutri')
+                    {
+                        header("Location: ../views/nutriologo/principal.php ");
                     }
                     else
                     {
@@ -140,7 +144,7 @@ class Database
             echo "<h2 align='center'>Usuario o contraseña incorrecto ...</h2>";
             echo "</div>";
 
-            header("refresh:2 ../First.php");
+            header("refresh:20 ../First.php");
         }
     } catch (PDOException $e) {
         echo $e->getMessage();

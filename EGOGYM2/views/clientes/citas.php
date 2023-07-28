@@ -95,10 +95,24 @@
 
 </head>
  <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
-    <nav class="navbar navbar-expand-lg fixed-top">
+    <?php
+    session_start();
+    
+    if(isset($_SESSION["correo"]) )
+    {
+      
+    }
+    else 
+    {
+        header("Location:../../First.php");
+    }
+
+    ?>
+
+<nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../recepcionista/principal.php">EGO GYM</a>
+            <a class="navbar-brand" href="Primera.php#home">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -107,27 +121,49 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
-                <li class="nav-item">
-                        <a href="../recepcionista/principal.php" class="nav-link smoothScroll">Inicio</a>
+                    <li class="nav-item">
+                        <a href="Primera.php#home" class="nav-link smoothScroll">Home</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="../recepcionista/citas.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="Primera.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="../recepcionista/usuarios.php" class="nav-link smoothScroll">Usuarios</a>
+                        <a href="Primera.php#serv" class="nav-link smoothScroll">Servicios</a>
                     </li>
-
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" > Citas</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="citas.php">Agendar Cita</a></li>
+                          <li><a class="dropdown-item" href="vercitas.php">Ver Citas</a></li>
+                        </ul>
+                      </li>
                     <li class="nav-item">
-                        <a href="../recepcionista/registrarusu.php" class="nav-link smoothScroll">Registrar Nuevo Usuario</a>
+                        <a href="staff.php" class="nav-link smoothScroll">Staff</a>
                     </li>
                 </ul>
 
+
+                <ul class="navbar-nav ml-lg-2">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" >
+                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
+                          <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
+                        </ul>
+                      </li>
+                </ul>
             </div>
 
         </div>
     </nav>
+
+
 
     <div class="container" style="padding-top: 10%;">
         <ul class="nav nav-tabs">
@@ -399,4 +435,4 @@
         </div>
     </div>
 </body>
-</html>
+</html> 
