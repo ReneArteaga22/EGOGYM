@@ -192,7 +192,7 @@
                         echo "<tr>";
                         echo "<td> $registro->cliente</td> ";
                         echo "<td> $registro->hora</td> ";
-                        echo "<td><a href='verFichaFisio.php?id=" . $registro->id_ficha . "'>Generar ficha médica</a></td>";
+                        echo "<td><a href='modFichaFisio.php?id=" . $registro->id_ficha . "'>Generar ficha médica</a></td>";
                         echo "</tr>";
                     }
                     echo "</tbody>

@@ -56,9 +56,9 @@
 
       $idFicha = $_GET['id'];
       $consulta="SELECT concat(nombre,' ',apellido_paterno,' ',apellido_materno) as nombre, citas.fecha, 
-      FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad FROM persona INNER JOIN cliente on cliente.id_cliente=persona.id_persona
-      INNER JOIN citas on citas.cliente=cliente.id_cliente INNER JOIN ficha_nutri 
-      ON ficha_nutri.cita=citas.id_cita WHERE ficha_nutri.id_ficha=$idFicha";
+        FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad FROM persona INNER JOIN cliente on cliente.id_cliente=persona.id_persona
+      INNER JOIN citas on citas.cliente=cliente.id_cliente INNER JOIN ficha_fisio
+      ON ficha_fisio.cita=citas.id_cita WHERE ficha_fisio.id_ficha=$idFicha";
       $parametros = array(':id'=> $idFicha);
       $persona =$conexion->seleccionar($consulta, $parametros);
 
@@ -72,41 +72,34 @@
         
         echo"<div class='card' style='padding-bottom:2%'>";
       
-        $consulta = "SELECT ficha_nutri.objetivo, ficha_nutri.motivo, ficha_nutri.peso,
-        ficha_nutri.altura, ficha_nutri.med_cintura, ficha_nutri.med_cadera, ficha_nutri.med_cuello,
-        ficha_nutri.porc_grasa_corporal, ficha_nutri.masa_corp_magra, ficha_nutri.observaciones, ficha_nutri.id_ficha
-        from ficha_nutri 
-        where ficha_nutri.id_ficha= $idFicha";
+        $consulta = "SELECT ficha_fisio.altura, ficha_fisio.peso, ficha_fisio.observaciones, ficha_fisio.motivo
+        from ficha_fisio 
+        where ficha_fisio.id_ficha= $idFicha";
         $ficha = $conexion->seleccionar($consulta);
 
         foreach($ficha as $fila)
         {
-        echo "<form action='../../scripts/guardarFichaNutri.php' method='post'>";
+        echo "<form action='../../scripts/guardarFichaFisio.php' method='post'>";
         echo "<div class='row'>";
-        
+
         echo "<div class='col-lg-6 col-6'>";
         echo "<div class='modal-body' style='padding: 3%'>";
         echo "<input type='hidden' name='idFicha' value='$idFicha'>";
         echo "<h6 style='font-weight:bold;color:black; opacity:0.7;'>Datos del paciente</h6><br>"; 
         echo "<p>Edad: ".$persona[0]->edad." años</p>";  
-        echo "<p>Altura:</p>"." <input type='text' name='altura' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' placeholder='$fila->altura'></input>";
-        echo "<p>Peso: </p>"." <input type='text' name='peso' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' placeholder='$fila->peso'></input>";
-        echo "<p>Cintura: </p>"." <input type='text' name='cintura' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' placeholder='$fila->med_cintura'></input>";
-        echo "<p>Cadera: </p>"." <input type='text' name='cadera' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' placeholder='$fila->med_cadera'></input>";
-        echo "<p>Cuello: </p>"." <input type='text' name='cuello' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' placeholder='$fila->med_cuello'></input>";
+        echo "<p>Altura: </p>"."<input type='text' name='altura' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' placeholder='$fila->altura'></input>";
+        echo "<p>Peso: </p>"."<input type='text' name='peso' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' placeholder='$fila->peso'></input>";
         echo "</div>";
         echo "</div>";
 
         echo "<div class='col-lg-6 col-6'>";
         echo "<div class='modal-body' style='padding: 3%'>";
-        echo "<h6 style='font-weight:bold;color:black; opacity:0.7;'>Detalles de la cita: </h6><br>"; 
-        echo "<p>Grasa Corporal: </p>"." <input type='text' name='grasa' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' placeholder='$fila->porc_grasa_corporal'></input>";
-        echo "<p>Masa Corporal Magra: </p>"." <input type='text' name='masa' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' placeholder='$fila->masa_corp_magra'></input>";
-        echo "<p>Objetivo:</p>"." <input type='text' name='objetivo' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' placeholder='$fila->objetivo'> kg</input>";
-        echo "<p>Motivo: </p>"." <textarea name='motivo' style='border-radius:4%;padding:3px; width:50%; border: none;background-color:lightgrey' placeholder='$fila->motivo'></textarea>";
-        echo "<p>Observaciones: </p>"." <textarea name='observaciones' style='border-radius:4%;padding:3px; width:50%; border: none;background-color:lightgrey' placeholder='$fila->observaciones'></textarea>";
+        echo "<h6 style='font-weight:bold;color:black; opacity:0.7;'>Detalles: </h6><br>"; 
+        echo "<p>Motivo: </p>"."<textarea name='motivo' style='border-radius:4%;padding:3px; width:50%; border: none;background-color:lightgrey' placeholder='$fila->motivo'></textarea>";
+        echo "<p>Observaciones:</p>"."<textarea name='observaciones' style='border-radius:4%;padding:3px; width:50%; border: none;background-color:lightgrey' placeholder='$fila->observaciones'></textarea>";
         echo "</div>";
         echo "</div>";
+
 
         echo "</div>";
         }

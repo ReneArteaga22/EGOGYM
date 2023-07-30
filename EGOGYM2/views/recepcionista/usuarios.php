@@ -121,14 +121,10 @@
             $conexion->conectarDB();
         
             $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) as nombre_emp, 
-            persona.tipo_usuario as tipo_us, persona.telefono as contacto_emp, servicios.nombre as servicio_emp, persona.id_persona
+            persona.tipo_usuario as tipo_us, persona.telefono as contacto_emp, persona.id_persona
             from persona 
             inner join empleado on
-            empleado.id_empleado=persona.id_persona
-            inner join servicios_empleados on
-            servicios_empleados.empleado=empleado.id_empleado
-            inner join servicios on 
-            servicios.codigo=servicios_empleados.servicio";
+            empleado.id_empleado=persona.id_persona";
             $conexion->seleccionar($consulta);
             $tabla = $conexion->seleccionar($consulta);
         
@@ -147,9 +143,6 @@
                     <th style='color: goldenrod;'>
                     Contacto
                     </th>
-                    <th style='color: goldenrod;'>
-                    Servicio
-                    </th>
                     <th>
                     </th>
                     
@@ -162,7 +155,6 @@
                 echo "<td><a href='perfilEmpleado.php?id=" . $registro->id_persona . "'>" . $registro->nombre_emp . "</a></td>";
                 echo "<td> $registro->tipo_us</td> ";
                 echo "<td> $registro->contacto_emp</td> ";
-                echo "<td> $registro->servicio_emp</td> ";
             }
             echo "</tbody>
             </table>";
