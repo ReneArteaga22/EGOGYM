@@ -20,8 +20,8 @@
          //DATE: YYYY-MM-DD
         
         //2021-10-08
-        $cadena= "INSERT INTO persona(id_persona,nombre, apellido_paterno, apellido_materno,telefono, correo,fecha_nacimiento,sexo,contraseña,tipo_usuario)
-         values('','$nombre','$ap_paterno','$ap_materno',null,'$correo','$fecha_nacimiento','$sexo','$hash','cliente')";
+        $cadena= "INSERT INTO persona(id_persona,nombre, apellido_paterno, apellido_materno,telefono, correo,fecha_nacimiento,sexo,contraseña,tipo_usuario,foto)
+         values('','$nombre','$ap_paterno','$ap_materno',null,'$correo','$fecha_nacimiento','$sexo','$hash','cliente',default)";
          $conexion->ejecutarSQL($cadena);
 
 

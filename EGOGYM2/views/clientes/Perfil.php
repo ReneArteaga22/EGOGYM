@@ -24,6 +24,7 @@
 
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
+     <link rel="stylesheet" href="../../css/profile.css">
      <style></style>
 
 </head>
@@ -99,14 +100,12 @@
 
 <div class="container">
 
-    <div class="card bg-light" style="margin-top: 99px;">
+<div class="card bg-light" style="margin-top: 99px;">
         <div class="card-header bg-dark text-white">
           Informacion Personal
         </div>
-        <div class="card-body row">
-            <div class="col-lg-6 col-xs-12  col-sm-12 col-md-6 text-center">
-            <img src="../../images/class/boxwax.jpg" class="rounded-circle" alt="..." style="width: 60%;">
-          </div>
+        
+
 
         <?php
         include '../../scripts/database.php';
@@ -115,19 +114,29 @@
 
         $email = $_SESSION["correo"];
 
-        $consulta = "select concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
-        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, plan.nombre as plan,
+        $consulta = "select persona.foto as foto,concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
+        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña, plan.nombre as plan,
         concat(cliente.fecha_ini,'  ','de','  ',cliente.fecha_fin) as periodo from persona
         left join cliente on persona.id_persona = cliente.id_cliente
         left join plan on cliente.codigo_plan = plan.codigo
         where persona.correo = '$email'";
         $datos_per = $conexion ->seleccionar($consulta);
+        $imagenPorDefecto = "../../images/class/boxwax.jpg"; 
 
-
-
+        
         foreach($datos_per as $registro)
         {
-            echo "<div class='col-lg-6 col-xs-12 col-sm-12 col-md-6'>";
+          echo "<div class='card-body row'>";
+          echo "<div class='col-lg-6 col-xs-12  col-sm-12 col-md-7 text-center'>";
+
+    // Operador ternario para determinar qué URL de imagen utilizar
+    
+    $urlImagenMostrar = $registro->foto ? $registro->foto : $imagenPorDefecto;
+   
+    echo "<img src='$urlImagenMostrar' class='rounded-circle' alt='...' style='width: 60%'>";
+    echo "</div>";
+           
+            echo "<div class='col-lg-6 col-12 col-sm-12 col-md-12'>";
             echo "<p>Nombre: $registro->nombre </p>";
             echo "<p>Correo: $registro->correo </p>";
             echo "<p>Telefono: $registro->telefono </p>";
@@ -136,13 +145,14 @@
             echo "<p>Plan: $registro->plan </p>";
             echo "<p>Periodo: $registro->periodo </p>";
             echo "<a href='editarPerfil.php'>Editar Perfil</a>";
-            echo "</div>";
+
 
         }    
         ?>
+      </div>
         </div>
+      </form>
     </div>
-
 
       <div class="card bg-light" style="margin-top: 40px;">
         <div class="card-header bg-dark text-white">
