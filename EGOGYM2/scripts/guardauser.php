@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +7,7 @@
 <body>
     <div class="container">
         <?php
-        include '../class/database.php';
+        include 'database.php';
         $conexion = new Database();
         $conexion->conectarDB();
 
@@ -17,14 +15,20 @@
         $hash = password_hash($contraseña, PASSWORD_DEFAULT);
       
         
-        $cadena= "INSERT INTO persona(id_persona,nombre, apellido_paterno, apellido_materno, correo,contraseña,sexo,fecha_nacimiento,telefono,tipo_usuario)
-         values('','$nombre','$ap_paterno','$ap_materno','$correo','$hash','$sexo',$fecha_nacimiento,$telefono,1)";
+      
+ 
+         //DATE: YYYY-MM-DD
+        
+        //2021-10-08
+        $cadena= "INSERT INTO persona(id_persona,nombre, apellido_paterno, apellido_materno,telefono, correo,fecha_nacimiento,sexo,contraseña,tipo_usuario)
+         values('','$nombre','$ap_paterno','$ap_materno',null,'$correo','$fecha_nacimiento','$sexo','$hash','cliente')";
+         $conexion->ejecutarSQL($cadena);
 
-        $conexion->ejecutarSQL($cadena);
-        $conexion->desconectarDB();
 
          echo"<div class='alert alert-success'>Cliente Registrado</>";
-        header("refresh:2 ../index.html");
+        header("refresh:2 ../First.php");
+        $conexion->desconectarBD();
+
 
         ?>
 

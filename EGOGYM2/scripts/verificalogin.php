@@ -9,13 +9,14 @@
 <body>
     <div class="container">
         <?php
-        include '../class/database.php';
+        include 'database.php';
         $db = new Database();
         $db->conectarDB();
         extract($_POST);
 
-        $db->verifica("$correo","$contraseña");
-        $db->desconectarDB();
+    
+        $db->verifica("$email","$contraseña");
+        $db->desconectarBD();
         ?>
 
     </div>
