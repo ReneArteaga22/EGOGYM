@@ -30,8 +30,22 @@
 </head>
 <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
 <?php
+    include '../../scripts/database.php';
+    $conexion = new Database();
+    $conexion->conectarDB();
+
     session_start();
-    if(isset($_SESSION["correo"]))
+    $email = $_SESSION["correo"];
+    $consulta = "SELECT tipo_usuario from persona
+        where correo ='$email'";
+    $datos = $conexion -> seleccionar($consulta);
+
+        foreach ($datos as $dato)
+        {
+          $tipo = $dato->tipo_usuario;
+        }
+
+    if(isset($email) and $tipo == 'cliente' )
     {
       
     }
@@ -39,9 +53,8 @@
     {
         header("Location:../../First.php");
     }
-
+       
     ?>
-
     <!-- MENU BAR -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
@@ -108,7 +121,6 @@
 
 
         <?php
-        include '../../scripts/database.php';
         $conexion = new Database();
         $conexion->conectarDB();
 

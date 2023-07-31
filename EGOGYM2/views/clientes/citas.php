@@ -95,10 +95,23 @@
 
 </head>
  <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
-    <?php
+ <?php
+    include '../../scripts/database.php';
+    $conexion = new Database();
+    $conexion->conectarDB();
+
     session_start();
-    
-    if(isset($_SESSION["correo"]) )
+    $email = $_SESSION["correo"];
+    $consulta = "SELECT tipo_usuario from persona
+        where correo ='$email'";
+    $datos = $conexion -> seleccionar($consulta);
+
+        foreach ($datos as $dato)
+        {
+          $tipo = $dato->tipo_usuario;
+        }
+
+    if(isset($email) and $tipo == 'cliente' )
     {
       
     }
@@ -106,7 +119,7 @@
     {
         header("Location:../../First.php");
     }
-
+       
     ?>
 
 <nav class="navbar navbar-expand-lg fixed-top">
@@ -177,50 +190,43 @@
         <div id="nutri" class="tab-pane fade">
         <br>
         <div class="container">
-            <form action="../../scripts/guardaCitas.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:5%">
+            <form action="../../scripts/guardaCitasUsu.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:5%">
             <div class="row">
                   <legend class="form-label" style="color: goldenrod;">Agendar Cita</legend>
                   <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
                   <div class="col-12 col-lg-6">
-                  <label style='color: white;'>Cliente</label><br>
-                    <?php
-                    include '../../scripts/database.php';
-                     $db=new database();
-                     $db->conectarDB();
-                     $cadena="SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente,
-                     cliente.id_cliente from persona inner join cliente on cliente.id_cliente=persona.id_persona;";
-                     $reg = $db->seleccionar($cadena);
-                     echo 
-                     "
-                     <div class='mb-3' style='width: 30%;'>
-                    <select name='cliente_op' class='form-select'>
-                     ";
-                     foreach($reg as $value)
+                  <?php
+                    $db=new database();
+                    $db->conectarDB();
+                    $cadena="SELECT servicios_empleados.id_empserv as empleado, 
+                    concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) as nombre
+                    from servicios_empleados
+                     inner join servicios on servicios.codigo=servicios_empleados.servicio
+                     inner join empleado on empleado.id_empleado=servicios_empleados.empleado
+                     inner join persona on persona.id_persona=empleado.id_empleado
+                     where servicios.nombre='nutricion'";
+                    $reg =$db->seleccionar($cadena);
+                    
+                    echo 
+                    "<div class='mb-3' style='width: 30%;'>
+                    <label class='control-label' style='color:white;'>
+                    Empleado
+                    </label>
+                    <select name='servicio' class='form-select'>
+                    ";
+
+                    foreach($reg as $value)
                     {
-                        echo "<option value='".$value->id_cliente."'>".$value->cliente."</option>";
+                        echo "<option value='".$value->empleado."'>".$value->nombre."</option>";
                     }
 
                     echo "</select>
                     </div>";
-                    ?>              
-
-                    <?php
-                    $db=new database();
-                    $db->conectarDB();
-                    $cadena="SELECT servicios_empleados.id_empserv as empleado, servicios.nombre 
-                    from servicios_empleados
-                     inner join servicios on servicios.codigo=servicios_empleados.servicio
-                     where servicios.nombre not in(select servicios.nombre from servicios where servicios.nombre='spinning');";
-                    $reg =$db->seleccionar($cadena);
-                  
-
-                    foreach($reg as $value)
-                    {
-                        $servicio = $value->empleado;
-                        $value->nombre;
-                    }
                     $db->desconectarBD();
                     ?>
+       
+
+                   
 
                   </div>
 
@@ -251,47 +257,39 @@
     <div id="fisio" class="tab-pane fade">
         <br>
         <div class="container">
-            <form action="../../scripts/guardaCitas.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:5%">
+            <form action="../../scripts/guardaCitasUsu.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:5%">
             <div class="row">
                   <legend class="form-label" style="color: goldenrod;">Agendar Cita</legend>
                   <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
                   <div class="col-12 col-lg-6">
                   <label style='color: white;'>Cliente</label><br>
-                    <?php
-                     $db=new database();
-                     $db->conectarDB();
-                     $cadena="SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente,
-                     cliente.id_cliente from persona inner join cliente on cliente.id_cliente=persona.id_persona;";
-                     $reg = $db->seleccionar($cadena);
-                     echo 
-                     "
-                     <div class='mb-3' style='width: 30%;'>
-                    <select name='cliente_op' class='form-select'>
-                     ";
-                     foreach($reg as $value)
+                  <?php
+                    $db=new database();
+                    $db->conectarDB();
+                    $cadena="SELECT servicios_empleados.id_empserv as empleado, 
+                    concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) as nombre
+                    from servicios_empleados
+                     inner join servicios on servicios.codigo=servicios_empleados.servicio
+                     inner join empleado on empleado.id_empleado=servicios_empleados.empleado
+                     inner join persona on persona.id_persona=empleado.id_empleado
+                     where servicios.nombre='fisioterapia'";
+                    $reg =$db->seleccionar($cadena);
+                    
+                    echo 
+                    "<div class='mb-3' style='width: 30%;'>
+                    <label class='control-label' style='color:white;'>
+                    Servicio
+                    </label>
+                    <select name='servicio' class='form-select'>
+                    ";
+
+                    foreach($reg as $value)
                     {
-                        echo "<option value='".$value->id_cliente."'>".$value->cliente."</option>";
+                        echo "<option value='".$value->empleado."'>".$value->nombre."</option>";
                     }
 
                     echo "</select>
                     </div>";
-                    ?>              
-
-                    <?php
-                    $db=new database();
-                    $db->conectarDB();
-                    $cadena="SELECT servicios_empleados.id_empserv as empleado, servicios.nombre 
-                    from servicios_empleados
-                     inner join servicios on servicios.codigo=servicios_empleados.servicio
-                     where servicios.nombre not in(select servicios.nombre from servicios where servicios.nombre='spinning')";
-                    $reg =$db->seleccionar($cadena);
-
-                    foreach($reg as $value)
-                    {
-                        $value->empleado;
-                        $value->nombre;
-                    }
-
                     $db->desconectarBD();
                     ?>
 
