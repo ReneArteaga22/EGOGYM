@@ -118,7 +118,6 @@
                   </div>
                   <div class="card mt-3">
                     <?php
-                    include '../../scripts/database.php';
                     $conexion = new Database();
                     $conexion->conectarDB();
                     

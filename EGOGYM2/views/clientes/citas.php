@@ -117,7 +117,7 @@
     }
     else 
     {
-        header("Location:../../First.php");
+        header("Location:../../First.php?modal=true");
     }
        
     ?>

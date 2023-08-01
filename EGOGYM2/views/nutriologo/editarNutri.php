@@ -87,47 +87,63 @@
 
     <div class="container">
 
-        <div class="card bg-light" style="margin-top: 99px;">
-        <div class="card-header bg-dark text-white">
-          Informacion Personal
-        </div>
-        <div class="card-body row">
-            <div class="col-lg-6 col-xs-12  col-sm-12 col-md-7 text-center">
-            <img src="../../images/class/boxwax.jpg" class="rounded-circle" alt="..." style="width: 60%;">
-            <input class="form-control form-control-sm" id="formFileSm" type="file" form="../../scripts/actualizarPerfil.php" method="post">
-          </div>
-
-
-        <?php
-        $conexion = new Database();
-        $conexion->conectarDB();
-
-
-        $consulta = "SELECT concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
-        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña from persona 
-        where persona.correo = '$email'";
-        $datos_per = $conexion ->seleccionar($consulta);
-
-        foreach($datos_per as $registro)
-        {
-            echo "<form action='../../scripts/actualizarPerfil.php' method='POST'>";
-            echo "<div class='col-lg-12 col-12 col-sm-12 col-md-12'>";
-            echo "<p>Nombre: $registro->nombre </p>";
-            echo "<input type='mail' value='$registro->correo' class='form-control w-75' name='correo'>";
-            echo "<input type='text' value='$registro->telefono' class='form-control w-50' name='telefono'>";
-            echo "<p>Fecha de nacimiento: $registro->fecha_nacimiento </p>";
-            echo "<p>Sexo: $registro->sexo </p>";
-            echo "<p>Contraseña:</p><input type='password' value='$registro->contraseña' class='form-control w-50' name='contra'>";
-
-        }    
-        ?>
-       
-       <button type="reset" value="Limpiar" class="btn btn-secondary">Borrar cambios</button>
-            <button type="submit"name="Guardar" class="btn btn-warning">Guardar cambios</button>      
-      </div>
-        </div>
-      </form>
-        </div>
+<div class="card bg-light" style="margin-top: 99px;">
+    <div class="card-header bg-dark text-white">
+      Informacion Personal
     </div>
+    
+
+
+    <?php
+    $conexion = new Database();
+    $conexion->conectarDB();
+
+    $email = $_SESSION["correo"];
+
+    $consulta = "select persona.foto as foto,concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
+    persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña, plan.nombre as plan,
+    concat(cliente.fecha_ini,'  ','de','  ',cliente.fecha_fin) as periodo from persona
+    left join cliente on persona.id_persona = cliente.id_cliente
+    left join plan on cliente.codigo_plan = plan.codigo
+    where persona.correo = '$email'";
+    $datos_per = $conexion ->seleccionar($consulta);
+    $imagenPorDefecto = "../../images/class/boxwax.jpg"; 
+
+    
+    foreach($datos_per as $registro)
+    {
+      echo "<div class='card-body row'>";
+      echo "<div class='col-lg-6 col-xs-12  col-sm-12 col-md-7 text-center'>";
+
+// Operador ternario para determinar qué URL de imagen utilizar
+
+echo "<form action='../../scripts/editar/actualizarPerfil.php' method='POST' enctype='multipart/form-data'>";
+$urlImagenMostrar = $registro->foto ? $registro->foto : $imagenPorDefecto;
+
+echo "<img src='$urlImagenMostrar' class='rounded-circle' alt='...' style='width: 60%'>";
+echo "<input class='form-control form-control-sm' id='foto' name='foto' type='file' >";
+echo "</div>";
+       
+        echo "<div class='col-lg-6 col-12 col-sm-12 col-md-12'>";
+        echo "<p>Nombre: $registro->nombre </p>";
+        echo "<p>Correo: $registro->correo </p>";
+        echo "<p>Telefono:</p><input type='text' value='$registro->telefono' class='form-control w-50' name='telefono'>";
+        echo "<p>Fecha de nacimiento: $registro->fecha_nacimiento </p>";
+        echo "<p>Sexo: $registro->sexo </p>";
+        echo "<p>Contraseña:</p><input type='password' value='$registro->contraseña' class='form-control w-50' name='contra'>";
+        echo "<p>Plan: $registro->plan </p>";
+        echo "<p>Periodo: $registro->periodo </p>";
+
+
+    }    
+    ?>
+    <div class="text-center"> 
+    <button type="submit" class="btn btn-success btn-sm">Guardar</button>
+    </div>
+  </div>
+    </div>
+  </form>
+</div>
+</div>
     </body>
 </html>

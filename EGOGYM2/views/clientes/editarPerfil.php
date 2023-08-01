@@ -122,7 +122,6 @@
 
 
         <?php
-        include '../../scripts/database.php';
         $conexion = new Database();
         $conexion->conectarDB();
 
