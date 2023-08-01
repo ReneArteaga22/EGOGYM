@@ -30,8 +30,27 @@
 </head>
 <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
 <?php
+<<<<<<< HEAD
     session_start();
     if(isset($_SESSION["correo"]))
+=======
+    include '../../scripts/database.php';
+    $conexion = new Database();
+    $conexion->conectarDB();
+
+    session_start();
+    $email = $_SESSION["correo"];
+    $consulta = "SELECT tipo_usuario from persona
+        where correo ='$email'";
+    $datos = $conexion -> seleccionar($consulta);
+
+        foreach ($datos as $dato)
+        {
+          $tipo = $dato->tipo_usuario;
+        }
+
+    if(isset($email) and $tipo == 'cliente' )
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
     {
       
     }
@@ -39,7 +58,11 @@
     {
         header("Location:../../First.php");
     }
+<<<<<<< HEAD
 
+=======
+       
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
     ?>
 
     <!-- MENU BAR -->
@@ -138,16 +161,27 @@
     echo "<input class='form-control form-control-sm' id='foto' name='foto' type='file' >";
     echo "</div>";
            
+<<<<<<< HEAD
             echo "<div class='col-lg-12 col-12 col-sm-12 col-md-12'>";
             echo "<p>Nombre: $registro->nombre </p>";
             echo "<input type='mail' value='$registro->correo' class='form-control w-75' name='correo'>";
             echo "<input type='text' value='$registro->telefono' class='form-control w-50' name='telefono'>";
+=======
+            echo "<div class='col-lg-6 col-12 col-sm-12 col-md-12'>";
+            echo "<p>Nombre: $registro->nombre </p>";
+            echo "<p>Correo: $registro->correo </p>";
+            echo "<p>Telefono:</p><input type='text' value='$registro->telefono' class='form-control w-50' name='telefono'>";
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
             echo "<p>Fecha de nacimiento: $registro->fecha_nacimiento </p>";
             echo "<p>Sexo: $registro->sexo </p>";
             echo "<p>Contraseña:</p><input type='password' value='$registro->contraseña' class='form-control w-50' name='contra'>";
             echo "<p>Plan: $registro->plan </p>";
             echo "<p>Periodo: $registro->periodo </p>";
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
         }    
         ?>
         <div class="text-center"> 

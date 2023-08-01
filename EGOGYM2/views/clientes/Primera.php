@@ -21,7 +21,10 @@
      <link rel="stylesheet" href="../../css/bootstrap.min.css">
      <link rel="stylesheet" href="../../css/font-awesome.min.css">
      <link rel="stylesheet" href="../../css/font-awesome.min.css">
+<<<<<<< HEAD
      <link rel="stylesheet" href="../../css/aos.css">
+=======
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
 
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
@@ -55,9 +58,28 @@
 </head>
 <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
 <?php
+<<<<<<< HEAD
     session_start();
     
     if(isset($_SESSION["correo"]) )
+=======
+    include '../../scripts/database.php';
+    $conexion = new Database();
+    $conexion->conectarDB();
+
+    session_start();
+    $email = $_SESSION["correo"];
+    $consulta = "SELECT tipo_usuario from persona
+        where correo ='$email'";
+    $datos = $conexion -> seleccionar($consulta);
+
+        foreach ($datos as $dato)
+        {
+          $tipo = $dato->tipo_usuario;
+        }
+
+    if(isset($email) and $tipo == 'cliente' )
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
     {
       
     }
@@ -65,14 +87,22 @@
     {
         header("Location:../../First.php");
     }
+<<<<<<< HEAD
 
+=======
+       
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
     ?>
 
     <!-- MENU BAR -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
+<<<<<<< HEAD
             <a class="navbar-brand" href="index.html">EGO GYM</a>
+=======
+            <a class="navbar-brand" href="Primera.php#home">EGO GYM</a>
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -86,7 +116,11 @@
                     </li>
 
                     <li class="nav-item">
+<<<<<<< HEAD
                         <a href="Primera.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
+=======
+                        <a href="#about" class="nav-link smoothScroll">Sobre Nosotros</a>
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
                     </li>
 
                     <li class="nav-item">
@@ -268,7 +302,11 @@
                         <div class="col-lg-12 col-12 text-center">
                             <h6 data-aos="fade-up">Cronograma de clases</h6>
 
+<<<<<<< HEAD
                             <h2 class="text-white" data-aos="fade-up" data-aos-delay="250"></h2>
+=======
+                            <h2 class="text-white" data-aos="fade-up" data-aos-delay="200"></h2>
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
                          </div>
 
                          <div class="col-lg-12 py-5 col-md-12 col-12">

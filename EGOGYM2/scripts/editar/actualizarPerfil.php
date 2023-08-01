@@ -32,7 +32,11 @@ if ($_FILES['foto']['size'] > 0) {
 }
 
 $pase = false;
+<<<<<<< HEAD
 $cadena= "update persona set correo='$correo', telefono='$telefono', contraseña='$contra' where correo= '$email' ";    
+=======
+$cadena= "update persona set telefono='$telefono', contraseña='$contra' where correo= '$email' ";    
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
 while($conexion->ejecutarSQL($cadena))
 {
     $pase=true;
@@ -41,13 +45,25 @@ while($conexion->ejecutarSQL($cadena))
 if($pase=true)
 {
     echo"<div class='alert alert-success text-center'>Actualizacion de datos realizada con exito</div>";
+<<<<<<< HEAD
     header("refresh:20 ../views/clientes/perfil.php");
+=======
+    header("refresh:2 ../../views/clientes/perfil.php");
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
 }
 else
 {
     echo "<div class='alert alert-warning'>No se pudo actualizar</div>";
+<<<<<<< HEAD
     header("refresh:20 ../views/clientes/editarPerfil.php");
 }
 ?>
 </body>
 </html>
+=======
+    header("refresh:2 ../views/clientes/editarPerfil.php");
+}
+?>
+</body>
+</html>
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3

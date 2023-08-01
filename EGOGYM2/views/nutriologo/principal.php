@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+    <head>
     <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=Edge">
      <meta name="description" content="">
@@ -23,8 +23,6 @@
      <link rel="stylesheet" href="../../css/egogym.css">
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
-<<<<<<< HEAD
-=======
     <?php
     include '../../scripts/database.php';
     $conexion = new Database();
@@ -41,7 +39,7 @@
           $tipo = $dato->tipo_empleado;
         }
 
-    if(isset($email) and $tipo == 'fisio' )
+    if(isset($email) and $tipo == 'nutri' )
     {
       
     }
@@ -51,11 +49,10 @@
     }
        
     ?>
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../fisioterapeuta/principal.php">EGO GYM</a>
+            <a class="navbar-brand" href="../nutriologo/principal.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -65,20 +62,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-<<<<<<< HEAD
-                        <a href="../fisioterapeuta/principal.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="../nutriologo/principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="../fisioterapeuta/citas_fisio.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="../nutriologo/citas_nutri.php" class="nav-link smoothScroll">Citas</a>
                     </li>
                 </ul>
-=======
-                        <a href="principal.php" class="nav-link smoothScroll">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="citasfisio.php" class="nav-link smoothScroll">Citas</a>
-                    </li>
-                </ul>
+
                 <ul class="navbar-nav ml-lg-2">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -86,62 +76,58 @@
                          <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
                           <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
+                      </li>
+                </ul>
             </div>
         </div>
     </nav>
 
+    <!--Inicio de recepcionista-->
+    <div class="container" style="padding-top: 10%;">
+        <h1 style="text-align: center;" data-aos="fade-right">¡Hola!</h1>
+        <!--Tablas de citas registradas para el día actual-->
+    </div>
     <div class="container">
-
-        <div class="card bg-light" style="margin-top: 99px;">
-        <div class="card-header bg-dark text-white">
-          Informacion Personal
+        <div class="card-header" style="color:black;">
+          Tu información
         </div>
+
         <div class="card-body row">
-            <div class="col-lg-6 col-xs-12  col-sm-12 col-md-7 text-center">
+            <div class="col-lg-6 col-xs-12  col-sm-12 col-md-6 text-center">
             <img src="../../images/class/boxwax.jpg" class="rounded-circle" alt="..." style="width: 60%;">
-            <input class="form-control form-control-sm" id="formFileSm" type="file" form="../../scripts/actualizarPerfil.php" method="post">
           </div>
-
-
         <?php
-<<<<<<< HEAD
-        include '../../scripts/database.php';
-=======
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
         $conexion = new Database();
         $conexion->conectarDB();
 
-        $idPersona = $_GET['id'];
-
-        $consulta = "SELECT concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
-        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña from persona 
-        where persona.id_persona=$idPersona";
+        $consulta = "SELECT concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre, persona.id_persona,
+        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña,FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad from persona
+        where persona.id_persona in (select nutricionista.id_nutri from nutricionista) AND persona.correo='$email'";
         $datos_per = $conexion ->seleccionar($consulta);
 
         foreach($datos_per as $registro)
         {
-            echo "<form action='../../scripts/actualizarPerfil.php' method='POST'>";
-            echo "<div class='col-lg-12 col-12 col-sm-12 col-md-12'>";
+            echo "<div class='col-lg-6 col-xs-12 col-sm-12 col-md-6'>";
             echo "<p>Nombre: $registro->nombre </p>";
-            echo "<input type='mail' value='$registro->correo' class='form-control w-75' name='correo'>";
-            echo "<input type='text' value='$registro->telefono' class='form-control w-50' name='telefono'>";
-            echo "<p>Fecha de nacimiento: $registro->fecha_nacimiento </p>";
+            echo "<p>Correo: $registro->correo </p>";
+            echo "<p>Telefono: $registro->telefono </p>";
+            echo "<p>Edad: ".$registro->edad." años </p>";
             echo "<p>Sexo: $registro->sexo </p>";
-            echo "<p>Contraseña:</p><input type='password' value='$registro->contraseña' class='form-control w-50' name='contra'>";
+            echo "</div>";
 
-        }    
+            echo "<a href='editarNutri.php?id=".$registro->id_persona."' style='margin:auto; font-size:15px; color:goldenrod ; font-style:oblique;'>
+            Editar perfil
+          </a>";
+
+        } 
+        
         ?>
-       
-       <button type="reset" value="Limpiar" class="btn btn-secondary">Borrar cambios</button>
-            <button type="submit"name="Guardar" class="btn btn-warning">Guardar cambios</button>      
-      </div>
-        </div>
-      </form>
+
         </div>
     </div>
+    <br>
+    <br>
     </body>
 </html>

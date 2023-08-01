@@ -3,8 +3,13 @@ class Database
 {
     private $PDOLocal;
     private $user = "root";
+<<<<<<< HEAD
     private $password = "ranagasu22";
     private $server = "mysql:host=localhost; dbname=egogym2";
+=======
+    private $password = "";
+    private $server = "mysql:host=127.0.0.1:3307; dbname=egogym2";
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
 
     function conectarDB()
     {
@@ -62,7 +67,11 @@ class Database
         try 
         {
         $pase = false;
+<<<<<<< HEAD
         $query = "SELECT * from persona  inner join cliente on persona.id_persona = cliente.id_cliente
+=======
+        $query = "SELECT * from persona  left join cliente on persona.id_persona = cliente.id_cliente
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
         where correo ='$email'";
         $consulta=$this->PDOLocal->query($query);
        
@@ -99,6 +108,7 @@ class Database
                     $resu = $this->PDOLocal->query($consulta1);
                         $fila = $resu->fetch(PDO::FETCH_ASSOC);
     
+<<<<<<< HEAD
                     if($fila['tipo_empleado'] == 'recepcionista')
                     {
                         header("Location: ../views/recepcionista/principal.php");
@@ -107,6 +117,20 @@ class Database
                     {
                         header("Location: ../views/fisioterapeuta/principal.php");
                     }
+=======
+                    if($fila['tipo_empleado'] === 'recepcionista')
+                    {
+                        header("Location: ../views/recepcionista/principal.php");
+                    }
+                    else if ($fila['tipo_empleado'] === 'fisio')
+                    {
+                        header("Location: ../views/fisioterapeuta/principal.php");
+                    }
+                    else if ($fila['tipo_empleado'] === 'nutri')
+                    {
+                        header("Location: ../views/nutriologo/principal.php ");
+                    }
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
                     else
                     {
                         echo "NO SE PUDO ACCEDER";  
@@ -140,7 +164,11 @@ class Database
             echo "<h2 align='center'>Usuario o contraseña incorrecto ...</h2>";
             echo "</div>";
 
+<<<<<<< HEAD
             header("refresh:2 ../First.php");
+=======
+            header("refresh:20 ../First.php");
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
         }
     } catch (PDOException $e) {
         echo $e->getMessage();

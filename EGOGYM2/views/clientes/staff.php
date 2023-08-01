@@ -105,9 +105,28 @@
 </style>
 <body  data-spy="scroll" data-target="#navbarNav" data-offset="50">
 <?php
+<<<<<<< HEAD
     session_start();
     
     if(isset($_SESSION["correo"]) )
+=======
+    include '../../scripts/database.php';
+    $conexion = new Database();
+    $conexion->conectarDB();
+
+    session_start();
+    $email = $_SESSION["correo"];
+    $consulta = "SELECT tipo_usuario from persona
+        where correo ='$email'";
+    $datos = $conexion -> seleccionar($consulta);
+
+        foreach ($datos as $dato)
+        {
+          $tipo = $dato->tipo_usuario;
+        }
+
+    if(isset($email) and $tipo == 'cliente' )
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
     {
       
     }
@@ -115,7 +134,11 @@
     {
         header("Location:../../First.php");
     }
+<<<<<<< HEAD
 
+=======
+       
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
     ?>
 
     <!-- MENU BAR -->
@@ -178,7 +201,10 @@
     <div class="row" style="align-self: center;">
 
     <?php
+<<<<<<< HEAD
 include '../../scripts/database.php';
+=======
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
 $conexion = new Database();
 $conexion->conectarDB();
 

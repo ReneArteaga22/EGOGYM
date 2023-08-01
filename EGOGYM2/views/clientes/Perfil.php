@@ -24,13 +24,36 @@
 
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
+<<<<<<< HEAD
+=======
+     <link rel="stylesheet" href="../../css/profile.css">
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
      <style></style>
 
 </head>
 <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
 <?php
+<<<<<<< HEAD
     session_start();
     if(isset($_SESSION["correo"]))
+=======
+    include '../../scripts/database.php';
+    $conexion = new Database();
+    $conexion->conectarDB();
+
+    session_start();
+    $email = $_SESSION["correo"];
+    $consulta = "SELECT tipo_usuario from persona
+        where correo ='$email'";
+    $datos = $conexion -> seleccionar($consulta);
+
+        foreach ($datos as $dato)
+        {
+          $tipo = $dato->tipo_usuario;
+        }
+
+    if(isset($email) and $tipo == 'cliente' )
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
     {
       
     }
@@ -38,9 +61,14 @@
     {
         header("Location:../../First.php");
     }
+<<<<<<< HEAD
 
     ?>
 
+=======
+       
+    ?>
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
     <!-- MENU BAR -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
@@ -99,6 +127,7 @@
 
 <div class="container">
 
+<<<<<<< HEAD
     <div class="card bg-light" style="margin-top: 99px;">
         <div class="card-header bg-dark text-white">
           Informacion Personal
@@ -110,24 +139,58 @@
 
         <?php
         include '../../scripts/database.php';
+=======
+<div class="card bg-light" style="margin-top: 99px;">
+        <div class="card-header bg-dark text-white">
+          Informacion Personal
+        </div>
+        
+
+
+        <?php
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
         $conexion = new Database();
         $conexion->conectarDB();
 
         $email = $_SESSION["correo"];
 
+<<<<<<< HEAD
         $consulta = "select concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
         persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, plan.nombre as plan,
+=======
+        $consulta = "select persona.foto as foto,concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
+        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña, plan.nombre as plan,
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
         concat(cliente.fecha_ini,'  ','de','  ',cliente.fecha_fin) as periodo from persona
         left join cliente on persona.id_persona = cliente.id_cliente
         left join plan on cliente.codigo_plan = plan.codigo
         where persona.correo = '$email'";
         $datos_per = $conexion ->seleccionar($consulta);
+<<<<<<< HEAD
 
 
 
         foreach($datos_per as $registro)
         {
             echo "<div class='col-lg-6 col-xs-12 col-sm-12 col-md-6'>";
+=======
+        $imagenPorDefecto = "../../images/class/boxwax.jpg"; 
+
+        
+        foreach($datos_per as $registro)
+        {
+          echo "<div class='card-body row'>";
+          echo "<div class='col-lg-6 col-xs-12  col-sm-12 col-md-7 text-center'>";
+
+    // Operador ternario para determinar qué URL de imagen utilizar
+    
+    $urlImagenMostrar = $registro->foto ? $registro->foto : $imagenPorDefecto;
+   
+    echo "<img src='$urlImagenMostrar' class='rounded-circle' alt='...' style='width: 60%'>";
+    echo "</div>";
+           
+            echo "<div class='col-lg-6 col-12 col-sm-12 col-md-12'>";
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
             echo "<p>Nombre: $registro->nombre </p>";
             echo "<p>Correo: $registro->correo </p>";
             echo "<p>Telefono: $registro->telefono </p>";
@@ -136,6 +199,7 @@
             echo "<p>Plan: $registro->plan </p>";
             echo "<p>Periodo: $registro->periodo </p>";
             echo "<a href='editarPerfil.php'>Editar Perfil</a>";
+<<<<<<< HEAD
             echo "</div>";
 
         }    
@@ -144,6 +208,17 @@
     </div>
 
 
+=======
+
+
+        }    
+        ?>
+      </div>
+        </div>
+      </form>
+    </div>
+
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
       <div class="card bg-light" style="margin-top: 40px;">
         <div class="card-header bg-dark text-white">
           Historial de Citas

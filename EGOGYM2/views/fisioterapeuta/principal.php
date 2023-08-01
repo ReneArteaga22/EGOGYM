@@ -24,9 +24,28 @@
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
     <?php
+<<<<<<< HEAD
     session_start();
     
     if(isset($_SESSION["correo"]) )
+=======
+    include '../../scripts/database.php';
+    $conexion = new Database();
+    $conexion->conectarDB();
+
+    session_start();
+    $email = $_SESSION["correo"];
+    $consulta = "SELECT tipo_empleado from persona inner join empleado on persona.id_persona = empleado.id_empleado
+        where correo ='$email'";
+    $datos = $conexion -> seleccionar($consulta);
+
+        foreach ($datos as $dato)
+        {
+          $tipo = $dato->tipo_empleado;
+        }
+
+    if(isset($email) and $tipo == 'fisio' )
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
     {
       
     }
@@ -34,12 +53,20 @@
     {
         header("Location:../../First.php");
     }
+<<<<<<< HEAD
 
+=======
+       
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
     ?>
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
+<<<<<<< HEAD
             <a class="navbar-brand" href="../fisioterapeuta/principal.php">EGO GYM</a>
+=======
+            <a class="navbar-brand" href="principal.php">EGO GYM</a>
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -92,7 +119,11 @@
         persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña, persona.id_persona,
         FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad 
          from persona
+<<<<<<< HEAD
         where persona.id_persona in (select fisioterapeuta.id_fisio from fisioterapeuta)";
+=======
+        where persona.id_persona in (select fisioterapeuta.id_fisio from fisioterapeuta) AND persona.correo='$email'";
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
         $datos_per = $conexion ->seleccionar($consulta);
 
         foreach($datos_per as $registro)

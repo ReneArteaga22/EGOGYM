@@ -25,10 +25,43 @@
      <link rel="stylesheet" href="../../css/egogym.css">
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
+<<<<<<< HEAD
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
             <a class="navbar-brand" href="../recepcionista/index.php">EGO GYM</a>
+=======
+    <?php
+    include '../../scripts/database.php';
+    $conexion = new Database();
+    $conexion->conectarDB();
+
+    session_start();
+    $email = $_SESSION["correo"];
+    $consulta = "SELECT tipo_empleado from persona inner join empleado on persona.id_persona = empleado.id_empleado
+        where correo ='$email'";
+    $datos = $conexion -> seleccionar($consulta);
+
+        foreach ($datos as $dato)
+        {
+          $tipo = $dato->tipo_empleado;
+        }
+
+    if(isset($email) and $tipo == 'recepcionista' )
+    {
+      
+    }
+    else 
+    {
+        header("Location:../../First.php");
+    }
+       
+    ?>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+
+            <a class="navbar-brand" href="../recepcionista/principal.php">EGO GYM</a>
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -38,6 +71,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
+<<<<<<< HEAD
                         <a href="../recepcionista/index.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
 
@@ -52,12 +86,50 @@
                     <li class="nav-item">
                         <a href="../recepcionista/registrar_usuarios.php" class="nav-link smoothScroll">Registrar Nuevo Usuario</a>
                     </li>
+=======
+                        <a href="../recepcionista/principal.php" class="nav-link smoothScroll">Inicio</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" > Citas</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="citas.php">Agendar Cita</a></li>
+                          <li><a class="dropdown-item" href="vercitas.php">Ver Citas</a></li>
+                        </ul>
+                      </li>
+
+                    <li class="nav-item">
+                        <a href="usuarios.php" class="nav-link smoothScroll">Usuarios</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="registrarusu.php" class="nav-link smoothScroll">Registrar Nuevo Usuario</a>
+                    </li>
+                    
+                </ul>
+
+                <ul class="navbar-nav ml-lg-2">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" >
+                         Hola Recepcionista
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
+                        </ul>
+                      </li>
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
                 </ul>
             </div>
         </div>
     </nav>
 
+<<<<<<< HEAD
     <div class="container" style="padding: 15%;">
+=======
+    <div class="container" style="padding: 8%;">
+>>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
     <form action="../../scripts/guardausu(rec).php" method="post" style="background-color: black; opacity: 0.8; border-radius: 5px; padding: 5%;margin: auto; width: 80%;">
                 <div class="row">
                   <legend class="form-label" style="color: goldenrod;">Registrar usuario</legend>

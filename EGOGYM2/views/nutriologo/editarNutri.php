@@ -23,8 +23,6 @@
      <link rel="stylesheet" href="../../css/egogym.css">
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
-<<<<<<< HEAD
-=======
     <?php
     include '../../scripts/database.php';
     $conexion = new Database();
@@ -41,7 +39,7 @@
           $tipo = $dato->tipo_empleado;
         }
 
-    if(isset($email) and $tipo == 'fisio' )
+    if(isset($email) and $tipo == 'nutri' )
     {
       
     }
@@ -51,11 +49,11 @@
     }
        
     ?>
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
-    <nav class="navbar navbar-expand-lg fixed-top">
+
+<nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../fisioterapeuta/principal.php">EGO GYM</a>
+            <a class="navbar-brand" href="../nutriologo/principal.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -65,20 +63,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-<<<<<<< HEAD
-                        <a href="../fisioterapeuta/principal.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="../nutriologo/principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="../fisioterapeuta/citas_fisio.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="../nutriologo/citas_nutri.php" class="nav-link smoothScroll">Citas</a>
                     </li>
                 </ul>
-=======
-                        <a href="principal.php" class="nav-link smoothScroll">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="citasfisio.php" class="nav-link smoothScroll">Citas</a>
-                    </li>
-                </ul>
+
                 <ul class="navbar-nav ml-lg-2">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -86,10 +77,10 @@
                          <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
                           <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
+                      </li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -108,18 +99,13 @@
 
 
         <?php
-<<<<<<< HEAD
-        include '../../scripts/database.php';
-=======
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
         $conexion = new Database();
         $conexion->conectarDB();
 
-        $idPersona = $_GET['id'];
 
         $consulta = "SELECT concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
         persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña from persona 
-        where persona.id_persona=$idPersona";
+        where persona.correo = '$email'";
         $datos_per = $conexion ->seleccionar($consulta);
 
         foreach($datos_per as $registro)

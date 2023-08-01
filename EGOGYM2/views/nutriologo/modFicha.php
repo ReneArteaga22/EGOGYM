@@ -23,12 +23,6 @@
      <link rel="stylesheet" href="../../css/egogym.css">
     </head>
     <body>
-<<<<<<< HEAD
-    <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container">
-
-            <a class="navbar-brand" href="../fisioterapeuta/principal.php" >EGO GYM</a>
-=======
     <?php
     include '../../scripts/database.php';
     $conexion = new Database();
@@ -45,7 +39,7 @@
           $tipo = $dato->tipo_empleado;
         }
 
-    if(isset($email) and $tipo == 'fisio' )
+    if(isset($email) and $tipo == 'nutri' )
     {
       
     }
@@ -55,11 +49,10 @@
     }
        
     ?>
-    <nav class="navbar navbar-expand-lg fixed-top">
+  <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../fisioterapeuta/principal.php">EGO GYM</a>
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
+            <a class="navbar-brand" href="../nutriologo/principal.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -69,20 +62,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-<<<<<<< HEAD
-                        <a href="../fisioterapeuta/principal.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="../nutriologo/principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="../fisioterapeuta/citas_fisio.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="../nutriologo/citas_nutri.php" class="nav-link smoothScroll">Citas</a>
                     </li>
                 </ul>
-=======
-                        <a href="principal.php" class="nav-link smoothScroll">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="citasfisio.php" class="nav-link smoothScroll">Citas</a>
-                    </li>
-                </ul>
+
                 <ul class="navbar-nav ml-lg-2">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -90,74 +76,59 @@
                          <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
                           <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
+                      </li>
+                </ul>
             </div>
         </div>
     </nav>
-    
 
-        <?php
-<<<<<<< HEAD
-      include '../../scripts/database.php';
-=======
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
+    <div class="container" style="padding-top: 10%;">
+    
+    <?php
       $conexion = new Database();
       $conexion->conectarDB();
 
-      $idFicha = $_GET['id'];
-      $consulta="SELECT concat(nombre,' ',apellido_paterno,' ',apellido_materno) as nombre, citas.fecha, 
-        FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad FROM persona INNER JOIN cliente on cliente.id_cliente=persona.id_persona
-      INNER JOIN citas on citas.cliente=cliente.id_cliente INNER JOIN ficha_fisio
-      ON ficha_fisio.cita=citas.id_cita WHERE ficha_fisio.id_ficha=$idFicha";
+      $consulta="SELECT concat(nombre,' ',apellido_paterno,' ',apellido_materno) as nombre, citas.fecha FROM persona INNER JOIN cliente on cliente.id_cliente=persona.id_persona
+      INNER JOIN citas on citas.cliente=cliente.id_cliente INNER JOIN ficha_nutri 
+      ON ficha_nutri.cita=citas.id_cita WHERE ficha_nutri.id_ficha=$idFicha";
       $parametros = array(':id'=> $idFicha);
       $persona =$conexion->seleccionar($consulta, $parametros);
 
       if($persona)
       {
+        echo "<div class='container'>
+        <div class='card-body row justify-content-center'>";
+        echo "<h5>Cliente: ".$persona[0]->nombre."</h5>";
+        echo "<h6>Fecha de la cita: ".$persona[0]->fecha."</h6>";
 
-        echo "<div class='container' style='padding-top:15%'>
-        <div class='container text-center'><h3>Ficha médica</<h3></div>
-        <div class='card-header' style='color:grey; float: right'><h5> Fecha: ".$persona[0]->fecha."</h5></div>
-         <div class='card-header'><h5>Cliente: ".$persona[0]->nombre."</h5></div>";
-        
-        echo"<div class='card'>";
-      
-        $consulta = "SELECT ficha_fisio.altura, ficha_fisio.peso, ficha_fisio.observaciones, ficha_fisio.motivo
-        from ficha_fisio 
-        where ficha_fisio.id_ficha= $idFicha";
+        $consulta = "SELECT ficha_nutri.objetivo, ficha_nutri.motivo, ficha_nutri.peso,
+        ficha_nutri.altura, ficha_nutri.med_cintura, ficha_nutri.med_cadera, ficha_nutri.med_cuello,
+        ficha_nutri.porc_grasa_corporal, ficha_nutri.masa_corp_magra, ficha_nutri.observaciones
+        from ficha_nutri 
+        where ficha_nutri.id_ficha= $idFicha";
         $ficha = $conexion->seleccionar($consulta);
 
         foreach($ficha as $fila)
         {
-        echo "<div class='row'>";
-
-        echo "<div class='col-lg-6 col-6'>";
-        echo "<div class='modal-body' style='padding: 3%'>";
-        echo "<h6 style='font-weight:bold;color:black; opacity:0.7;'>Datos del paciente</h6><br>"; 
-        echo "<p>Edad: ".$persona[0]->edad." años</p>";  
-        echo "<p>Altura: $fila->altura</p>";
-        echo "<p>Peso: ".$fila->peso." kg</p>";
-        echo "</div>";
-        echo "</div>";
-
-        echo "<div class='col-lg-6 col-6'>";
-        echo "<div class='modal-body' style='padding: 3%'>";
-        echo "<h6 style='font-weight:bold;color:black; opacity:0.7;'>Detalles: </h6><br>"; 
+        echo "Hey";
+        echo "<div class='modal-body' style='margin-top:15px;'>";
+        echo "<p>Objetivo: $fila->objetivo</p>";
         echo "<p>Motivo: $fila->motivo</p>";
-        echo "<p>Observaciones: ".$fila->observaciones."</p>";
-        echo "</div>";
-        echo "</div>";
-
+        echo "<p>Peso: $fila->peso</p>";
+        echo "<p>Altura: $fila->altura</p>";
+        echo "<p>Cintura: $fila->med_cintura</p>";
+        echo "<p>Cadera: $fila->med_cadera</p>";
+        echo "<p>Cuello: $fila->med_cuello</p>";
+        echo "<p>Grasa Corporal: $fila->porc_grasa_corporal</p>";
+        echo "<p>Masa Corporal Magra: $fila->masa_corp_magra</p>";
+        echo "<p>Observaciones: $fila->observaciones</p>";
         echo "</div>";
         }
         echo "</div>
         </div>";
 
-        echo "</div>
-        </div>";
 
       }
       else
@@ -167,10 +138,7 @@
       
       $conexion->desconectarBD();
       ?>
-        
-
     </div>
-    
-
+     
     </body>
 </html>
