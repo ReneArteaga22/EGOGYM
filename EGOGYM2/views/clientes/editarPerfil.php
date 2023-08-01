@@ -115,7 +115,7 @@
         $email = $_SESSION["correo"];
 
         $consulta = "select persona.foto as foto,concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
-        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña, plan.nom_plan as plan,
+        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña, plan.nombre as plan,
         concat(cliente.fecha_ini,'  ','de','  ',cliente.fecha_fin) as periodo from persona
         left join cliente on persona.id_persona = cliente.id_cliente
         left join plan on cliente.codigo_plan = plan.codigo
