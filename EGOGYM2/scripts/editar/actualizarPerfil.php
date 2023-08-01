@@ -8,7 +8,7 @@
 </head>
 <body>
 <?php 
-include 'database.php';
+include '../database.php';
 $conexion = new Database();
 $conexion->conectarDB();
 extract($_POST);

@@ -131,7 +131,7 @@
 
     // Operador ternario para determinar qué URL de imagen utilizar
     
-    echo "<form action='../../scripts/actualizarPerfil.php' method='POST' enctype='multipart/form-data'>";
+    echo "<form action='../../scripts/editar/actualizarPerfil.php' method='POST' enctype='multipart/form-data'>";
     $urlImagenMostrar = $registro->foto ? $registro->foto : $imagenPorDefecto;
    
     echo "<img src='$urlImagenMostrar' class='rounded-circle' alt='...' style='width: 60%'>";
