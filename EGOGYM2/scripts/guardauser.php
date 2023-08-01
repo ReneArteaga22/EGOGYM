@@ -22,7 +22,7 @@
         //2021-10-08
 
         $cadena= "INSERT INTO persona(nombre, apellido_paterno, apellido_materno, correo,contraseña,sexo,fecha_nacimiento,telefono,tipo_usuario)
-         values('$nombre','$ap_paterno','$ap_materno','$correo','$hash','$sexo','$ap_paterno','$fecha_nacimiento',null)";
+         values('$nombre','$ap_paterno','$ap_materno','$correo','$hash','$sexo','$ap_paterno','$fecha_nacimiento',default)";
 
         $conexion->ejecutarSQL($cadena);
         $conexion->desconectarBD();

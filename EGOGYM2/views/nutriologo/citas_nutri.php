@@ -27,6 +27,34 @@
      <link rel="stylesheet" href="../../css/egogym.css">
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
+    <?php
+    include '../../scripts/database.php';
+    $conexion = new Database();
+    $conexion->conectarDB();
+
+    session_start();
+    $email = $_SESSION["correo"];
+    $consulta = "SELECT tipo_empleado from persona inner join empleado on persona.id_persona = empleado.id_empleado
+        where correo ='$email'";
+    $datos = $conexion -> seleccionar($consulta);
+
+        foreach ($datos as $dato)
+        {
+          $tipo = $dato->tipo_empleado;
+        }
+
+    if(isset($email) and $tipo == 'fisio' )
+    {
+      
+    }
+    else 
+    {
+        header("Location:../../First.php");
+    }
+       
+    ?>
+
+
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
@@ -61,6 +89,25 @@
             <li class="active"><a data-toggle="tab" href="#citas_pr" style="margin-left: 20px;">Citas próximas</a></li>
             <li><a data-toggle="tab" href="#citas" style="margin-left: 20px;">Citas pasadas</a></li>
         </ul>
+        <?php
+        $db= new database();
+        $db->conectarDB();
+         session_start();
+         $email = $_SESSION["correo"];
+         $consulta = "SELECT servicios_empleados.id_empserv from servicios_empleados
+         inner join empleado on empleado.id_empleado= servicios_empleados.empleado
+         inner join persona on persona.id_persona=empleado.id_empleado
+         where correo ='$email'";
+         $datos = $db -> seleccionar($consulta);
+     
+             foreach ($datos as $dato)
+             {
+               $ID = $dato->id_persona;
+             }
+     
+            
+         ?>
+
         <div class="tab-content">
         <div class="tab-pane fade" id="citas">
         <?php
@@ -82,6 +129,7 @@
                 INNER JOIN persona ON empleado.id_empleado = persona.id_persona
                 ) AS e ON citas.serv_emp = e.id_empserv 
                 where e.servicio='nutricion' AND concat(citas.fecha,' ',citas.hora) < now()
+                AND citas.serv_emp=$ID
                 ";
                 $conexion->seleccionar($consulta);
                 $tabla = $conexion->seleccionar($consulta);
@@ -164,6 +212,7 @@
                     INNER JOIN persona ON empleado.id_empleado = persona.id_persona
                     ) AS e ON citas.serv_emp = e.id_empserv 
                     where e.servicio='nutricion' AND citas.fecha = curdate()
+                    AND citas.serv_emp=$ID
                     ";
                     echo 
                     "
@@ -246,6 +295,7 @@
                     INNER JOIN persona ON empleado.id_empleado = persona.id_persona
                     ) AS e ON citas.serv_emp = e.id_empserv 
                     where citas.fecha > curdate() AND e.servicio='nutricion'
+                    AND citas.serv_emp=$ID
                     ";
                     echo 
                     "

@@ -62,66 +62,95 @@ class Database
         try 
         {
         $pase = false;
-        $query = "SELECT * from persona where correo ='$email'";
+        $query = "SELECT * from persona  left join cliente on persona.id_persona = cliente.id_cliente
+        where correo ='$email'";
         $consulta=$this->PDOLocal->query($query);
        
-
-        while($renglon=$consulta->fetch(PDO::FETCH_ASSOC))
+       
+        while( $renglon=$consulta->fetch(PDO::FETCH_ASSOC))
         {
             if(password_verify($contraseña,$renglon['contraseña']))
             {
                 $pase=true;
-                $tipo = $renglon['tipo_usuario'];
-            }
-        }
-        if($pase)
-        {
-            session_start();
-            $_SESSION["correo"]=$email;
+                
+               
+                $nombreUsuario = $renglon['nombre'];
+                if ($renglon['tipo_usuario'] === 'cliente') {
+                    
+                    $fechaFinMembresia = $renglon['fecha_fin'];
 
-            if  ($tipo == 'cliente')
-            {
-                header("location: ../views/clientes/Primera.php");
-            }
-            else
-            {
-                $consulta1 = "select tipo_empleado from empleado
-                inner join persona on empleado.id_empleado = persona.id_persona
-                where persona.correo = '$email'";
-                $resu = $this->PDOLocal->query($consulta1);
-                    $fila = $resu->fetch(PDO::FETCH_ASSOC);
+                  
+                    if (strtotime($fechaFinMembresia) < time()) {
+                      
+                        echo "<div class='alert alert-danger'>";
+                        echo "<h2 align='center'>La membresía ha expirado, no se permite el inicio de sesión.</h2>";
+                        echo "</div>";
+                        header("refresh:2 ../First.php");
+                        return;
+                    }
+                   
 
-                if($fila['tipo_empleado'] == 'recepcionista')
-                {
-                    header("Location: ../views/recepcionista/principal.php");
                 }
                 else
                 {
-                    echo "NO SE PUDO ACCEDER";  
+                    $consulta1 = "select tipo_empleado from empleado
+                    inner join persona on empleado.id_empleado = persona.id_persona
+                    where persona.correo = '$email'";
+                    $resu = $this->PDOLocal->query($consulta1);
+                        $fila = $resu->fetch(PDO::FETCH_ASSOC);
+    
+                    if($fila['tipo_empleado'] === 'recepcionista')
+                    {
+                        header("Location: ../views/recepcionista/principal.php");
+                    }
+                    else if ($fila['tipo_empleado'] === 'fisio')
+                    {
+                        header("Location: ../views/fisioterapeuta/principal.php");
+                    }
+                    else if ($fila['tipo_empleado'] === 'nutri')
+                    {
+                        header("Location: ../views/nutriologo/principal.php ");
+                    }
+                    else
+                    {
+                        echo "NO SE PUDO ACCEDER";  
+                    }
                 }
             }
+            else
+            {
+                echo "<div class='alert alert-danger'>";
+                echo "<h2 align='center'>Usuario o password incorrecto ...</h2>";
+                echo"</div";
+               
             
-        
+               
+                header("refresh:20 ../First.php#membershipForm");
+            }
+            
+            
+           
+            
         }
-        else
-        {
+
+        if ($pase) {
+            session_start();
+
+            $_SESSION["correo"] = $email;
+
+            header("refresh:0 ../views/clientes/Primera.php");
+        } else {
             echo "<div class='alert alert-danger'>";
-            echo "<h2 align='center'>Usuario o password incorrecto ...</h2>";
-            echo"</div";
-           
-        
-           
-            header("refresh:20 ../First.php#membershipForm");
+            echo "<h2 align='center'>Usuario o contraseña incorrecto ...</h2>";
+            echo "</div>";
+
+            header("refresh:20 ../First.php");
         }
-        
-        } 
-       
-        catch(PDOException $e)
-        {
-            echo $e->getMessage();
-        }
-           
+    } catch (PDOException $e) {
+        echo $e->getMessage();
     }
+}
+
     function cerrarSesion()
     {
         session_start();

@@ -31,12 +31,19 @@
         $db->conectarDB();
 
         extract($_POST);
+
+        if($hora < 8)
+        {
+            echo "<h1>¡Horario inválido!</h1>";
+            header("refresh:3; ../views/recepcionista/citas.php");
+        }
+        else
+        {
         $cadena = "call restriccion_citas_3($servicio, $cliente_op,'$fecha_cita','$hora')";
         $db->ejecutarSQL($cadena);
         $db->desconectarBD();
         header("refresh:3; ../views/recepcionista/citas.php");
-   
-
+        }
         ?>
     </div>
 </body>

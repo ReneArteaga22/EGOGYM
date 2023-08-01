@@ -30,95 +30,97 @@
     <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     
     <script type="text/javascript">
-         $(function(){
-    var today = new Date();
-      var dd = String(today.getDate()).padStart(2, '0');
-      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-      var yyyy = today.getFullYear();
-
-      today = yyyy + '/' + mm + '/' + dd;
-  })
-  $( function() {
-    $( "#datepicker" ).datepicker({
+  function initializeDatepicker(id) {
+    $( "#" + id ).datepicker({
       showOtherMonths: true,
       selectOtherMonths: true,
       dateFormat: 'yy-mm-dd',
       minDate: new Date(),
       maxDate: '+9D',
-      beforeShowDay: $.datepicker.noWeekends
-    });} 
-    );
-    </script>
+      beforeShowDay: $.datepicker.noWeekends,
+      // Evento onchange para actualizar el selector de hora cuando se cambia la fecha
+      onSelect: function(selectedDate) {
+        updateAvailableHours(id.replace("datepicker", "timeSelect"));
+      }
+    });
+  }
+
+  function updateAvailableHours(id) {
+    const hoursSelect = $('#' + id);
+    hoursSelect.empty();
+    hoursSelect.append('<option value="">Seleccione una hora</option>');
+          
+    // Definir las opciones específicas para cada selector de hora
+    let startHour, endHour;
+    if (id === 'timeSelect1') {
+      startHour = 8; // Hora de inicio para el selector 1
+      endHour = 18;  // Hora de fin para el selector 1
+    } else if (id === 'timeSelect2') {
+      startHour = 8; // Hora de inicio para el selector 2
+      endHour = 18;   // Hora de fin para el selector 2
+    } else if (id === 'timeSelect3') {
+      startHour = 7; // Hora de inicio para el selector 3
+      endHour = 10;   // Hora de fin para el selector 3
+    } 
+
+    for (let hour = startHour; hour <= endHour; hour++) {
+      const formattedHour = hour.toString().padStart(2, '0') + ':00';
+      hoursSelect.append(`<option value="${formattedHour}">${formattedHour}</option>`);
+    }
+
+    // Actualizar el selector de horas después de cambiar las opciones
+    hoursSelect.selectpicker('refresh');
   
-   
-  <script type="text/javascript">
-         $(function(){
-    var today = new Date();
-      var dd = String(today.getDate()).padStart(2, '0');
-      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-      var yyyy = today.getFullYear();
+  }
 
-      today = yyyy + '/' + mm + '/' + dd;
-  })
-  $( function() {
-    $( "#datepicker_fisio" ).datepicker({
-      showOtherMonths: true,
-      selectOtherMonths: true,
-      dateFormat: 'yy-mm-dd',
-      minDate: new Date(),
-      maxDate: '+9D',
-      beforeShowDay: $.datepicker.noWeekends
-    });} 
-    );
-    </script>
-  <script>
-     $ (function updateAvailableHours() {
-          // Aquí puedes obtener las horas disponibles según la fecha seleccionada.
-          // Por ejemplo, en este caso, se generarán opciones de horas para cada hora de 8 AM a 6 PM.
-          const hoursSelect = $('#timeSelect');
-          hoursSelect.empty();
-          hoursSelect.append('<option value="">Seleccione una hora</option>');
-          
-          const startHour = 8;
-          const endHour = 18;
-          for (let hour = startHour; hour <= endHour; hour++) {
-            const formattedHour = hour.toString().padStart(2, '0') + ':00';
-            hoursSelect.append(`<option value="${formattedHour}">${formattedHour}</option>`);
-          }
-      
-          // Actualizar el selector de horas después de cambiar las opciones
-          hoursSelect.selectpicker('refresh');
-        })
-      
-        // Inicializar el selector de hora
-        $('#timeSelect').selectpicker();
-  </script>
-   <script>
-     $ (function updateAvailableHours() {
-          // Aquí puedes obtener las horas disponibles según la fecha seleccionada.
-          // Por ejemplo, en este caso, se generarán opciones de horas para cada hora de 8 AM a 6 PM.
-          const hoursSelect = $('#timeSelect_fisio');
-          hoursSelect.empty();
-          hoursSelect.append('<option value="">Seleccione una hora</option>');
-          
-          const startHour = 8;
-          const endHour = 18;
-          for (let hour = startHour; hour <= endHour; hour++) {
-            const formattedHour = hour.toString().padStart(2, '0') + ':00';
-            hoursSelect.append(`<option value="${formattedHour}">${formattedHour}</option>`);
-          }
-      
-          // Actualizar el selector de horas después de cambiar las opciones
-          hoursSelect.selectpicker('refresh');
-        })
-      
-        // Inicializar el selector de hora
-        $('#timeSelect_fisio').selectpicker();
-  </script>
+  $(function() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+    today = yyyy + '/' + mm + '/' + dd;
+
+    // Inicializar los calendarios
+    initializeDatepicker('datepicker1');
+    initializeDatepicker('datepicker2');
+    initializeDatepicker('datepicker3');
+
+    // Inicializar los selectores de hora (opcionalmente, puedes mover esta parte al evento onchange de cada calendario)
+    updateAvailableHours('timeSelect1');
+    updateAvailableHours('timeSelect2');
+    updateAvailableHours('timeSelect3');
+  });
+</script>
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
+    <?php
+    include '../../scripts/database.php';
+    $conexion = new Database();
+    $conexion->conectarDB();
+
+    session_start();
+    $email = $_SESSION["correo"];
+    $consulta = "SELECT tipo_empleado from persona inner join empleado on persona.id_persona = empleado.id_empleado
+        where correo ='$email'";
+    $datos = $conexion -> seleccionar($consulta);
+
+        foreach ($datos as $dato)
+        {
+          $tipo = $dato->tipo_empleado;
+        }
+
+    if(isset($email) and $tipo == 'recepcionista' )
+    {
+      
+    }
+    else 
+    {
+        header("Location:../../First.php");
+    }
+       
+    ?>
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
@@ -131,25 +133,41 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
-                <li class="nav-item">
+                    <li class="nav-item">
                         <a href="../recepcionista/principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" > Citas</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="citas.php">Agendar Cita</a></li>
+                          <li><a class="dropdown-item" href="vercitas.php">Ver Citas</a></li>
+                        </ul>
+                      </li>
+
                     <li class="nav-item">
-                        <a href="../recepcionista/citas.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="usuarios.php" class="nav-link smoothScroll">Usuarios</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="../recepcionista/usuarios.php" class="nav-link smoothScroll">Usuarios</a>
+                        <a href="registrarusu.php" class="nav-link smoothScroll">Registrar Nuevo Usuario</a>
                     </li>
-
-                    <li class="nav-item">
-                        <a href="../recepcionista/registrarusu.php" class="nav-link smoothScroll">Registrar Nuevo Usuario</a>
-                    </li>
+                    
                 </ul>
 
+                <ul class="navbar-nav ml-lg-2">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" >
+                         Hola Recepcionista
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
+                        </ul>
+                      </li>
+                </ul>
             </div>
-
         </div>
     </nav>
 
@@ -158,71 +176,12 @@
      filtrar citas por fecha, entrenador, servicio-->
     <div class="container" style="padding-top: 15%;">
         <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#citas">Todas las citas</a></li>
-    <li><a data-toggle="tab" href="#clases" style="margin-left: 20px;">Clases agendadas</a></li>
-    <li><a data-toggle="tab" href="#agendar_nutri" style="margin-left: 20px;">Agendar cita (nutriólogo)</a></li>
-    <li><a data-toggle="tab" href="#agendar_fisio" style="margin-left: 20px;">Agendar cita (fisioterapia)</a></li>
+    <li><a data-toggle="tab" href="#agendar_nutri" style="margin-left: 20px;">Nutriologia</a></li>
+    <li><a data-toggle="tab" href="#agendar_fisio" style="margin-left: 20px;">Fisioterapia</a></li>
         </ul>
     </div>
   <div class="container">
     <div class="tab-content">
-
-    <!--Citas-->
-    <div id="citas" class="tab-pane fade">
-         <?php
-        include '../../scripts/database.php';
-        $conexion = new database();
-        $conexion->conectarDB();
-
-        $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente, e.empleado AS
-        empleado, e.servicio as servicio, concat(citas.fecha,' ',citas.hora) as horario from citas INNER JOIN cliente ON cliente.id_cliente= citas.cliente
-        INNER JOIN persona ON persona.id_persona = cliente.id_cliente
-        INNER JOIN
-        (
-        SELECT id_empserv, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS empleado,
-        servicios.nombre as servicio 
-        FROM servicios_empleados 
-        INNER JOIN servicios ON servicios.codigo=servicios_empleados.servicio
-        INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
-        INNER JOIN persona ON empleado.id_empleado = persona.id_persona
-        ) AS e ON citas.serv_emp = e.id_empserv;";
-         $conexion->seleccionar($consulta);
-         $tabla = $conexion->seleccionar($consulta);
-
-         echo 
-         "
-         <table class='table' style='border-radius: 5px;'>
-         <thead class='table-dark'>
-             <tr>
-             <br>
-                 <th style='color: goldenrod;'>
-                 Cliente
-                 </th>
-                 <th style='color: goldenrod;'>
-                 Fecha
-                 </th>
-                 <th style='color: goldenrod;'>
-                 Servicio
-                 </th>
-                 <th style='color: goldenrod;'>
-                 Empleado
-                 </th>
-                 
-             </tr>
-         </thead>
-         <tbody>";
-         foreach ($tabla as $registro)
-         {
-             echo "<tr>";
-             echo "<td> $registro->cliente</td> ";
-             echo "<td> $registro->horario</td> ";
-             echo "<td> $registro->servicio</td> ";
-             echo "<td> $registro->empleado</td> ";
-         }
-         echo "</tbody>
-         </table>";
-         ?> 
-    </div>
 
     <!--Agendar citas nutri-->
          <div id="agendar_nutri" class="tab-pane fade">
@@ -233,7 +192,7 @@
                   <div class="col-12 col-lg-6">
                   <label style='color: white;'>Cliente</label><br>
                     <?php
-                     $db=new database();
+                     $db=new Database();
                      $db->conectarDB();
                      $cadena="SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente,
                      cliente.id_cliente from persona inner join cliente on cliente.id_cliente=persona.id_persona;";
@@ -287,10 +246,10 @@
                  <div class="col-12 col-lg-6">
                  <label style="color:white">Fecha</label>
             <div class="input-group date">
-            <input type="text" id="datepicker" required name="fecha_cita">
+            <input type="text" id="datepicker1" required name="fecha_cita">
             </div>
             <h5 style="color: white;">Seleccionar hora</h5>
-            <select class="form-select" id="timeSelect" name="hora">
+            <select class="form-select" id="timeSelect1" name="hora">
               <option value="">Seleccione una hora</option>
             </select>
 
@@ -366,10 +325,10 @@
                  <div class="col-12 col-lg-6">
                  <label style="color:white">Fecha</label>
             <div class="input-group date">
-            <input type="text" id="datepicker_fisio" required name="fecha_cita">
+            <input type="text" id="datepicker2" required name="fecha_cita">
             </div>
             <h5 style="color: white;">Seleccionar hora</h5>
-            <select class="form-select" id="timeSelect_fisio" name="hora">
+            <select class="form-select" id="timeSelect2" name="hora">
               <option value="">Seleccione una hora</option>
             </select>
 
@@ -384,62 +343,7 @@
             </form>
       </div>
     
-      <!--Clases spinning-->
-      <div id="clases" class="tab-pane fade">
-                        <?php
-                        $conexion = new database();
-                        $conexion->conectarDB();
-
-                        $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente, e.empleado AS
-                        empleado, e.servicio as servicio, concat(citas_spinning.fecha,' ',citas_spinning.hora) as fecha from citas_spinning INNER JOIN cliente ON cliente.id_cliente= citas_spinning.cliente
-                        INNER JOIN persona ON persona.id_persona = cliente.id_cliente 
-                        INNER JOIN
-                        (
-                        SELECT id_empserv, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS empleado,
-                        servicios.nombre as servicio 
-                        FROM servicios_empleados 
-                        INNER JOIN servicios ON servicios.codigo=servicios_empleados.servicio
-                        INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
-                        INNER JOIN persona ON empleado.id_empleado = persona.id_persona
-                        ) AS e ON citas_spinning.serv_emp = e.id_empserv;";
-                        $conexion->seleccionar($consulta);
-                        $tabla = $conexion->seleccionar($consulta);
-
-                        echo 
-                        "
-                        <table class='table' style='border-radius: 5px;'>
-                        <thead class='table-dark'>
-                            <tr>
-                            <br>
-                                <th style='color: goldenrod;'>
-                                Cliente
-                                </th>
-                                <th style='color: goldenrod;'>
-                                Fecha
-                                </th>
-                                <th style='color: goldenrod;'>
-                                Servicio
-                                </th>
-                                <th style='color: goldenrod;'>
-                                Empleado
-                                </th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody>";
-                        foreach ($tabla as $registro)
-                        {
-                            echo "<tr>";
-                            echo "<td> $registro->cliente</td> ";
-                            echo "<td> $registro->horario</td> ";
-                            echo "<td> $registro->servicio</td> ";
-                            echo "<td> $registro->empleado</td> ";
-                        }
-                        echo "</tbody>
-                        </table>";
-                        ?> 
-        
-    </div>
+      
 
 
     </div>
