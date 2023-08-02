@@ -278,6 +278,67 @@
 
         </div>
     </div>
+
+<!--Inicio del modal-->
+
+    <div class="modal fade" id="plan_up" tabindex="-1" role="dialog" aria-labelledby="membershipFormLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+          <div class="modal-header">
+
+            <h4 class="modal-title" id="membershipFormLabel">Dar de alta o actualizar plan</h4>
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <form class="membership-form webform" role="form"  action="../../scripts/update_plan.php" method="post">
+                
+
+
+                
+            <?php
+            $conexion = new Database();
+            $conexion->conectarDB();
+
+            $cadena = "SELECT codigo, plan.nombre, precio FROM plan";
+            $reg = $conexion->seleccionar($cadena);
+            ?>
+
+            <input type="hidden" name="clienteId" value="<?php echo $idPersona; ?>">
+
+                <label style="position: relative; display: block;">
+                    <select required name="plan" id="planSelect" style="display: block; width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-top: 20px;">
+                        <option value="Seleccione una" selected disabled hidden></option>
+                        
+                <?php
+                foreach ($reg as $value) {
+                  echo "<option value='" . $value->codigo."' data-precio='" . $value->precio . "'>" . $value->nombre. "</option>";
+                }
+                ?>
+              </select>
+              <span style="position: absolute; top: -10px; left: 10px; background-color: #fff; padding: 0 5px; font-size: 14px; color: #999;">Tipo de plan</span>
+            </label>
+
+            <!-- Agrega un div para mostrar el precio -->
+            <div id="precioPlan" style="display: none; margin-top: 10px; font-weight: bold;"></div>
+
+            <?php
+            $conexion->desconectarBD();
+            ?>
+
+
+                <button type="submit" class="form-control" id="submit-button" name="submit">Ingresar el plan</button>
+                
+                
+            </form>
+          </div>
+
+          <div class="modal-footer"></div>
+<!--Fin del modal-->
       
     </body>
 </html>

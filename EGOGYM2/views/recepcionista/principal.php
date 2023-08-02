@@ -23,32 +23,6 @@
      <link rel="stylesheet" href="../../css/egogym.css">
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
-    <?php
-    include '../../scripts/database.php';
-    $conexion = new Database();
-    $conexion->conectarDB();
-
-    session_start();
-    $email = $_SESSION["correo"];
-    $consulta = "SELECT tipo_empleado from persona inner join empleado on persona.id_persona = empleado.id_empleado
-        where correo ='$email'";
-    $datos = $conexion -> seleccionar($consulta);
-
-        foreach ($datos as $dato)
-        {
-          $tipo = $dato->tipo_empleado;
-        }
-
-    if(isset($email) and $tipo == 'recepcionista' )
-    {
-      
-    }
-    else 
-    {
-        header("Location:../../First.php");
-    }
-       
-    ?>
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
@@ -108,6 +82,7 @@
     </div>
     <div class="container">
         <?php
+        include '../../scripts/database.php';
         $conexion = new database();
         $conexion->conectarDB();
 

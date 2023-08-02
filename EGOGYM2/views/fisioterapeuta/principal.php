@@ -96,8 +96,9 @@
             <div class="col-lg-6 col-xs-12  col-sm-12 col-md-6 text-center">
             <img src="../../images/class/boxwax.jpg" class="rounded-circle" alt="..." style="width: 60%;">
           </div>
+        
+        
         <?php
-        include '../../scripts/database.php';
         $conexion = new Database();
         $conexion->conectarDB();
 

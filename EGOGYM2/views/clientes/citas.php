@@ -31,7 +31,7 @@
       showOtherMonths: true,
       selectOtherMonths: true,
       dateFormat: 'yy-mm-dd',
-      minDate: new Date(),
+      minDate: '+1D',
       maxDate: '+9D',
       beforeShowDay: $.datepicker.noWeekends,
       // Evento onchange para actualizar el selector de hora cuando se cambia la fecha

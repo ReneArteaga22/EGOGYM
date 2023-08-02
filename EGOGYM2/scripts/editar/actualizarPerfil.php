@@ -12,6 +12,7 @@ include '../database.php';
 $conexion = new Database();
 $conexion->conectarDB();
 extract($_POST);
+$hash = password_hash($contra, PASSWORD_DEFAULT);
 
 session_start();
 isset($_SESSION["correo"]);
@@ -32,7 +33,7 @@ if ($_FILES['foto']['size'] > 0) {
 }
 
 $pase = false;
-$cadena= "update persona set telefono='$telefono', contraseña='$contra' where correo= '$email' ";    
+$cadena= "update persona set telefono='$telefono', contraseña='$hash' where correo= '$email' ";    
 while($conexion->ejecutarSQL($cadena))
 {
     $pase=true;
@@ -41,7 +42,7 @@ while($conexion->ejecutarSQL($cadena))
 if($pase=true)
 {
     echo"<div class='alert alert-success text-center'>Actualizacion de datos realizada con exito</div>";
-    header("refresh:2 ../../views/clientes/perfil.php");
+    header("refresh:2 ../../views/clientes/Perfil.php");
 }
 else
 {

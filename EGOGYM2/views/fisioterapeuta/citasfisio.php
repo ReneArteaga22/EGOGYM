@@ -53,6 +53,7 @@
     }
        
     ?>
+
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
@@ -66,22 +67,12 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                        <a href="principal.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="../fisioterapeuta/principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="citasfisio.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="../fisioterapeuta/citas_fisio.php" class="nav-link smoothScroll">Citas</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav ml-lg-2">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false" >
-                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
-                          <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
-                        </ul>
             </div>
         </div>
     </nav>
@@ -97,6 +88,27 @@
             <li class="active"><a data-toggle="tab" href="#citas_pr" style="margin-left: 20px;">Citas próximas</a></li>
             <li><a data-toggle="tab" href="#citas" style="margin-left: 20px;">Citas pasadas</a></li>
         </ul>
+        
+
+        <?php
+        $db= new database();
+        $db->conectarDB();
+         session_start();
+         $email = $_SESSION["correo"];
+         $consulta = "SELECT servicios_empleados.id_empserv from servicios_empleados
+         inner join empleado on empleado.id_empleado= servicios_empleados.empleado
+         inner join persona on persona.id_persona=empleado.id_empleado
+         where correo ='$email'";
+         $datos = $db -> seleccionar($consulta);
+     
+             foreach ($datos as $dato)
+             {
+               $ID = $dato->id_persona;
+             }
+     
+            
+         ?>
+
         <div class="tab-content">
         <div class="tab-pane fade" id="citas">
         <?php
@@ -116,7 +128,8 @@
                 INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
                 INNER JOIN persona ON empleado.id_empleado = persona.id_persona
                 ) AS e ON citas.serv_emp = e.id_empserv 
-                where e.servicio='fisioterapia' AND concat(citas.fecha,' ',citas.hora) < now()
+                where e.servicio='fisioterapia' AND concat(citas.fecha,' ',citas.hora) < now() 
+                AND citas.serv_emp=$ID
                 ";
                 $conexion->seleccionar($consulta);
                 $tabla = $conexion->seleccionar($consulta);
@@ -199,6 +212,7 @@
                     INNER JOIN persona ON empleado.id_empleado = persona.id_persona
                     ) AS e ON citas.serv_emp = e.id_empserv 
                     where citas.fecha = curdate() AND e.servicio='fisioterapia'
+                    AND citas.serv_emp=$ID
                     ";
                     echo 
                     "
@@ -227,7 +241,7 @@
                         echo "<tr>";
                         echo "<td> $registro->cliente</td> ";
                         echo "<td> $registro->hora</td> ";
-                        echo "<td><a href='verFichaFisio.php?id=" . $registro->id_ficha . "'>Generar ficha médica</a></td>";
+                        echo "<td><a href='modFichaFisio.php?id=" . $registro->id_ficha . "'>Generar ficha médica</a></td>";
                         echo "</tr>";
                     }
                     echo "</tbody>
@@ -281,6 +295,7 @@
                     INNER JOIN persona ON empleado.id_empleado = persona.id_persona
                     ) AS e ON citas.serv_emp = e.id_empserv 
                     where citas.fecha > curdate() AND e.servicio='fisioterapia'
+                    AND citas.serv_emp=$ID
                     ";
                     echo 
                     "

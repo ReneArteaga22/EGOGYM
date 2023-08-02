@@ -50,11 +50,10 @@
        
     ?>
 
-
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../fisioterapeuta/principal.php" >EGO GYM</a>
+            <a class="navbar-brand" href="../nutriologo/principal.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -64,18 +63,20 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                        <a href="../fisioterapeuta/principal.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="../nutriologo/principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="../fisioterapeuta/citas_fisio.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="../nutriologo/citas_nutri.php" class="nav-link smoothScroll">Citas</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-    
 
-        <?php
+    <div class="container" style="padding-top: 5%;">
+
+    
+    <?php
       $conexion = new Database();
       $conexion->conectarDB();
 
@@ -90,12 +91,12 @@
       if($persona)
       {
 
-        echo "<div class='container' style='padding-top:15%'>
+        echo "<div class='container' style='padding-top:5%;padding-bottom:5%'>
         <div class='container text-center'><h3>Ficha médica</<h3></div>
         <div class='card-header' style='color:grey; float: right'><h5> Fecha: ".$persona[0]->fecha."</h5></div>
          <div class='card-header'><h5>Cliente: ".$persona[0]->nombre."</h5></div>";
         
-        echo"<div class='card'>";
+        echo"<div class='card' style='padding-bottom:2%'>";
       
         $consulta = "SELECT ficha_fisio.altura, ficha_fisio.peso, ficha_fisio.observaciones, ficha_fisio.motivo
         from ficha_fisio 
@@ -104,32 +105,43 @@
 
         foreach($ficha as $fila)
         {
+        echo "<form action='../../scripts/guardarFichaFisio.php' method='post'>";
         echo "<div class='row'>";
 
         echo "<div class='col-lg-6 col-6'>";
         echo "<div class='modal-body' style='padding: 3%'>";
+        echo "<input type='hidden' name='idFicha' value='$idFicha'>";
         echo "<h6 style='font-weight:bold;color:black; opacity:0.7;'>Datos del paciente</h6><br>"; 
         echo "<p>Edad: ".$persona[0]->edad." años</p>";  
-        echo "<p>Altura: $fila->altura</p>";
-        echo "<p>Peso: ".$fila->peso." kg</p>";
+        echo "<p>Altura: </p>"."<input type='text' name='altura' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' placeholder='$fila->altura'></input>";
+        echo "<p>Peso: </p>"."<input type='text' name='peso' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' placeholder='$fila->peso'></input>";
         echo "</div>";
         echo "</div>";
 
         echo "<div class='col-lg-6 col-6'>";
         echo "<div class='modal-body' style='padding: 3%'>";
         echo "<h6 style='font-weight:bold;color:black; opacity:0.7;'>Detalles: </h6><br>"; 
-        echo "<p>Motivo: $fila->motivo</p>";
-        echo "<p>Observaciones: ".$fila->observaciones."</p>";
+        echo "<p>Motivo: </p>"."<textarea name='motivo' style='border-radius:4%;padding:3px; width:50%; border: none;background-color:lightgrey' placeholder='$fila->motivo'></textarea>";
+        echo "<p>Observaciones:</p>"."<textarea name='observaciones' style='border-radius:4%;padding:3px; width:50%; border: none;background-color:lightgrey' placeholder='$fila->observaciones'></textarea>";
         echo "</div>";
         echo "</div>";
+
 
         echo "</div>";
         }
-        echo "</div>
+        echo "
+        <div class='container text-center'>
+        <button type='reset' value='Limpiar' class='btn btn-secondary'>Borrar cambios</button>
+        <button type='submit'name='guardar' class='btn btn-warning' style='margin-left:50px'>Guardar cambios</button>
+        </div>
+
+        </div>
         </div>";
 
-        echo "</div>
-        </div>";
+        echo "
+        </div>
+        </div>
+        </form>";
 
       }
       else
@@ -140,9 +152,9 @@
       $conexion->desconectarBD();
       ?>
         
-
-    </div>
     
-
+   
+    </div>
+     
     </body>
 </html>
