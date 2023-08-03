@@ -89,6 +89,7 @@
 </script>
 
 
+
   
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
@@ -117,7 +118,7 @@
     }
     else 
     {
-        header("Location:../../First.php?modal=true");
+        header("Location: ../../First.php");
     }
        
     ?>

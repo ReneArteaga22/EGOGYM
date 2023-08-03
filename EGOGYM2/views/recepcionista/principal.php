@@ -100,7 +100,7 @@
         INNER JOIN persona ON empleado.id_empleado = persona.id_persona
         ) AS e ON citas.serv_emp = e.id_empserv 
          where citas.fecha = curdate()
-         group by cliente;
+         group by citas.id_cita;
         ";
          $tabla = $conexion->seleccionar($consulta);
          foreach($tabla as $registro)

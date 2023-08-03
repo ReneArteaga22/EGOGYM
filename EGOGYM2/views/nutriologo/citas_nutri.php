@@ -53,7 +53,9 @@
     }
        
     ?>
-    <nav class="navbar navbar-expand-lg fixed-top">
+
+
+<nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
             <a class="navbar-brand" href="../nutriologo/principal.php">EGO GYM</a>
@@ -88,7 +90,6 @@
         </div>
     </nav>
 
-
     <!--Crea pills para todas las citas, citas canceladas, confirmadas, completadas, en las tres
      filtrar citas por fecha, entrenador, servicio-->
    <div class="container" style="padding-top: 15%;"> 
@@ -99,6 +100,24 @@
             <li class="active"><a data-toggle="tab" href="#citas_pr" style="margin-left: 20px;">Citas próximas</a></li>
             <li><a data-toggle="tab" href="#citas" style="margin-left: 20px;">Citas pasadas</a></li>
         </ul>
+        <?php
+        $db= new database();
+        $db->conectarDB();
+         $email = $_SESSION["correo"];
+         $consulta = "SELECT servicios_empleados.id_empserv from servicios_empleados
+         inner join empleado on empleado.id_empleado= servicios_empleados.empleado
+         inner join persona on persona.id_persona=empleado.id_empleado
+         where correo ='$email'";
+         $datos = $db -> seleccionar($consulta);
+     
+             foreach ($datos as $dato)
+             {
+               $ID = $dato->id_empserv;
+             }
+     
+            
+         ?>
+
         <div class="tab-content">
         <div class="tab-pane fade" id="citas">
         <?php
@@ -119,6 +138,7 @@
                 INNER JOIN persona ON empleado.id_empleado = persona.id_persona
                 ) AS e ON citas.serv_emp = e.id_empserv 
                 where e.servicio='nutricion' AND concat(citas.fecha,' ',citas.hora) < now()
+                AND citas.serv_emp=$ID
                 ";
                 $conexion->seleccionar($consulta);
                 $tabla = $conexion->seleccionar($consulta);
@@ -187,19 +207,21 @@
                 $conexion = new database();
                     $conexion->conectarDB();    
                     $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente, 
-                    e.servicio as servicio,e.empleado AS empleado, citas.hora as hora
-                    from citas INNER JOIN cliente ON cliente.id_cliente= citas.cliente
+                    e.servicio as servicio,e.empleado AS empleado, citas.hora as hora, citas.fecha as fecha, citas.estado as estado, citas.id_cita as num,
+                    ficha_nutri.id_ficha from citas INNER JOIN cliente ON cliente.id_cliente= citas.cliente
                     INNER JOIN persona ON persona.id_persona = cliente.id_cliente
+                    INNER JOIN ficha_nutri on ficha_nutri.cita=citas.id_cita
                     INNER JOIN
                     (
                     SELECT id_empserv, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS empleado,
-                    servicios.nombre as servicio
+                    servicios.nombre as servicio 
                     FROM servicios_empleados 
                     INNER JOIN servicios ON servicios.codigo=servicios_empleados.servicio
                     INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
                     INNER JOIN persona ON empleado.id_empleado = persona.id_persona
                     ) AS e ON citas.serv_emp = e.id_empserv 
-                    where citas.fecha = curdate() AND e.servicio='nutricion'
+                    where e.servicio='nutricion' AND citas.fecha = curdate() AND citas.estado='confirmada'
+                    AND citas.serv_emp=$ID
                     ";
                     echo 
                     "
@@ -282,6 +304,7 @@
                     INNER JOIN persona ON empleado.id_empleado = persona.id_persona
                     ) AS e ON citas.serv_emp = e.id_empserv 
                     where citas.fecha > curdate() AND e.servicio='nutricion'
+                    AND citas.serv_emp=$ID
                     ";
                     echo 
                     "
