@@ -7,7 +7,7 @@
      <meta name="keywords" content="">
      <meta name="author" content="">
      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-     <title>Citas nutri</title>
+     <title>Citas spin</title>
       <!-- SCRIPTS -->
       <script src="js/jquery.min.js"></script>
       <script src="js/bootstrap.min.js"></script>
@@ -53,7 +53,7 @@
 
     <!--Crea pills para todas las citas, citas canceladas, confirmadas, completadas, en las tres
      filtrar citas por fecha, entrenador, servicio-->
-   <div class="container" style="padding-top: 15%;"> 
+     <div class="container" style="padding-top: 15%;"> 
         <h3 data-aos="fade-right">Citas agendadas</h3>
 
         <ul class="nav nav-tabs">
@@ -61,237 +61,172 @@
             <li class="active"><a data-toggle="tab" href="#citas_pr" style="margin-left: 20px;">Citas próximas</a></li>
             <li><a data-toggle="tab" href="#citas" style="margin-left: 20px;">Citas pasadas</a></li>
         </ul>
+
         <div class="tab-content">
-        <div class="tab-pane fade" id="citas">
-        <?php
-                include '../recepcionista/database_gym.php';
-                $conexion = new database();
-                $conexion->conectarDB();
-                $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente, 
-                e.servicio as servicio,e.empleado AS empleado, citas_spinning.hora as hora, citas_spinning.fecha as fecha, citas_spinning.estado as estado, citas_spinning.id_cita as num
-                from citas_spinning INNER JOIN cliente ON cliente.id_cliente= citas_spinning.cliente
-                INNER JOIN persona ON persona.id_persona = cliente.id_cliente
-                INNER JOIN
-                (
-                SELECT id_empserv, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS empleado,
-                servicios.nombre as servicio 
-                FROM servicios_empleados 
-                INNER JOIN servicios ON servicios.codigo=servicios_empleados.servicio
-                INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
-                INNER JOIN persona ON empleado.id_empleado = persona.id_persona
-                ) AS e ON citas_spinning.entrenador = e.id_empserv 
-                where e.servicio='spinning' AND concat(citas_spinning.fecha,citas_spinning.hora) < now()
-                ";
-                $conexion->seleccionar($consulta);
-                $tabla = $conexion->seleccionar($consulta);
-                echo 
-                "
-                <table class='table' style='border-radius: 5px;width:60%'>
-                <thead class='table-dark' style='text-align:'center;''>
-                    <tr>
-                    <br>
-                        <th style='color: goldenrod'>
-                        No.Cita
-                        </th>
-                        <th style='color: goldenrod;'>
-                        Cliente
-                        </th>
-                        <th style='color: goldenrod;'>
-                        Fecha
-                        </th>
-                        <th style='color: goldenrod;'>
-                        Hora
-                        </th>
-                        <th style='color: goldenrod;'>
-                        Ficha medica
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>";
+            <div class="tab-pane fade" id="citas">
+<?php
+include 'conexion/database2.php';
 
-                foreach ($tabla as $registro)
-                {
-                    echo "<tr>";
-                    echo "<td>$registro->num</td>";
-                    echo "<td> $registro->cliente</td> ";
-                    echo "<td> $registro->fecha </td> ";
-                    echo "<td> $registro->hora</td> ";
-                    echo "<td><a href='verFicha.php?id=" . $registro->id_ficha . "'>Ver ficha médica</a></td>";
-                    echo "</tr>";
-                }
-                echo "</tbody>
-                </table>";
-                ?>
+$conexion = new database();
+$conexion->conectarDB();
+
+$consulta = "SELECT concat(persona.nombre, ' ', persona.apellido_paterno, ' ', persona.apellido_materno) AS cliente, 
+       e.servicio as servicio, e.empleado AS empleado, citas.hora as hora, citas.fecha as fecha, 
+       citas.estado as estado, citas.id_cita as num
+FROM citas_spinning AS citas
+INNER JOIN cliente ON cliente.id_cliente = citas.cliente
+INNER JOIN persona ON persona.id_persona = cliente.id_cliente
+INNER JOIN
+(
+    SELECT id_empserv, concat(persona.nombre, ' ', persona.apellido_paterno, ' ', persona.apellido_materno) AS empleado,
+           servicios.nombre as servicio 
+    FROM servicios_empleados 
+    INNER JOIN servicios ON servicios.codigo = servicios_empleados.servicio
+    INNER JOIN empleado ON servicios_empleados.empleado = empleado.id_empleado
+    INNER JOIN persona ON empleado.id_empleado = persona.id_persona
+) AS e ON citas.entrenador = e.id_empserv 
+WHERE e.servicio = 'spinning' AND concat(citas.fecha, ' ', citas.hora) < NOW()";
+
+$conexion->seleccionar($consulta);
+$tabla = $conexion->seleccionar($consulta);
+
+if (count($tabla) > 0) {
+    echo "<table class='table' style='border-radius: 5px;width:60%'>";
+    echo "<thead class='table-dark' style='text-align:'center;''>";
+    echo "<tr><br><th style='color: goldenrod;'>No.Cita</th><th style='color: goldenrod;'>Cliente</th><th style='color: goldenrod;'>Fecha</th><th style='color: goldenrod;'>Hora</th></tr>";
+    echo "</thead><tbody>";
+
+    foreach ($tabla as $registro) {
+        echo "<tr>";
+        echo "<td>$registro->num</td>";
+        echo "<td>$registro->cliente</td>";
+        echo "<td>$registro->fecha</td>";
+        echo "<td>$registro->hora</td>";
+        echo "</tr>";
+    }
+
+    echo "</tbody></table>";
+} else {
+    echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay citas anteriores!</h2>";
+}
+?>
             </div>
-        <div class="tab-pane fade" id="citas_hoy">
+
+            <div class="tab-pane fade" id="citas_hoy">
             <?php
-             $conexion = new database();
-             $conexion->conectarDB();
-     
-             $consulta = "SELECT count(citas_spinning.id_cita) cantidad, servicios.nombre from citas_spinning
-             inner join servicios_empleados on 
-             servicios_empleados.id_empserv=citas_spinning.entrenador
-             inner join servicios on
-             servicios.codigo=servicios_empleados.servicio
-             where citas_spinning.fecha= curdate() AND servicios.nombre='spinning'
-              group by servicio;
-             ";
-              $conexion->seleccionar($consulta);
-              $tabla = $conexion->seleccionar($consulta);
-              foreach($tabla as $registro)
-              {
-                  $registro->cantidad;
-     
-                  $cant = $registro;
-              }
-            if(isset($cant) != '0')
-             {
-                $conexion = new database();
-                    $conexion->conectarDB();    
-                    $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente, 
-                    e.servicio as servicio,e.empleado AS empleado, citas_spinning.hora as hora
-                    from citas_spinning INNER JOIN cliente ON cliente.id_cliente= citas_spinning.cliente
-                    INNER JOIN persona ON persona.id_persona = cliente.id_cliente
-                    INNER JOIN
-                    (
-                    SELECT id_empserv, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS empleado,
-                    servicios.nombre as servicio
-                    FROM servicios_empleados 
-                    INNER JOIN servicios ON servicios.codigo=servicios_empleados.servicio
-                    INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
-                    INNER JOIN persona ON empleado.id_empleado = persona.id_persona
-                    ) AS e ON citas_spinning.entrenador = e.id_empserv 
-                    where citas_spinning.fecha = curdate() AND e.servicio='spinning'
-                    ";
-                    echo 
-                    "
-                    <table class='table' style='border-radius: 5px;width:60%'>
-                    <thead class='table-dark' style='text-align:'center;''>
-                        <tr>
-                        <br>
-                            <th style='color: goldenrod;'>
-                            Cliente
-                            </th>
-                            <th style='color: goldenrod;'>
-                            Hora
-                            </th>
-                            <th style='color: goldenrod;'>
-                            Ficha medica
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>";
+$consulta = "SELECT count( citas.id_cita) cantidad, servicios.nombre 
+             FROM citas_spinning AS citas
+             INNER JOIN servicios_empleados ON servicios_empleados.id_empserv = citas.entrenador
+             INNER JOIN servicios ON servicios.codigo = servicios_empleados.servicio
+             WHERE citas.fecha = CURDATE() AND servicios.nombre = 'spinning'
+             GROUP BY servicio";
 
-                    $conexion->seleccionar($consulta);
-                    $tabla = $conexion->seleccionar($consulta);
+$conexion->seleccionar($consulta);
+$tabla = $conexion->seleccionar($consulta);
 
-                    foreach ($tabla as $registro)
-                    {
-                        echo "<tr>";
-                        echo "<td> $registro->cliente</td> ";
-                        echo "<td> $registro->hora</td> ";
-                        echo "<td><a href='modFicha.php?id=" . $registro->id_ficha . "'>Generar ficha médica</a></td>";
-                        echo "</tr>";
-                    }
-                    echo "</tbody>
-                    </table>";
-                    $conexion->desconectarBD();
-             }
-             else
-            {
-               echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay citas pendientes!</h2>";
-            }
-            ?>
+foreach ($tabla as $registro) {
+    $cant = $registro;
+}
+
+if (isset($cant) != '0') {
+    $consulta = "SELECT concat(persona.nombre, ' ', persona.apellido_paterno, ' ', persona.apellido_materno) AS cliente, 
+    e.servicio as servicio, e.empleado AS empleado, citas.hora as hora
+    FROM citas_spinning AS citas
+    INNER JOIN cliente ON cliente.id_cliente = citas.cliente
+    INNER JOIN persona ON persona.id_persona = cliente.id_cliente
+    INNER JOIN
+    (
+        SELECT id_empserv, concat(persona.nombre, ' ', persona.apellido_paterno, ' ', persona.apellido_materno) AS empleado,
+               servicios.nombre as servicio
+        FROM servicios_empleados 
+        INNER JOIN servicios ON servicios.codigo = servicios_empleados.servicio
+        INNER JOIN empleado ON servicios_empleados.empleado = empleado.id_empleado
+        INNER JOIN persona ON empleado.id_empleado = persona.id_persona
+    ) AS e ON citas.entrenador = e.id_empserv 
+    WHERE citas.fecha = CURDATE() AND e.servicio = 'spinning'";
+    $conexion->seleccionar($consulta);
+    $tabla = $conexion->seleccionar($consulta);
+
+    echo "<table class='table' style='border-radius: 5px;width:60%'>";
+    echo "<thead class='table-dark' style='text-align:'center;''>";
+    echo "<tr><br><th style='color: goldenrod;'>Cliente</th><th style='color: goldenrod;'>Hora</th></tr>";
+    echo "</thead><tbody>";
+
+    foreach ($tabla as $registro) {
+        echo "<tr>";
+        echo "<td>$registro->cliente</td>";
+        echo "<td>$registro->hora</td>";
+        echo "</tr>";
+    }
+
+    echo "</tbody></table>";
+} else {
+    echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay citas pendientes!</h2>";
+}
+?>
             </div>
 
             <div class="tab-pane fade" id="citas_pr">
             <?php
-             $conexion = new database();
-             $conexion->conectarDB();
-     
-             $consulta = "SELECT count(citas_spinning.id_cita) cantidad, servicios.nombre from citas
-             inner join servicios_empleados on 
-             servicios_empleados.id_empserv=citas_spinning.entrenador
-             inner join servicios on
-             servicios.codigo=servicios_empleados.servicio
-             where citas_spinning.fecha > curdate() AND servicios.nombre='spinning'
-             group by servicio;
-             ";
-              $conexion->seleccionar($consulta);
-              $tabla = $conexion->seleccionar($consulta);
-              foreach($tabla as $registro)
-              {
-                  $registro->cantidad;
-     
-                  $cant_2 = $registro;
-              }
-              
-            if(isset($cant_2) != '0')
-             {
-                $conexion = new database();
-                    $conexion->conectarDB();    
-                    $consulta = "SELECT concat(persona.nombre, ' ', persona.apellido_paterno, ' ', persona.apellido_materno) AS cliente, 
-                    e.servicio as servicio, e.empleado AS empleado, citas_spinning.hora as hora, citas_spinning.fecha, citas_spinning.estado
-                    from citas_spinning INNER JOIN cliente ON cliente.id_cliente = citas_spinning.cliente
+$consulta = "SELECT count(citas.id_cita) cantidad, servicios.nombre 
+             FROM citas_spinning AS citas
+             INNER JOIN servicios_empleados ON servicios_empleados.id_empserv = citas.entrenador
+             INNER JOIN servicios ON servicios.codigo = servicios_empleados.servicio
+             WHERE citas.fecha > CURDATE() AND servicios.nombre = 'spinning'
+             GROUP BY servicio";
+
+$conexion->seleccionar($consulta);
+$tabla = $conexion->seleccionar($consulta);
+
+foreach ($tabla as $registro) {
+    $cant_2 = $registro;
+}
+
+if (isset($cant_2) != '0') {
+    $consulta = "SELECT concat(persona.nombre, ' ', persona.apellido_paterno, ' ', persona.apellido_materno) AS cliente, 
+                    e.servicio as servicio, e.empleado AS empleado, citas.hora as hora, citas.fecha, citas.estado
+                    FROM citas_spinning AS citas
+                    INNER JOIN cliente ON cliente.id_cliente = citas.cliente
                     INNER JOIN persona ON persona.id_persona = cliente.id_cliente
                     INNER JOIN
                     (
-                    SELECT id_empserv, concat(persona.nombre, ' ', persona.apellido_paterno, ' ', persona.apellido_materno) AS empleado,
-                    servicios.nombre as servicio
-                    FROM servicios_empleados 
-                    INNER JOIN servicios ON servicios.codigo = servicios_empleados.servicio
-                    INNER JOIN empleado ON servicios_empleados.empleado = empleado.id_empleado
-                    INNER JOIN persona ON empleado.id_empleado = persona.id_persona
-                    ) AS e ON citas_spinning.entrenador = e.id_empserv 
-                    where citas_spinning.fecha > curdate() AND e.servicio ='spinning'
-                    ";
-                    echo 
-                    "
-                    <table class='table' style='border-radius: 5px;width:60%'>
-                    <thead class='table-dark' style='text-align:'center;''>
-                        <tr>
-                        <br>
-                            <th style='color: goldenrod;'>
-                            Cliente
-                            </th>
-                            <th style='color: goldenrod;'>
-                            Fecha
-                            </th>
-                            <th style='color: goldenrod;'>
-                            Hora
-                            </th>
-                            <th style='color: goldenrod;'>
-                            Estatus
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>";
+                        SELECT id_empserv, concat(persona.nombre, ' ', persona.apellido_paterno, ' ', persona.apellido_materno) AS empleado,
+                               servicios.nombre as servicio
+                        FROM servicios_empleados 
+                        INNER JOIN servicios ON servicios.codigo = servicios_empleados.servicio
+                        INNER JOIN empleado ON servicios_empleados.empleado = empleado.id_empleado
+                        INNER JOIN persona ON empleado.id_empleado = persona.id_persona
+                    ) AS e ON citas.entrenador = e.id_empserv 
+                    WHERE citas.fecha > CURDATE() AND e.servicio = 'spinning'";
 
-                    $conexion->seleccionar($consulta);
-                    $tabla = $conexion->seleccionar($consulta);
+    $conexion->seleccionar($consulta);
+    $tabla = $conexion->seleccionar($consulta);
 
-                    foreach ($tabla as $registro)
-                    {
-                        echo "<tr>";
-                        echo "<td> $registro->cliente</td> ";
-                        echo "<td> $registro->fecha</td> ";
-                        echo "<td> $registro->hora</td> ";
-                        echo "<td>$registro->estado</td>";
-                        echo "</tr>";
-                    }
-                    echo "</tbody>
-                    </table>";
-                    $conexion->desconectarBD();
-             }
-             else
-            {
-               echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay citas pendientes!</h2>";
-            }
-            ?>
+    echo "<table class='table' style='border-radius: 5px;width:60%'>";
+    echo "<thead class='table-dark' style='text-align:'center;''>";
+    echo "<tr><br><th style='color: goldenrod;'>Cliente</th><th style='color: goldenrod;'>Fecha</th><th style='color: goldenrod;'>Hora</th><th style='color: goldenrod;'>Estatus</th></tr>";
+    echo "</thead><tbody>";
+
+    foreach ($tabla as $registro) {
+        echo "<tr>";
+        echo "<td>$registro->cliente</td>";
+        echo "<td>$registro->fecha</td>";
+        echo "<td>$registro->hora</td>";
+        echo "<td>$registro->estado</td>";
+        echo "</tr>";
+    }
+
+    echo "</tbody></table>";
+} else {
+    echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay citas pendientes!</h2>";
+}
+?>
             </div>
-
         </div>
-   </div>
+    </div>
+ 
+    </body>
+</html>
 
    
     </body>
