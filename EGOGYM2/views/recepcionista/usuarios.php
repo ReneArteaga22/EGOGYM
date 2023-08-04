@@ -143,7 +143,8 @@
             persona.tipo_usuario as tipo_us, persona.telefono as contacto_emp, persona.id_persona
             from persona 
             inner join empleado on
-            empleado.id_empleado=persona.id_persona";
+            empleado.id_empleado=persona.id_persona
+            where empleado.tipo_empleado != 'recepcionista'";
             $conexion->seleccionar($consulta);
             $tabla = $conexion->seleccionar($consulta);
         

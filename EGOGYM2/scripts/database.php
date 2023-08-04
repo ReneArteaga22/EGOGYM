@@ -111,6 +111,10 @@ class Database
                     {
                         header("Location: ../views/nutriologo/principal.php ");
                     }
+                    else if ($fila['tipo_empleado'] === 'entrenador')
+                    {
+                        header("Location: ../views/entrenador/inicio.php");
+                    }
                     else
                     {
                         echo "NO SE PUDO ACCEDER";  

@@ -102,7 +102,7 @@
     </nav>
 
     <div class="container" style="padding: 15%;">
-    <form action="../../scripts/guardarUsuario(rec).php" method="post" style="background-color: black; opacity: 0.8; border-radius: 5px; padding: 5%;margin: auto; width: 80%;">
+    <form action="../../scripts/guardausu(rec).php" method="post" style="background-color: black; opacity: 0.8; border-radius: 5px; padding: 5%;margin: auto; width: 80%;">
                 <div class="row" style="padding: 3%;">
                   <legend class="form-label" style="color: goldenrod;">Registrar usuario</legend>
                   <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">

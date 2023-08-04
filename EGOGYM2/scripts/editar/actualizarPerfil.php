@@ -42,12 +42,12 @@ while($conexion->ejecutarSQL($cadena))
 if($pase=true)
 {
     echo"<div class='alert alert-success text-center'>Actualizacion de datos realizada con exito</div>";
-    header("refresh:2 ../../views/clientes/Perfil.php");
+    header("refresh:20 ../../views/clientes/Perfil.php");
 }
 else
 {
     echo "<div class='alert alert-warning'>No se pudo actualizar</div>";
-    header("refresh:2 ../views/clientes/editarPerfil.php");
+    header("refresh:20 ../views/clientes/editarPerfil.php");
 }
 ?>
 </body>
