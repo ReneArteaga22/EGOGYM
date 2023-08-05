@@ -184,7 +184,7 @@
     <div class="tab-content">
 
     <!--Agendar citas nutri-->
-         <div id="agendar_nutri" class="tab-pane fade">
+         <div id="agendar_nutri" class="tab-pane active">
          <form action="../../scripts/guardaCitas.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:5%">
             <div class="row">
                   <legend class="form-label" style="color: goldenrod;">Agendar Cita</legend>

@@ -146,7 +146,7 @@ if (count($tabla) > 0) {
 ?>
             </div>
 
-            <div class="tab-pane fade" id="citas_hoy">
+            <div class="tab-pane active" id="citas_hoy">
             <?php
 $consulta = "SELECT count( citas.id_cita) cantidad, servicios.nombre 
              FROM citas_spinning AS citas

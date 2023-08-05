@@ -44,12 +44,37 @@
 
 </head>
 <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
+<?php
+    include '../../scripts/database.php';
+    $conexion = new Database();
+    $conexion->conectarDB();
 
+    session_start();
+    $email = $_SESSION["correo"];
+    $consulta = "SELECT tipo_empleado from persona inner join empleado on persona.id_persona = empleado.id_empleado
+        where correo ='$email'";
+    $datos = $conexion -> seleccionar($consulta);
+
+        foreach ($datos as $dato)
+        {
+          $tipo = $dato->tipo_empleado;
+        }
+
+    if(isset($email) and $tipo == 'recepcionista' )
+    {
+      
+    }
+    else 
+    {
+        header("Location:../../First.php");
+    }
+       
+    ?>
     <!-- MENU BAR -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="index.html">EGO GYM</a>
+            <a class="navbar-brand" href="../recepcionista/principal.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -59,35 +84,43 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="#home" class="nav-link smoothScroll">Home</a>
+                        <a href="../recepcionista/principal.php" class="nav-link smoothScroll">Inicio</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" > Citas</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="citas.php">Agendar Cita</a></li>
+                          <li><a class="dropdown-item" href="vercitas.php">Ver Citas</a></li>
+                        </ul>
+                      </li>
+
+                    <li class="nav-item">
+                        <a href="usuarios.php" class="nav-link smoothScroll">Usuarios</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="#about" class="nav-link smoothScroll">Sobre Nosotros</a>
+                        <a href="registrarusu.php" class="nav-link smoothScroll">Registrar Nuevo Usuario</a>
                     </li>
-
-                    <li class="nav-item">
-                        <a href="#serv" class="nav-link smoothScroll">Servicios</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="#schedule" class="nav-link smoothScroll">Calendario</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="#contact" class="nav-link smoothScroll">Contacto</a>
-                    </li>
-                    <li class="nav-item">
-                        <!---->
-                        <div class="btn-group-sm"> 
-                            <a href="#" class="btn btn-sm custom-btn bg-color "  data-toggle="modal" data-target="#membershipForm">Inicia Sesión</a> 
-                    </li>
+                    
                 </ul>
 
+                <ul class="navbar-nav ml-lg-2">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" >
+                         Hola Recepcionista
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
+                        </ul>
+                      </li>
+                </ul>
             </div>
-
         </div>
     </nav>
+
 
     <div class="container">
         <div class="main-body">
@@ -97,7 +130,7 @@
                   <div class="card">
                     <div class="card-body">
                       <div class="d-flex flex-column align-items-center text-center">
-                      <img src="../images/class/boxwax.jpg" alt="user" class="rounded-circle" width="250">
+                      <img src="../../images/class/boxwax.jpg" alt="user" class="rounded-circle" width="250">
                       
                     
                       </div>
@@ -106,7 +139,6 @@
                   </div>
                   <div class="card mt-3">
                     <?php
-                    include '../../scripts/database.php';
                     $conexion = new Database();
                     $conexion->conectarDB();
                     

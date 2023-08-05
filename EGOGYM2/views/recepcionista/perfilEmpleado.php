@@ -49,7 +49,7 @@
     }
        
     ?>
-    <nav class="navbar navbar-expand-lg fixed-top">
+   <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
             <a class="navbar-brand" href="../recepcionista/principal.php">EGO GYM</a>
@@ -98,6 +98,7 @@
             </div>
         </div>
     </nav>
+
 
       
     <div class="container" style="padding-top: 14%;">

@@ -188,7 +188,7 @@
     </div>
    <div class="container" >
     <div class="tab-content">
-        <div id="nutri" class="tab-pane fade">
+        <div id="nutri" class="tab-pane active">
         <br>
         <div class="container">
             <form action="../../scripts/guardaCitasUsu.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:5%">

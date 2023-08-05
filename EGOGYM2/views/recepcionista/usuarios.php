@@ -84,7 +84,7 @@
 </ul>
      <div class="container">
      <div class="tab-content">
-  <div id="clientes" class="tab-pane fade in active">
+  <div id="clientes" class="tab-pane active">
   <?php
         include '../../scripts/database.php';
         $conexion = new database();

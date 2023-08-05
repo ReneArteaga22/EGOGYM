@@ -121,7 +121,7 @@
     <div class="tab-content">
 
     <!--Citas-->
-    <div id="citas" class="tab-pane fade">
+    <div id="citas" class="tab-pane active">
          <?php
         $conexion = new database();
         $conexion->conectarDB();

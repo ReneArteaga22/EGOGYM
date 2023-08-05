@@ -50,10 +50,10 @@
        
     ?>
 
-    <nav class="navbar navbar-expand-lg fixed-top">
+<nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../fisioterapeuta/principal.php">EGO GYM</a>
+            <a class="navbar-brand" href="../nutriologo/citas_nutri.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -63,55 +63,74 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                        <a href="../fisioterapeuta/principal.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="inicio.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="../fisioterapeuta/citas_fisio.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="citas.php" class="nav-link smoothScroll">Citas</a>
                     </li>
                 </ul>
+                <ul class="navbar-nav ml-lg-2">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" >
+                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
+                        </ul>
             </div>
         </div>
     </nav>
-
     <div class="container">
 
         <div class="card bg-light" style="margin-top: 99px;">
         <div class="card-header bg-dark text-white">
           Informacion Personal
         </div>
-        <div class="card-body row">
-            <div class="col-lg-6 col-xs-12  col-sm-12 col-md-7 text-center">
-            <img src="../../images/class/boxwax.jpg" class="rounded-circle" alt="..." style="width: 60%;">
-            <input class="form-control form-control-sm" id="formFileSm" type="file" form="../../scripts/editar/actualizarPerfil.php" method="post">
-          </div>
+        
+    <?php
+    $conexion = new Database();
+    $conexion->conectarDB();
 
+    $email = $_SESSION["correo"];
 
-        <?php
-        $conexion = new Database();
-        $conexion->conectarDB();
+    $consulta = "select persona.foto as foto,concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
+    persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña, plan.nombre as plan,
+    concat(cliente.fecha_ini,'  ','de','  ',cliente.fecha_fin) as periodo from persona
+    left join cliente on persona.id_persona = cliente.id_cliente
+    left join plan on cliente.codigo_plan = plan.codigo
+    where persona.correo = '$email'";
+    $datos_per = $conexion ->seleccionar($consulta);
+    $imagenPorDefecto = "../../images/class/boxwax.jpg"; 
 
-        $idPersona = $_GET['id'];
     
-        $consulta = "SELECT concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
-        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña, persona.id_persona,
-        FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad 
-         from persona
-        where persona.id_persona in (select entrenador.id_ent from entrenador) AND persona.correo='$email'";
-        $datos_per = $conexion ->seleccionar($consulta);
+    foreach($datos_per as $registro)
+    {
+      echo "<div class='card-body row'>";
+      echo "<div class='col-lg-6 col-xs-12  col-sm-12 col-md-7 text-center'>";
 
-        foreach($datos_per as $registro)
-        {
-            echo "<form action='../../scripts/editar/actualizarPerfil.php' method='POST'>";
-            echo "<div class='col-lg-12 col-12 col-sm-12 col-md-12'>";
-            echo "<p>Nombre: $registro->nombre </p>";
-            echo "<input type='mail' value='$registro->correo' class='form-control w-75' name='correo'>";
-            echo "<input type='text' value='$registro->telefono' class='form-control w-50' name='telefono'>";
-            echo "<p>Fecha de nacimiento: $registro->fecha_nacimiento </p>";
-            echo "<p>Sexo: $registro->sexo </p>";
-            echo "<p>Contraseña:</p><input type='password' value='$registro->contraseña' class='form-control w-50' name='contra'>";
+// Operador ternario para determinar qué URL de imagen utilizar
 
-        }    
-        ?>
+echo "<form action='../../scripts/editar/actualizar_entre.php' method='POST' enctype='multipart/form-data'>";
+$urlImagenMostrar = $registro->foto ? $registro->foto : $imagenPorDefecto;
+
+echo "<img src='$urlImagenMostrar' class='rounded-circle' alt='...' style='width: 60%'>";
+echo "<input class='form-control form-control-sm' id='foto' name='foto' type='file' >";
+echo "</div>";
+       
+        echo "<div class='col-lg-6 col-12 col-sm-12 col-md-12'>";
+        echo "<p>Nombre: $registro->nombre </p>";
+        echo "<p>Correo: $registro->correo </p>";
+        echo "<p>Telefono:</p><input type='text' value='$registro->telefono' class='form-control w-50' name='telefono'>";
+        echo "<p>Fecha de nacimiento: $registro->fecha_nacimiento </p>";
+        echo "<p>Sexo: $registro->sexo </p>";
+        echo "<p>Contraseña:</p><input type='password' value='$registro->contraseña' class='form-control w-50' name='contra'>";
+        echo "<p>Plan: $registro->plan </p>";
+        echo "<p>Periodo: $registro->periodo </p>";
+
+
+    }    
+    ?>
        
        <button type="reset" value="Limpiar" class="btn btn-secondary">Borrar cambios</button>
             <button type="submit"name="Guardar" class="btn btn-warning">Guardar cambios</button>      

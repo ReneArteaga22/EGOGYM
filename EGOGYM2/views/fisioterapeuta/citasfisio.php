@@ -54,10 +54,10 @@
        
     ?>
 
-    <nav class="navbar navbar-expand-lg fixed-top">
+<nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../fisioterapeuta/principal.php">EGO GYM</a>
+            <a class="navbar-brand" href="principal.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -67,12 +67,22 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                        <a href="../fisioterapeuta/principal.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="../fisioterapeuta/citas_fisio.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="citasfisio.php" class="nav-link smoothScroll">Citas</a>
                     </li>
                 </ul>
+                <ul class="navbar-nav ml-lg-2">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" >
+                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
+                          <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
+                        </ul>
             </div>
         </div>
     </nav>
@@ -93,7 +103,6 @@
         <?php
         $db= new database();
         $db->conectarDB();
-         session_start();
          $email = $_SESSION["correo"];
          $consulta = "SELECT servicios_empleados.id_empserv from servicios_empleados
          inner join empleado on empleado.id_empleado= servicios_empleados.empleado
@@ -103,7 +112,7 @@
      
              foreach ($datos as $dato)
              {
-               $ID = $dato->id_persona;
+               $ID = $dato->id_empserv;
              }
      
             
@@ -172,7 +181,7 @@
                 </table>";
                 ?>
             </div>
-        <div class="tab-pane fade" id="citas_hoy">
+        <div class="tab-pane active" id="citas_hoy">
             <?php
              $conexion = new database();
              $conexion->conectarDB();

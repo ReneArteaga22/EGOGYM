@@ -181,7 +181,7 @@
                 </table>";
                 ?>
             </div>
-        <div class="tab-pane fade" id="citas_hoy">
+        <div class="tab-pane active" id="citas_hoy">
             <?php
              $conexion = new database();
              $conexion->conectarDB();
