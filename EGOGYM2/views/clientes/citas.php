@@ -263,7 +263,6 @@
                   <legend class="form-label" style="color: goldenrod;">Agendar Cita</legend>
                   <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
                   <div class="col-12 col-lg-6">
-                  <label style='color: white;'>Cliente</label><br>
                   <?php
                     $db=new database();
                     $db->conectarDB();

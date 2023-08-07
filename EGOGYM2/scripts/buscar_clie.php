@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <head>
+<head>
     <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=Edge">
      <meta name="description" content="">
@@ -9,64 +9,20 @@
      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
      <title>Inicio</title>
       <!-- SCRIPTS -->
-      <script src="../../js/jquery.min.js"></script>
-      <script src="../../js/bootstrap.min.js"></script>
-      <script src="../../js/aos.js"></script>
-      <script src="../../js/smoothscroll.js"></script>
-      <script src="../../js/custom.js"></script>
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="../js/jquery.min.js"></script>
+      <script src="../js/bootstrap.min.js"></script>
+      <script src="../js/aos.js"></script>
+      <script src="../js/smoothscroll.js"></script>
+      <script src="../js/custom.js"></script>
 
-
-     <link rel="stylesheet" href="../../css/bootstrap.min.css">
-     <link rel="stylesheet" href="../../css/font-awesome.min.css">
-     <link rel="stylesheet" href="../../css/aos.css">
+     <link rel="stylesheet" href="../css/bootstrap.min.css">
+     <link rel="stylesheet" href="../css/font-awesome.min.css">
+     <link rel="stylesheet" href="../css/aos.css">
 
      <!-- MAIN CSS -->
-     <link rel="stylesheet" href="../../css/egogym.css">
-
-     <script>
-$(document).ready(function() {
-
-  $('.dropdown-menu a.dropdown-item').click(function(event) {
- 
-    event.preventDefault();
-
-
-    var href = $(this).attr('href');
-
-    
-    window.location.href = href;
-  });
-});
-</script>
+     <link rel="stylesheet" href="../css/egogym.css">
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
-    <?php
-    include '../../scripts/database.php';
-    $conexion = new Database();
-    $conexion->conectarDB();
-
-    session_start();
-    $email = $_SESSION["correo"];
-    $consulta = "SELECT tipo_empleado from persona inner join empleado on persona.id_persona = empleado.id_empleado
-        where correo ='$email'";
-    $datos = $conexion -> seleccionar($consulta);
-
-        foreach ($datos as $dato)
-        {
-          $tipo = $dato->tipo_empleado;
-        }
-
-    if(isset($email) and $tipo == 'recepcionista' )
-    {
-      
-    }
-    else 
-    {
-        header("Location:../../First.php");
-    }
-       
-    ?>
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
@@ -117,85 +73,105 @@ $(document).ready(function() {
         </div>
     </nav>
 
-    <!--Inicio de recepcionista-->
-    <div class="container" style="padding-top: 10%;">
-        <h1 data-aos="fade-up" style="text-align: center;">¡Bienvenido!</h1>
-        <hr class="dropdown divider" style="height: 2px;">
 
-        <!--Tablas de citas registradas para el día actual-->
-    </div>
-    <div class="container">
+    <!--Pills para buscar por clientes, empleados, nuevos usuarios-->
+    <!--Pills para todos los usuarios-->
+  <div class="container" style="padding-top: 15%;">
+  <ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#clientes">Clientes</a></li>
+  <li><a data-toggle="tab" href="#empleados" style="margin-left: 10px;">Empleados</a></li>
+  <li><a data-toggle="tab" href="#usuarios" style="margin-left: 10px;">Nuevos usuarios</a></li>
+</ul>
+     <div class="container">
+     <div class="tab-content">
+  <div id="clientes" class="tab-pane active">
+
+  <form action="../../scripts/buscar_clie.php" method="post">
+        <div class="mb-3 col-6" style="margin-top:20px;width:40%;">
+        <input type="text" name="cliente" placeholder="Buscar Cliente" class="form-control w-50" required>
+        </div>
+
+        <div class="d-grid gap-2 w-25">
+            <input class="btn btn-warning btn-sm " type="submit" value="Buscar">
+        </div>
         <?php
+
+        if($_POST)
+        {
+        include 'database.php';
+        extract($_POST);
         $conexion = new database();
         $conexion->conectarDB();
 
-        $consulta = "SELECT count(citas.id_cita) as cantidad, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente, 
-        e.servicio as servicio,e.empleado AS empleado, citas.hora as hora
-        from citas INNER JOIN cliente ON cliente.id_cliente= citas.cliente
-        INNER JOIN persona ON persona.id_persona = cliente.id_cliente
-        INNER JOIN
-        (
-        SELECT id_empserv, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS empleado,
-        servicios.nombre as servicio 
-        FROM servicios_empleados 
-        INNER JOIN servicios ON servicios.codigo=servicios_empleados.servicio
-        INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
-        INNER JOIN persona ON empleado.id_empleado = persona.id_persona
-        ) AS e ON citas.serv_emp = e.id_empserv 
-         where citas.fecha = curdate()
-         group by citas.id_cita;
-        ";
+        $consulta = " SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) as nombre,
+        persona.tipo_usuario as tipo,persona.telefono as contacto, persona.id_persona 
+        from persona 
+        inner join cliente on
+        cliente.id_cliente=persona.id_persona where nombre like '$cliente'
+        AND persona.id_persona IN(select cliente.id_cliente from cliente )";
+         $conexion->seleccionar($consulta);
          $tabla = $conexion->seleccionar($consulta);
-         foreach($tabla as $registro)
-         {
-             $cant = $registro->cantidad;
 
-             $cant = $registro;
-         }
-         if(isset($cant) != '0')
-         {
-            echo"<h3 data-aos='fade-right'>Citas del día de hoy</h3>";
-            echo 
+         echo 
          "
          <table class='table' style='border-radius: 5px;'>
          <thead class='table-dark'>
              <tr>
              <br>
                  <th style='color: goldenrod;'>
-                 Cliente
+                Nombre
                  </th>
                  <th style='color: goldenrod;'>
-                 Hora
+                 Tipo de usuario
                  </th>
                  <th style='color: goldenrod;'>
-                 Servicio
+                 Contacto
                  </th>
                  <th style='color: goldenrod;'>
-                 Empleado
+                 Estatus de membresía
                  </th>
+                 <th>
+                    </th>
+                 
              </tr>
          </thead>
          <tbody>";
          foreach ($tabla as $registro)
          {
              echo "<tr>";
-             echo "<td> $registro->cliente</td> ";
-             echo "<td> $registro->hora</td> ";
-             echo "<td> $registro->servicio</td> ";
-             echo "<td> $registro->empleado</td> ";
+             echo "<td><a href='../views/recepcionista/perfilCliente.php?id=" . $registro->id_persona . "'>" . $registro->nombre . "</a></td>";
+             echo "<td> $registro->tipo</td> ";
+             echo "<td> $registro->contacto</td> ";
          }
          echo "</tbody>
          </table>";
-         $conexion->desconectarBD();
-         }
-         else
-         {
-            echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay citas pendientes!</h2>";
-         }
+        }
+        ?> 
+            
+    </form>   
 
-         
-        ?>
-    </div>
+  
+  </div>
+  <div id="empleados" class="tab-pane fade">
+
+    <form action="buscar_emple.php" method="post">
+        <div class="mb-3 col-6" style="margin-top:20px;width:40%;">
+        <input type="text" name="empleado" placeholder="Buscar empleado" class="form-control w-50" required>
+        </div>
+
+        <div class="d-grid gap-2 w-25">
+            <input class="btn btn-warning btn-sm " type="submit" value="Buscar">
+        </div>
+            
+    </form>  
+
+        </div>
+
+        <div id="usuarios" class="tab-pane fade">
+        
+        </div>
+     </div>
+  </div>
 
     </body>
 </html>
