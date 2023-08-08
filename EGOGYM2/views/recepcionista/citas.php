@@ -117,7 +117,7 @@
     }
     else 
     {
-        header("Location:../../index.php");
+        header("Location:../../First.php");
     }
        
     ?>
@@ -185,32 +185,15 @@
 
     <!--Agendar citas nutri-->
          <div id="agendar_nutri" class="tab-pane active">
-         <form action="../../scripts/guardaCitas.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:5%">
+
+         <form action="../../scripts/guardaCitas.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:5%;">
             <div class="row">
                   <legend class="form-label" style="color: goldenrod;">Agendar Cita</legend>
                   <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
-                  <div class="col-12 col-lg-6">
+                  <div class="col-12 col-lg-6" style="padding: 3%;">
                   <label style='color: white;'>Cliente</label><br>
-                    <?php
-                     $db=new Database();
-                     $db->conectarDB();
-                     $cadena="SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente,
-                     cliente.id_cliente from persona inner join cliente on cliente.id_cliente=persona.id_persona;";
-                     $reg = $db->seleccionar($cadena);
-                     echo 
-                     "
-                     <div class='mb-3' style='width: 30%;'>
-                    <select name='cliente_op' class='form-select'>
-                     ";
-                     foreach($reg as $value)
-                    {
-                        echo "<option value='".$value->id_cliente."'>".$value->cliente."</option>";
-                    }
-
-                    echo "</select>
-                    </div>";
-                    ?>              
-
+                  <input type="text" name="cliente" placeholder="Nombre del cliente"><br> 
+                      <p style="font-size: 12px; color:goldenrod; margin-left:5px">* Es obligatorio escribir el nombre completo</p>    
                     <?php
                     $db=new database();
                     $db->conectarDB();
@@ -222,11 +205,10 @@
                      inner join persona on persona.id_persona=empleado.id_empleado
                      where servicios.nombre='nutricion'";
                     $reg =$db->seleccionar($cadena);
-                    
                     echo 
                     "<div class='mb-3' style='width: 30%;'>
                     <label class='control-label' style='color:white;'>
-                    Servicio
+                    Empleado
                     </label>
                     <select name='servicio' class='form-select'>
                     ";
@@ -243,22 +225,22 @@
 
                   </div>
 
-                 <div class="col-12 col-lg-6">
+                 <div class="col-12 col-lg-6" style="padding: 3%;">
                  <label style="color:white">Fecha</label>
-            <div class="input-group date">
-            <input type="text" id="datepicker1" required name="fecha_cita">
-            </div>
-            <h5 style="color: white;">Seleccionar hora</h5>
-            <select class="form-select" id="timeSelect1" name="hora">
-              <option value="">Seleccione una hora</option>
-            </select>
-
-                 </div>
+                <div class="input-group date">
+                <input type="text" id="datepicker1" required name="fecha_cita">
                 </div>
+                <h5 style="color: white;">Seleccionar hora</h5>
+                <select class="form-select" id="timeSelect1" name="hora">
+                  <option value="">Seleccione una hora</option>
+                </select>
+                 </div>
+            </div>
             <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
             <button type="reset" value="Limpiar" class="btn btn-secondary">Borrar cambios</button>
             <button type="submit"name="Registrar" class="btn btn-warning">Agendar</button>            
-          
+            
+
             </form>
          </div>
 
@@ -270,25 +252,8 @@
                   <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
                   <div class="col-12 col-lg-6">
                   <label style='color: white;'>Cliente</label><br>
-                    <?php
-                     $db=new database();
-                     $db->conectarDB();
-                     $cadena="SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente,
-                     cliente.id_cliente from persona inner join cliente on cliente.id_cliente=persona.id_persona;";
-                     $reg = $db->seleccionar($cadena);
-                     echo 
-                     "
-                     <div class='mb-3' style='width: 30%;'>
-                    <select name='cliente_op' class='form-select'>
-                     ";
-                     foreach($reg as $value)
-                    {
-                        echo "<option value='".$value->id_cliente."'>".$value->cliente."</option>";
-                    }
-
-                    echo "</select>
-                    </div>";
-                    ?>              
+                  <input type="text" name="cliente" placeholder="Nombre del cliente"><br> 
+                      <p style="font-size: 12px; color:goldenrod; margin-left:5px">* Es obligatorio escribir el nombre completo</p>  
 
                     <?php
                     $db=new database();
