@@ -27,7 +27,7 @@
 
 
          echo"<div class='alert alert-success'>Cliente Registrado</>";
-        header("refresh:2 ../First.php");
+        header("refresh:2 ../index.php");
         $conexion->desconectarBD();
 
 

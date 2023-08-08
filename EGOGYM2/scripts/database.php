@@ -85,7 +85,7 @@ class Database
                         echo "<div class='alert alert-danger'>";
                         echo "<h2 align='center'>La membresía ha expirado, no se permite el inicio de sesión.</h2>";
                         echo "</div>";
-                        header("refresh:2 ../First.php");
+                        header("refresh:2 ../index.php");
                         return;
                     }
                    
@@ -129,7 +129,7 @@ class Database
                
             
                
-                header("refresh:20 ../First.php#membershipForm");
+                header("refresh:2 ../index.php#membershipForm");
             }
             
             
@@ -148,7 +148,7 @@ class Database
             echo "<h2 align='center'>Usuario o contraseña incorrecto ...</h2>";
             echo "</div>";
 
-            header("refresh:20 ../First.php");
+            header("refresh:2 ../index.php");
         }
     } catch (PDOException $e) {
         echo $e->getMessage();
@@ -159,7 +159,7 @@ class Database
     {
         session_start();
         session_destroy();
-        header("Location: ../First.php");
+        header("Location: ../index.php");
     }
 
 

@@ -144,7 +144,7 @@ $(document).ready(function() {
     }
     else 
     {
-        header("Location:../../First.php");
+        header("Location:../../index.php");
     }
        
     ?>
