@@ -2,9 +2,7 @@
   $(function () {
 
     // MENU
-    $('.navbar-collapse a').on('click',function(){
-      $(".navbar-collapse").collapse('hide');
-    });
+   
 
     // AOS ANIMATION
     AOS.init({

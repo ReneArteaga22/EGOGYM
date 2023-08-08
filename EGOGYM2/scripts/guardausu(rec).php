@@ -33,9 +33,8 @@
          $contra = "1234";
          $hash = password_hash($contra, PASSWORD_DEFAULT);
 
-         $cadena = "INSERT INTO persona (nombre, apellido_paterno, 
-         apellido_materno,fecha_nacimiento,correo, sexo,contraseña, tipo_usuario) VALUES 
-         ('$nombre','$apellido_paterno','$apellido_materno','$fecha_nacimiento','$correo','$sexo','$hash', $tipo_usuario)";
+         $cadena = "INSERT INTO persona(nombre, apellido_paterno, apellido_materno, correo, sexo,contraseña, telefono, fecha_nacimiento, tipo_usuario,foto)
+         values('$nombre','$apellido_paterno','$apellido_materno','$correo','$sexo', '$hash', null, '$fecha_nacimiento','$tipo_usuario',default)";
  
          $db->ejecutarSQL($cadena);
          $db->desconectarBD();

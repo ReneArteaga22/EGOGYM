@@ -73,20 +73,18 @@
         </div>
     </nav>
 
-
     <!--Pills para buscar por clientes, empleados, nuevos usuarios-->
     <!--Pills para todos los usuarios-->
   <div class="container" style="padding-top: 15%;">
   <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#clientes">Clientes</a></li>
   <li><a data-toggle="tab" href="#empleados" style="margin-left: 10px;">Empleados</a></li>
-  <li><a data-toggle="tab" href="#usuarios" style="margin-left: 10px;">Nuevos usuarios</a></li>
 </ul>
      <div class="container">
      <div class="tab-content">
   <div id="clientes" class="tab-pane active">
 
-  <form action="../../scripts/buscar_clie.php" method="post">
+    <form action="" method="post">
         <div class="mb-3 col-6" style="margin-top:20px;width:40%;">
         <input type="text" name="cliente" placeholder="Buscar Cliente" class="form-control w-50" required>
         </div>
@@ -97,31 +95,83 @@
             
     </form>   
 
-  
+  <?php
+
+        if($_POST)
+        {
+        include '../../scripts/database.php';
+        extract($_POST);
+        $conexion = new database();
+        $conexion->conectarDB();
+        
+        $consulta = " SELECT count(cliente.id_cliente) as cantidad, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) as nombre,
+        persona.tipo_usuario as tipo,persona.telefono as contacto, persona.id_persona
+        from persona 
+        inner join cliente on
+        cliente.id_cliente=persona.id_persona where concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) like '%$cliente%'
+        AND persona.id_persona IN(select cliente.id_cliente from cliente )
+        group by nombre,apellido_paterno, apellido_materno";
+         $conexion->seleccionar($consulta);
+         $tabla = $conexion->seleccionar($consulta);
+         
+         $tabla = $conexion->seleccionar($consulta);
+         foreach($tabla as $registro)
+         {
+             $cant = $registro->cantidad;
+
+             $cant = $registro;
+         }
+
+         if (isset($cant) != '0')
+         {
+
+            echo 
+            "
+            <table class='table' style='border-radius: 5px;'>
+            <thead class='table-dark'>
+                <tr>
+                <br>
+                    <th style='color: goldenrod;'>
+                   Nombre
+                    </th>
+                    <th style='color: goldenrod;'>
+                    Tipo de usuario
+                    </th>
+                    <th style='color: goldenrod;'>
+                    Contacto
+                    </th>
+                    
+                </tr>
+            </thead>
+            <tbody>";
+            foreach ($tabla as $registro)
+            {
+                echo "<tr>";
+                echo "<td><a href='perfilCliente.php?id=" . $registro->id_persona . "'>" . $registro->nombre . "</a></td>";
+                echo "<td> $registro->tipo</td> ";
+                echo "<td> $registro->contacto</td> ";
+            }
+            echo "</tbody>
+            </table>";
+            }
+            else
+            {
+                echo "<h5>No existen resultados que coinicidan a su búsqueda..</h5>";
+            }
+        }
+        ?> 
   </div>
+
   <div id="empleados" class="tab-pane fade">
-
-    <form action="../../scripts/buscar_emple.php" method="post">
-        <div class="mb-3 col-6" style="margin-top:20px;width:40%;">
-        <input type="text" name="empleado" placeholder="Buscar empleado" class="form-control w-50" required>
-        </div>
-
-        <div class="d-grid gap-2 w-25">
-            <input class="btn btn-warning btn-sm " type="submit" value="Buscar">
-        </div>
-            
-    </form>  
-  
-        </div>
-
-        <div id="usuarios" class="tab-pane fade">
-        <?php
-            include '../../scripts/database.php';
+  <?php
             $conexion = new database();
             $conexion->conectarDB();
         
-            $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) as nombre, persona.telefono as contacto, persona.tipo_usuario as tipo, persona.id_persona 
-            from persona where persona.tipo_usuario IS NULL;";
+            $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) as nombre_emp, 
+            persona.correo as correo, persona.telefono as contacto_emp, persona.id_persona
+            from persona 
+            inner join empleado on
+            empleado.id_empleado=persona.id_persona";
             $conexion->seleccionar($consulta);
             $tabla = $conexion->seleccionar($consulta);
         
@@ -132,33 +182,30 @@
                 <tr>
                 <br>
                     <th style='color: goldenrod;'>
-                    Nombre
+                    Nombre del usuario
                     </th>
                     <th style='color: goldenrod;'>
-                    Contacto
+                    Teléfono
                     </th>
                     <th style='color: goldenrod;'>
-                    Tipo de usuario
+                    Correo
                     </th>
-                    <th>
-                    </th>
-                    
                 </tr>
             </thead>
             <tbody>";
             foreach ($tabla as $registro)
             {
-                
                 echo "<tr>";
-                echo "<td><a href='perfilNuevo.php?id=" . $registro->id_persona . "'>" . $registro->nombre . "</a></td>";
-                echo "<td>$registro->contacto</td> ";
-                echo "<td> $registro->tipo</td> ";
+                echo "<td><a href='perfilEmpleado.php?id=" . $registro->id_persona . "'>" . $registro->nombre_emp . "</a></td>";
+                echo "<td> $registro->contacto_emp</td> ";
+                echo "<td> $registro->correo</td> ";
             }
             echo "</tbody>
             </table>";
-            $conexion->desconectarBD();
             ?> 
         </div>
+
+      
      </div>
   </div>
 
