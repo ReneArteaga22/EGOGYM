@@ -122,9 +122,9 @@ $(document).ready(function() {
         </div>
     </nav>
 
-    <div class="container" style="padding: 15%;">
+    <div class="container" style="padding: 10%;">
     <form action="../../scripts/guardausu(rec).php" method="post" style="background-color: black; opacity: 0.8; border-radius: 5px; padding: 5%;margin: auto; width: 80%;">
-                <div class="row" style="padding: 3%;">
+                <div class="row" style="padding: 1%;">
                   <legend class="form-label" style="color: goldenrod;">Registrar usuario</legend>
                   <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
                   <div class="col-12 col-lg-6">
@@ -139,7 +139,7 @@ $(document).ready(function() {
 
                   </div>
                  <div class="col-12 col-lg-6">
-                 <label style="color: white; margin-top: 10px;">Sexo</label><br>
+                 <label style="color: white; margin-top: 5px;">Sexo</label><br>
               <input type="radio" value="femenino" name="sexo"> <b style="color: antiquewhite;">Femenino</b><br>
               <input type="radio" value="masculino" name="sexo"> <b style="color: antiquewhite;">Masculino</b><br>
                     <br>

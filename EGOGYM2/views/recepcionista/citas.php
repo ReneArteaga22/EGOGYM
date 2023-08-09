@@ -117,7 +117,7 @@
     }
     else 
     {
-        header("Location:../../First.php");
+        header("Location:../../index.php");
     }
        
     ?>
@@ -174,7 +174,7 @@
 
     <!--Crea pills para todas las citas, citas canceladas, confirmadas, completadas, en las tres
      filtrar citas por fecha, entrenador, servicio-->
-    <div class="container" style="padding-top: 15%;">
+    <div class="container" style="padding-top: 10%;">
         <ul class="nav nav-tabs">
     <li><a data-toggle="tab" href="#agendar_nutri" style="margin-left: 20px;">Nutriologia</a></li>
     <li><a data-toggle="tab" href="#agendar_fisio" style="margin-left: 20px;">Fisioterapia</a></li>
@@ -190,7 +190,7 @@
             <div class="row">
                   <legend class="form-label" style="color: goldenrod;">Agendar Cita</legend>
                   <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
-                  <div class="col-12 col-lg-6" style="padding: 3%;">
+                  <div class="col-12 col-lg-6">
                   <label style='color: white;'>Cliente</label><br>
                   <input type="text" name="cliente" placeholder="Nombre del cliente"><br> 
                       <p style="font-size: 12px; color:goldenrod; margin-left:5px">* Es obligatorio escribir el nombre completo</p>    
@@ -206,11 +206,12 @@
                      where servicios.nombre='nutricion'";
                     $reg =$db->seleccionar($cadena);
                     echo 
-                    "<div class='mb-3' style='width: 30%;'>
+                    "<div class='mb-4'>
                     <label class='control-label' style='color:white;'>
                     Empleado
                     </label>
-                    <select name='servicio' class='form-select'>
+                    <br>
+                    <select name='servicio' class='form-select w-75'>
                     ";
 
                     foreach($reg as $value)
@@ -225,13 +226,13 @@
 
                   </div>
 
-                 <div class="col-12 col-lg-6" style="padding: 3%;">
+                 <div class="col-12 col-lg-6 mb-2">
                  <label style="color:white">Fecha</label>
                 <div class="input-group date">
                 <input type="text" id="datepicker1" required name="fecha_cita">
                 </div>
-                <h5 style="color: white;">Seleccionar hora</h5>
-                <select class="form-select" id="timeSelect1" name="hora">
+                <label style="color: white; margin-top: 30px;">Seleccionar hora</label>
+                <select class="form-select w-75" id="timeSelect1" name="hora">
                   <option value="">Seleccione una hora</option>
                 </select>
                  </div>
@@ -268,11 +269,12 @@
                     $reg =$db->seleccionar($cadena);
                     
                     echo 
-                    "<div class='mb-3' style='width: 30%;'>
+                    "<div class='mb-4'>
                     <label class='control-label' style='color:white;'>
-                    Servicio
+                    Empleado
                     </label>
-                    <select name='servicio' class='form-select'>
+                    <br>
+                    <select name='servicio' class='form-select w-75'>
                     ";
 
                     foreach($reg as $value)
@@ -292,8 +294,8 @@
             <div class="input-group date">
             <input type="text" id="datepicker2" required name="fecha_cita">
             </div>
-            <h5 style="color: white;">Seleccionar hora</h5>
-            <select class="form-select" id="timeSelect2" name="hora">
+            <label style="color: white; margin-top:30px;">Seleccionar hora</label>
+            <select class="form-select w-75" id="timeSelect2" name="hora">
               <option value="">Seleccione una hora</option>
             </select>
 

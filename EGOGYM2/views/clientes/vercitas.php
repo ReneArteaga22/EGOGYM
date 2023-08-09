@@ -145,7 +145,7 @@ $(document).ready(function() {
 
     <div class="container" style="padding-top: 7%;">
         <h2>Mis Citas Agendadas</h2>
-        <table class="table table-hover">
+        <div class="table table-hover">
             <thead class="table-dark">
         <tr>
             <th>Id Cita</th>

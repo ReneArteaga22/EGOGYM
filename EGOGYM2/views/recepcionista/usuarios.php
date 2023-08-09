@@ -101,22 +101,19 @@
 
     <!--Pills para buscar por clientes, empleados, nuevos usuarios-->
     <!--Pills para todos los usuarios-->
-  <div class="container" style="padding-top: 15%;">
+  <div class="container" style="padding-top: 10%;">
   <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#clientes">Clientes</a></li>
   <li><a data-toggle="tab" href="#empleados" style="margin-left: 10px;">Empleados</a></li>
 </ul>
      <div class="container">
      <div class="tab-content">
-  <div id="clientes" class="tab-pane active">
+  <div id="clientes" class="tab-pane active" style="margin-top: 5px;">
 
-    <form action="" method="post">
-        <div class="mb-3 col-6" style="margin-top:20px;width:40%;">
-        <input type="text" name="cliente" placeholder="Buscar Cliente" class="form-control w-50" required>
-        </div>
-
-        <div class="d-grid gap-2 w-25">
-            <input class="btn btn-warning btn-sm " type="submit" value="Buscar">
+    <form action="" method="post" class="form-inline">
+        <div class="mb-2 col-12">
+        <input type="text" name="cliente" placeholder="Buscar Cliente" class="form-control w-25" style="height: 35px;" required>
+        <input class="btn btn-warning btn-sm " type="submit" value="Buscar" style="margin-left:20px;">
         </div>
             
     </form>   
@@ -125,18 +122,17 @@
 
         if($_POST)
         {
-        include '../../scripts/database.php';
         extract($_POST);
         $conexion = new database();
         $conexion->conectarDB();
         
-        $consulta = " SELECT count(cliente.id_cliente) as cantidad, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) as nombre,
+        $consulta = " SELECT count(cliente.id_cliente) as cantidad, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_m>
         persona.tipo_usuario as tipo,persona.telefono as contacto, persona.id_persona
         from persona 
         inner join cliente on
         cliente.id_cliente=persona.id_persona where concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) like '%$cliente%'
         AND persona.id_persona IN(select cliente.id_cliente from cliente )
-        group by nombre,apellido_paterno, apellido_materno";
+        group by nombre,apellido_paterno, apellido_materno, tipo_usuario, telefono, id_persona";
          $conexion->seleccionar($consulta);
          $tabla = $conexion->seleccionar($consulta);
          
