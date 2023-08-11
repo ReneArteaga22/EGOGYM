@@ -95,6 +95,7 @@ $(document).ready(function() {
                          <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../nutriologo/perfil_nutri.php">Perfil</a></li>
                           <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
                       </li>
@@ -102,7 +103,6 @@ $(document).ready(function() {
             </div>
         </div>
     </nav>
-
     <div class="container" style="padding-top: 5%;">
 
     

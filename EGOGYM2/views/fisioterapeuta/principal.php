@@ -93,6 +93,7 @@ $(document).ready(function() {
                          <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../fisioterapeuta/perfil_fisio.php">Perfil</a></li>
                           <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
             </div>
@@ -104,46 +105,7 @@ $(document).ready(function() {
         <h1 style="text-align: center;" data-aos="fade-right">¡Hola!</h1>
         <!--Tablas de citas registradas para el día actual-->
     </div>
-    <div class="container">
-        <div class="card-header" style="color:black;">
-          Tu información
-        </div>
-
-        <div class="card-body row">
-            <div class="col-lg-6 col-xs-12  col-sm-12 col-md-6 text-center">
-            <img src="../../images/class/boxwax.jpg" class="rounded-circle" alt="..." style="width: 60%;">
-          </div>
-        
-        
-        <?php
-        $conexion = new Database();
-        $conexion->conectarDB();
-
-        $consulta = "SELECT concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
-        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña, persona.id_persona,
-        FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad 
-         from persona
-        where persona.id_persona in (select fisioterapeuta.id_fisio from fisioterapeuta) AND persona.correo='$email'";
-        $datos_per = $conexion ->seleccionar($consulta);
-
-        foreach($datos_per as $registro)
-        {
-            echo "<div class='col-lg-6 col-xs-12 col-sm-12 col-md-6'>";
-            echo "<p>Nombre: $registro->nombre </p>";
-            echo "<p>Correo: $registro->correo </p>";
-            echo "<p>Telefono: $registro->telefono </p>";
-            echo "<p>Edad: ".$registro->edad." años</p>";
-            echo "<p>Sexo: $registro->sexo </p>";
-            echo "</div>";
-
-            echo "<a href='editarFisio.php?id=".$registro->id_persona."' style='margin:auto; font-size:15px; color:goldenrod ; font-style:oblique;'>
-            Editar perfil
-          </a>";
-        }    
-        ?>
-       
-
-        </div>
+    
     </div>
     <br>
     <br>

@@ -146,7 +146,7 @@ $(document).ready(function() {
                     <!--Fecha nac-->
                     <label style="color:white">Fecha de nacimiento</label >
             <div class="input-group date">
-            <input type="date" class="form-control" name="fecha_nacimiento">
+            <input type="date" class="form-control" name="fecha_nacimiento" required min="1950-01-01" max="2015-01-01">
             </div>
             <script>
         // Inicializar el selector de fecha

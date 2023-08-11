@@ -535,7 +535,7 @@
                     <input class="form-check-input" type="radio" name="sexo" id="inlineRadio2" value="2">
                     <label class="form-check-label" for="inlineRadio2">Mujer</label>
                   </div>
-                  <input type="date" class="form-control" name="fecha_nacimiento" required>
+                  <input type="date" class="form-control" name="fecha_nacimiento" required min="1950-01-01" max="2015-01-01">
                   <button type="submit" class="form-control" id="submit-button" name="submit">Guardar</button>
                   
                   

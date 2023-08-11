@@ -28,6 +28,35 @@
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
 
+<!--Calendario-->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+    <script type="text/javascript">
+         $(function(){
+    var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+
+      today = yyyy + '/' + mm + '/' + dd;
+  })
+  $( function() {
+    $( "#datepicker" ).datepicker({
+      showOtherMonths: true,
+      selectOtherMonths: true,
+      dateFormat: 'yy-mm-dd',
+      minDate: '-1M',
+      maxDate: '-1D',
+      beforeShowDay: $.datepicker.noWeekends
+    });} 
+    );
+    </script>
+
+
+
      <script>
 $(document).ready(function() {
 
@@ -71,10 +100,10 @@ $(document).ready(function() {
     }
        
     ?>
-    <nav class="navbar navbar-expand-lg fixed-top">
+  <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../nutriologo/citas_nutri.php">EGO GYM</a>
+            <a class="navbar-brand" href="../nutriologo//index.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -87,7 +116,7 @@ $(document).ready(function() {
                         <a href="inicio.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="citas.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="citas.php" class="nav-link smoothScroll">Clases</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-lg-2">
@@ -97,6 +126,7 @@ $(document).ready(function() {
                          <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../entrenador/perfil_entre.php">Perfil</a></li>
                           <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
             </div>
@@ -107,175 +137,146 @@ $(document).ready(function() {
     <!--Crea pills para todas las citas, citas canceladas, confirmadas, completadas, en las tres
      filtrar citas por fecha, entrenador, servicio-->
      <div class="container" style="padding-top: 15%;"> 
-        <h3 data-aos="fade-right">Citas agendadas</h3>
+        <h3 data-aos="fade-right">Clases agendadas</h3>
 
         <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#citas_hoy">Citas del día de hoy</a></li>
-            <li class="active"><a data-toggle="tab" href="#citas_pr" style="margin-left: 20px;">Citas próximas</a></li>
-            <li><a data-toggle="tab" href="#citas" style="margin-left: 20px;">Citas pasadas</a></li>
+            <li class="active"><a data-toggle="tab" href="#clases_hoy">Clases del día de hoy</a></li>
+            <li><a data-toggle="tab" href="#clases" style="margin-left: 20px;">Clases pasadas</a></li>
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane fade" id="citas">
-<?php
-
-$conexion = new database();
-$conexion->conectarDB();
-
-$consulta = "SELECT concat(persona.nombre, ' ', persona.apellido_paterno, ' ', persona.apellido_materno) AS cliente, 
-       e.servicio as servicio, e.empleado AS empleado, citas.hora as hora, citas.fecha as fecha, 
-       citas.estado as estado, citas.id_cita as num
-FROM citas_spinning AS citas
-INNER JOIN cliente ON cliente.id_cliente = citas.cliente
-INNER JOIN persona ON persona.id_persona = cliente.id_cliente
-INNER JOIN
-(
-    SELECT id_empserv, concat(persona.nombre, ' ', persona.apellido_paterno, ' ', persona.apellido_materno) AS empleado,
-           servicios.nombre as servicio 
-    FROM servicios_empleados 
-    INNER JOIN servicios ON servicios.codigo = servicios_empleados.servicio
-    INNER JOIN empleado ON servicios_empleados.empleado = empleado.id_empleado
-    INNER JOIN persona ON empleado.id_empleado = persona.id_persona
-) AS e ON citas.entrenador = e.id_empserv 
-WHERE e.servicio = 'spinning' AND concat(citas.fecha, ' ', citas.hora) < NOW()";
-
-$conexion->seleccionar($consulta);
-$tabla = $conexion->seleccionar($consulta);
-
-if (count($tabla) > 0) {
-    echo "<table class='table' style='border-radius: 5px;width:60%'>";
-    echo "<thead class='table-dark' style='text-align:'center;''>";
-    echo "<tr><br><th style='color: goldenrod;'>No.Cita</th><th style='color: goldenrod;'>Cliente</th><th style='color: goldenrod;'>Fecha</th><th style='color: goldenrod;'>Hora</th></tr>";
-    echo "</thead><tbody>";
-
-    foreach ($tabla as $registro) {
-        echo "<tr>";
-        echo "<td>$registro->num</td>";
-        echo "<td>$registro->cliente</td>";
-        echo "<td>$registro->fecha</td>";
-        echo "<td>$registro->hora</td>";
-        echo "</tr>";
-    }
-
-    echo "</tbody></table>";
-} else {
-    echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay citas anteriores!</h2>";
-}
-?>
-            </div>
-
-            <div class="tab-pane active" id="citas_hoy">
+            <div class="tab-pane active" id="clases_hoy">
             <?php
-$consulta = "SELECT count( citas.id_cita) cantidad, servicios.nombre 
-             FROM citas_spinning AS citas
-             INNER JOIN servicios_empleados ON servicios_empleados.id_empserv = citas.entrenador
-             INNER JOIN servicios ON servicios.codigo = servicios_empleados.servicio
-             WHERE citas.fecha = CURDATE() AND servicios.nombre = 'spinning'
-             GROUP BY servicio";
+            $conexion = new database();
+            $conexion->conectarDB();
+            $consulta = "SELECT COUNT(citas_spinning.id_cita) as 'Asistentes', citas_spinning.hora, 
+            citas_spinning.fecha
+            from citas_spinning
+            inner join servicios_empleados on
+            servicios_empleados.id_empserv= citas_spinning.entrenador
+            inner join empleado on
+            empleado.id_empleado=servicios_empleados.empleado
+            inner join persona on 
+            persona.id_persona=empleado.id_empleado
+            where citas_spinning.fecha = curdate()
+             group by citas_spinning.hora";
 
-$conexion->seleccionar($consulta);
-$tabla = $conexion->seleccionar($consulta);
+            $conexion->seleccionar($consulta);
+            $tabla = $conexion->seleccionar($consulta);
 
-foreach ($tabla as $registro) {
-    $cant = $registro;
-}
+            foreach ($tabla as $registro) {
+                $cant = $registro;
+            }
 
-if (isset($cant) != '0') {
-    $consulta = "SELECT concat(persona.nombre, ' ', persona.apellido_paterno, ' ', persona.apellido_materno) AS cliente, 
-    e.servicio as servicio, e.empleado AS empleado, citas.hora as hora
-    FROM citas_spinning AS citas
-    INNER JOIN cliente ON cliente.id_cliente = citas.cliente
-    INNER JOIN persona ON persona.id_persona = cliente.id_cliente
-    INNER JOIN
-    (
-        SELECT id_empserv, concat(persona.nombre, ' ', persona.apellido_paterno, ' ', persona.apellido_materno) AS empleado,
-               servicios.nombre as servicio
-        FROM servicios_empleados 
-        INNER JOIN servicios ON servicios.codigo = servicios_empleados.servicio
-        INNER JOIN empleado ON servicios_empleados.empleado = empleado.id_empleado
-        INNER JOIN persona ON empleado.id_empleado = persona.id_persona
-    ) AS e ON citas.entrenador = e.id_empserv 
-    WHERE citas.fecha = CURDATE() AND e.servicio = 'spinning'";
-    $conexion->seleccionar($consulta);
-    $tabla = $conexion->seleccionar($consulta);
+            if (isset($cant) != '0') {
+                $consulta = "SELECT COUNT(citas_spinning.id_cita) as 'Asistentes', citas_spinning.hora
+                from citas_spinning
+                inner join servicios_empleados on
+                servicios_empleados.id_empserv= citas_spinning.entrenador
+                inner join empleado on
+                empleado.id_empleado=servicios_empleados.empleado
+                inner join persona on 
+                persona.id_persona=empleado.id_empleado
+                where citas_spinning.fecha = curdate()
+                 group by citas_spinning.hora";
+                $conexion->seleccionar($consulta);
+                $tabla = $conexion->seleccionar($consulta);
+                
+                echo "<table class='table' style='border-radius: 5px;width:60%'>";
+                    echo "<thead class='table-dark' style='text-align:'center;''>";
+                    echo "<tr><br>
+                    <th style='color: goldenrod;'>Hora</th>
+                    <th style='color: goldenrod;'>Asistentes</th>
+                    </tr>";
+                    echo "</thead><tbody>";
+                
 
-    echo "<table class='table' style='border-radius: 5px;width:60%'>";
-    echo "<thead class='table-dark' style='text-align:'center;''>";
-    echo "<tr><br><th style='color: goldenrod;'>Cliente</th><th style='color: goldenrod;'>Hora</th></tr>";
-    echo "</thead><tbody>";
+                foreach ($tabla as $registro) {
+                    echo "<tr>";
+                        echo "<td>$registro->fecha</td>";
+                        echo "<td>$registro->hora</td>";
+                        echo "<td>$registro->Asistentes</td>";
+                        echo "</tr>";
+                }
 
-    foreach ($tabla as $registro) {
-        echo "<tr>";
-        echo "<td>$registro->cliente</td>";
-        echo "<td>$registro->hora</td>";
-        echo "</tr>";
-    }
-
-    echo "</tbody></table>";
-} else {
-    echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay citas pendientes!</h2>";
-}
-?>
+                echo "</tbody></table>";
+            } else {
+                echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay clases agendadas el día de hoy!</h2>";
+            }
+            ?>
             </div>
 
-            <div class="tab-pane fade" id="citas_pr">
-            <?php
-$consulta = "SELECT count(citas.id_cita) cantidad, servicios.nombre 
-             FROM citas_spinning AS citas
-             INNER JOIN servicios_empleados ON servicios_empleados.id_empserv = citas.entrenador
-             INNER JOIN servicios ON servicios.codigo = servicios_empleados.servicio
-             WHERE citas.fecha > CURDATE() AND servicios.nombre = 'spinning'
-             GROUP BY servicio";
 
-$conexion->seleccionar($consulta);
-$tabla = $conexion->seleccionar($consulta);
 
-foreach ($tabla as $registro) {
-    $cant_2 = $registro;
-}
 
-if (isset($cant_2) != '0') {
-    $consulta = "SELECT concat(persona.nombre, ' ', persona.apellido_paterno, ' ', persona.apellido_materno) AS cliente, 
-                    e.servicio as servicio, e.empleado AS empleado, citas.hora as hora, citas.fecha, citas.estado
-                    FROM citas_spinning AS citas
-                    INNER JOIN cliente ON cliente.id_cliente = citas.cliente
-                    INNER JOIN persona ON persona.id_persona = cliente.id_cliente
-                    INNER JOIN
-                    (
-                        SELECT id_empserv, concat(persona.nombre, ' ', persona.apellido_paterno, ' ', persona.apellido_materno) AS empleado,
-                               servicios.nombre as servicio
-                        FROM servicios_empleados 
-                        INNER JOIN servicios ON servicios.codigo = servicios_empleados.servicio
-                        INNER JOIN empleado ON servicios_empleados.empleado = empleado.id_empleado
-                        INNER JOIN persona ON empleado.id_empleado = persona.id_persona
-                    ) AS e ON citas.entrenador = e.id_empserv 
-                    WHERE citas.fecha > CURDATE() AND e.servicio = 'spinning'";
 
-    $conexion->seleccionar($consulta);
-    $tabla = $conexion->seleccionar($consulta);
+            <div class="tab-pane fade" id="clases">
 
-    echo "<table class='table' style='border-radius: 5px;width:60%'>";
-    echo "<thead class='table-dark' style='text-align:'center;''>";
-    echo "<tr><br><th style='color: goldenrod;'>Cliente</th><th style='color: goldenrod;'>Fecha</th><th style='color: goldenrod;'>Hora</th><th style='color: goldenrod;'>Estatus</th></tr>";
-    echo "</thead><tbody>";
+                <form method="post" action="">
+                    <br>
+                <label style="color: gray;">Introduce la fecha</label><br>
+                <input type="datepicker" id="datepicker" name="fecha" required>
+                <button type="submit" class="btn btn-warning btn-sm " style="margin-bottom: 7px;">Buscar</button>
+                </form>
+                
+                <?php
+                if($_POST)
+                {
+                extract($_POST);
+                $conexion = new database();
+                $conexion->conectarDB();
 
-    foreach ($tabla as $registro) {
-        echo "<tr>";
-        echo "<td>$registro->cliente</td>";
-        echo "<td>$registro->fecha</td>";
-        echo "<td>$registro->hora</td>";
-        echo "<td>$registro->estado</td>";
-        echo "</tr>";
-    }
+                $consulta = "SELECT COUNT(citas_spinning.id_cita) as 'Asistentes', citas_spinning.hora, 
+                citas_spinning.fecha
+                from citas_spinning
+                inner join servicios_empleados on
+                servicios_empleados.id_empserv= citas_spinning.entrenador
+                inner join empleado on
+                empleado.id_empleado=servicios_empleados.empleado
+                inner join persona on 
+                persona.id_persona=empleado.id_empleado
+                where citas_spinning.fecha = '$fecha'
+                 group by citas_spinning.hora";
 
-    echo "</tbody></table>";
-} else {
-    echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay citas pendientes!</h2>";
-}
-?>
+                $conexion->seleccionar($consulta);
+                $tabla = $conexion->seleccionar($consulta);
+
+                foreach($tabla as $registro)
+                {
+                    $cant = $registro->Asistentes;
+       
+                    $cant = $registro;
+                }
+
+                if (isset($cant) != '0') {
+                    echo "<table class='table' style='border-radius: 5px;width:60%'>";
+                    echo "<thead class='table-dark' style='text-align:'center;''>";
+                    echo "<tr><br>
+                    <th style='color: goldenrod;'>Fecha</th>
+                    <th style='color: goldenrod;'>Hora</th>
+                    <th style='color: goldenrod;'>Asistentes</th>
+                    </tr>";
+                    echo "</thead><tbody>";
+
+                    foreach ($tabla as $registro) {
+                        echo "<tr>";
+                        echo "<td>$registro->fecha</td>";
+                        echo "<td>$registro->hora</td>";
+                        echo "<td>$registro->Asistentes</td>";
+                        echo "</tr>";
+                    }
+
+                    echo "</tbody></table>";
+                } else {
+                    echo "<h2 data-aos='fade-right' style='color: goldenrod'>No hubo citas agendadas ese día</h2>";
+                }
+            }
+                ?>
             </div>
+
+        
         </div>
-    </div>
+ 
  
     </body>
 </html>

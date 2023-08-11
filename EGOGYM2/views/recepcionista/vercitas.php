@@ -166,7 +166,8 @@
                 $conexion = new database();
                     $conexion->conectarDB();    
                     $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente, 
-                    e.servicio as servicio,e.empleado AS empleado, citas.hora as hora, citas.fecha, citas.estado
+                    e.servicio as servicio,e.empleado AS empleado, citas.hora as hora, citas.fecha, citas.estado,
+                    citas.id_cita
                     from citas INNER JOIN cliente ON cliente.id_cliente= citas.cliente
                     INNER JOIN persona ON persona.id_persona = cliente.id_cliente
                     INNER JOIN
@@ -182,7 +183,7 @@
                     ORDER BY concat(citas.fecha,' ',citas.hora) DESC";
                     echo 
                     "
-                    <table class='table' style='border-radius: 5px;width:60%'>
+                    <table class='table' style='border-radius: 5px;width:80%'>
                     <thead class='table-dark' style='text-align:'center;''>
                         <tr>
                         <br>
@@ -198,6 +199,8 @@
                             <th style='color: goldenrod;'>
                             Estatus
                             </th>
+                            <th>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>";
@@ -212,6 +215,9 @@
                         echo "<td> $registro->fecha</td> ";
                         echo "<td> $registro->hora</td> ";
                         echo "<td>$registro->estado</td>";
+                        echo "<input type='hidden' value=".$registro->id_cita.">$registro->id_cita</input>"; 
+                        echo "<td><a href='#' class='btn btn-sm bg-color'  data-toggle='modal' data-target='#cancel'>Cancelar</a> 
+                        </td>";
                         echo "</tr>";
                     }
                     echo "</tbody>
@@ -357,6 +363,41 @@
 
         </div>
         
+    </div>
+
+
+     <!-- Modal -->
+     <div class="modal fade" id="cancel" tabindex="-1" role="dialog" aria-labelledby="membershipFormLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+          <div class="modal-header">
+
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <form class="membership-form webform" role="form" action="../../scripts/modal-cancel.php" method="post">
+                
+
+            <h4 class="text-center">¿Deseas reagendar la cita?</h4>
+
+            <input type="text" name="citaid" value="<?php echo $cita; ?>">  
+            <button type="submit" class="form-control w-75" id="submit-button" name="reagendar" value="si">Si</button>
+            <button type="submit" class="form-control w-75" id="submit-button" name="cancelar" value="no">No</button>
+                
+            </form>
+          </div>
+
+          <div class="modal-footer"></div>
+
+          
+
+        </div>
+      </div>
     </div>
 
     </body>

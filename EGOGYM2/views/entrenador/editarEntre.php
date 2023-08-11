@@ -71,7 +71,7 @@ $(document).ready(function() {
 <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../nutriologo/citas_nutri.php">EGO GYM</a>
+            <a class="navbar-brand" href="../nutriologo//index.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -84,7 +84,7 @@ $(document).ready(function() {
                         <a href="inicio.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="citas.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="citas.php" class="nav-link smoothScroll">Clases</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-lg-2">
@@ -94,11 +94,13 @@ $(document).ready(function() {
                          <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="../entrenador/perfil_entre.php">Perfil</a></li>
                           <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
             </div>
         </div>
     </nav>
+    
     <div class="container">
 
         <div class="card bg-light" style="margin-top: 99px;">

@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-<html>
-    <head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-     <meta name="description" content="">
-     <meta name="keywords" content="">
-     <meta name="author" content="">
-     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-     <title>Inicio spin</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio fisio</title>
       <!-- SCRIPTS -->
       <script src="../../js/jquery.min.js"></script>
       <script src="../../js/bootstrap.min.js"></script>
@@ -16,8 +13,7 @@
       <script src="../../js/custom.js"></script>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-      
- 
+
      <link rel="stylesheet" href="../../css/bootstrap.min.css">
      <link rel="stylesheet" href="../../css/font-awesome.min.css">
      <link rel="stylesheet" href="../../css/aos.css">
@@ -41,8 +37,7 @@ $(document).ready(function() {
 });
 </script>
     </head>
-
-    <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
+<body data-spy="scroll" data-target="#navbarNav" data-offset="50">
     <?php
     include '../../scripts/database.php';
     $conexion = new Database();
@@ -59,7 +54,7 @@ $(document).ready(function() {
           $tipo = $dato->tipo_empleado;
         }
 
-    if(isset($email) and $tipo == 'entrenador' )
+    if(isset($email) and $tipo == 'fisio' )
     {
       
     }
@@ -72,7 +67,7 @@ $(document).ready(function() {
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../nutriologo//index.php">EGO GYM</a>
+            <a class="navbar-brand" href="principal.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -82,10 +77,10 @@ $(document).ready(function() {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                        <a href="inicio.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="citas.php" class="nav-link smoothScroll">Clases</a>
+                        <a href="citasfisio.php" class="nav-link smoothScroll">Citas</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-lg-2">
@@ -95,21 +90,52 @@ $(document).ready(function() {
                          <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="../entrenador/perfil_entre.php">Perfil</a></li>
+                        <li><a class="dropdown-item" href="../nutriologo/perfil_fisio.php">Perfil</a></li>
                           <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
             </div>
         </div>
     </nav>
 
-    <!--Inicio-->
-    <div class="container" style="padding-top: 10%;">
-        <h1 style="text-align: center;" data-aos="fade-right">¡Hola!</h1>
-        <!--Tablas de citas registradas para el día actual-->
-    </div>
-    
-    </div>
-    <br>
-    <br>
-    </body>
+<div class="container">
+        <div class="card-header" style="color:black; margin-top:100px;">
+          Tu información
+        </div>
+
+        <div class="card-body row">
+            <div class="col-lg-6 col-xs-12  col-sm-12 col-md-6 text-center">
+            <img src="../../images/class/boxwax.jpg" class="rounded-circle" alt="..." style="width: 60%;">
+          </div>
+        
+        
+        <?php
+        $conexion = new Database();
+        $conexion->conectarDB();
+
+        $consulta = "SELECT concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
+        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña, persona.id_persona,
+        FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad 
+         from persona
+        where persona.id_persona in (select fisioterapeuta.id_fisio from fisioterapeuta) AND persona.correo='$email'";
+        $datos_per = $conexion ->seleccionar($consulta);
+
+        foreach($datos_per as $registro)
+        {
+            echo "<div class='col-lg-6 col-xs-12 col-sm-12 col-md-6'>";
+            echo "<p>Nombre: $registro->nombre </p>";
+            echo "<p>Correo: $registro->correo </p>";
+            echo "<p>Telefono: $registro->telefono </p>";
+            echo "<p>Edad: ".$registro->edad." años</p>";
+            echo "<p>Sexo: $registro->sexo </p>";
+            echo "</div>";
+
+            echo "<a href='editarFisio.php?id=".$registro->id_persona."' style='margin:auto; font-size:15px; color:goldenrod ; font-style:oblique;'>
+            Editar perfil
+          </a>";
+        }    
+        ?>
+       
+
+        </div>
+</body>
 </html>
