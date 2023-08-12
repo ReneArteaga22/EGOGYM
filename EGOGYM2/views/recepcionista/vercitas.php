@@ -114,6 +114,7 @@
         <ul class="nav nav-tabs">
         <li><a data-toggle="tab" href="#citas_pr" style="margin-right: 20px;">Citas próximas</a></li>
     <li class="active"><a data-toggle="tab" href="#citas">Citas pasadas</a></li>
+    <li><a data-toggle="tab" href="#citas_can" style="margin-left: 20px;">Citas canceladas</a></li>
     <li><a data-toggle="tab" href="#clases" style="margin-left: 20px;">Clases agendadas</a></li>
     
         </ul>
@@ -149,7 +150,7 @@
              servicios_empleados.id_empserv=citas.serv_emp
              inner join servicios on
              servicios.codigo=servicios_empleados.servicio
-             where citas.fecha > curdate() 
+             where citas.fecha > curdate()  and citas.estado= 'confirmada';
              group by servicio;
              ";
               $conexion->seleccionar($consulta);
@@ -167,7 +168,7 @@
                     $conexion->conectarDB();    
                     $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente, 
                     e.servicio as servicio,e.empleado AS empleado, citas.hora as hora, citas.fecha, citas.estado,
-                    citas.id_cita
+                    citas.id_cita as cita
                     from citas INNER JOIN cliente ON cliente.id_cliente= citas.cliente
                     INNER JOIN persona ON persona.id_persona = cliente.id_cliente
                     INNER JOIN
@@ -179,7 +180,7 @@
                     INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
                     INNER JOIN persona ON empleado.id_empleado = persona.id_persona
                     ) AS e ON citas.serv_emp = e.id_empserv 
-                    where citas.fecha > curdate()
+                    where citas.fecha > curdate() and citas.estado = 'confirmada';
                     ORDER BY concat(citas.fecha,' ',citas.hora) DESC";
                     echo 
                     "
@@ -201,6 +202,7 @@
                             </th>
                             <th>
                             </th>
+                         
                         </tr>
                     </thead>
                     <tbody>";
@@ -214,10 +216,18 @@
                         echo "<td> $registro->cliente</td> ";
                         echo "<td> $registro->fecha</td> ";
                         echo "<td> $registro->hora</td> ";
+                        $estado = $registro->estado;
                         echo "<td>$registro->estado</td>";
-                        echo "<input type='hidden' value=".$registro->id_cita.">$registro->id_cita</input>"; 
-                        echo "<td><a href='#' class='btn btn-sm bg-color'  data-toggle='modal' data-target='#cancel'>Cancelar</a> 
-                        </td>";
+                        $cita = $registro->cita;
+                        if ($estado == 'confirmada')
+                        {
+                            echo "<td><a href='../../scripts/cancelcita.php?idcita=" . $cita . "' style='color:red;'>Cancelar</a></td>";
+                        }
+                        else if($estado == 'cancelada')
+                        {
+                            echo "<td><a href='citas.php' style='color: goldenrod;'>Reagendar</a></td>";
+
+                        }
                         echo "</tr>";
                     }
                     echo "</tbody>
@@ -361,43 +371,133 @@
                     ?>
             </div>
 
+
+            <div class="tab-pane fade" id="citas_can">
+            
+            <form>
+            <div class="row" style="margin-top: 5px;">
+
+                <div class="col-lg-4">
+                    <label style="color: grey;">Servicio</label><br>
+                    <select style="border:none;"></select>
+                </div>
+
+                <div class="col-lg-4">
+                <label style="color: grey;">Periodo</label><br>
+                    <select style="border:none;"></select>
+                </div>
+
+            </div>
+            
+            </form>
+            
+            <?php
+             $conexion = new database();
+             $conexion->conectarDB();
+     
+             $consulta = "SELECT count(citas.id_cita) cantidad, servicios.nombre from citas
+             inner join servicios_empleados on 
+             servicios_empleados.id_empserv=citas.serv_emp
+             inner join servicios on
+             servicios.codigo=servicios_empleados.servicio
+             where citas.fecha > curdate()  and citas.estado= 'cancelada';
+             group by servicio;
+             ";
+              $conexion->seleccionar($consulta);
+              $tabla = $conexion->seleccionar($consulta);
+              foreach($tabla as $registro)
+              {
+                  $registro->cantidad;
+     
+                  $cant_2 = $registro;
+              }
+              
+            if(isset($cant_2) != '0')
+             {
+                $conexion = new database();
+                    $conexion->conectarDB();    
+                    $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente, 
+                    e.servicio as servicio,e.empleado AS empleado, citas.hora as hora, citas.fecha, citas.estado,
+                    citas.id_cita as cita
+                    from citas INNER JOIN cliente ON cliente.id_cliente= citas.cliente
+                    INNER JOIN persona ON persona.id_persona = cliente.id_cliente
+                    INNER JOIN
+                    (
+                    SELECT id_empserv, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS empleado,
+                    servicios.nombre as servicio 
+                    FROM servicios_empleados 
+                    INNER JOIN servicios ON servicios.codigo=servicios_empleados.servicio
+                    INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
+                    INNER JOIN persona ON empleado.id_empleado = persona.id_persona
+                    ) AS e ON citas.serv_emp = e.id_empserv 
+                    where citas.fecha > curdate() and citas.estado = 'cancelada';
+                    ORDER BY concat(citas.fecha,' ',citas.hora) DESC";
+                    echo 
+                    "
+                    <table class='table' style='border-radius: 5px;width:80%'>
+                    <thead class='table-dark' style='text-align:'center;''>
+                        <tr>
+                        <br>
+                            <th style='color: goldenrod;'>
+                            Cliente
+                            </th>
+                            <th style='color: goldenrod;'>
+                            Fecha
+                            </th>
+                            <th style='color: goldenrod;'>
+                            Hora
+                            </th>
+                            <th style='color: goldenrod;'>
+                            Estatus
+                            </th>
+                            <th>
+                            </th>
+                         
+                        </tr>
+                    </thead>
+                    <tbody>";
+
+                    $conexion->seleccionar($consulta);
+                    $tabla = $conexion->seleccionar($consulta);
+
+                    foreach ($tabla as $registro)
+                    {
+                        echo "<tr>";
+                        echo "<td> $registro->cliente</td> ";
+                        echo "<td> $registro->fecha</td> ";
+                        echo "<td> $registro->hora</td> ";
+                        $estado = $registro->estado;
+                        echo "<td>$registro->estado</td>";
+                        $cita = $registro->cita;
+                        if ($estado == 'confirmada')
+                        {
+                            echo "<td><a href='../../scripts/cancelcita.php?idcita=" . $cita . "' style='color:red;'>Cancelar</a></td>";
+                        }
+                        else if($estado == 'cancelada')
+                        {
+                            echo "<td><a href='citas.php' style='color: goldenrod;'>Reagendar</a></td>";
+
+                        }
+                        echo "</tr>";
+                    }
+                    echo "</tbody>
+                    </table>";
+                    $conexion->desconectarBD();
+             }
+             else
+            {
+               echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay citas pendientes!</h2>";
+            }
+            ?>
+            </div>
         </div>
+
+            
         
     </div>
 
 
-     <!-- Modal -->
-     <div class="modal fade" id="cancel" tabindex="-1" role="dialog" aria-labelledby="membershipFormLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-
-        <div class="modal-content">
-          <div class="modal-header">
-
-
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-
-          <div class="modal-body">
-            <form class="membership-form webform" role="form" action="../../scripts/modal-cancel.php" method="post">
-                
-
-            <h4 class="text-center">¿Deseas reagendar la cita?</h4>
-
-            <input type="text" name="citaid" value="<?php echo $cita; ?>">  
-            <button type="submit" class="form-control w-75" id="submit-button" name="reagendar" value="si">Si</button>
-            <button type="submit" class="form-control w-75" id="submit-button" name="cancelar" value="no">No</button>
-                
-            </form>
-          </div>
-
-          <div class="modal-footer"></div>
-
-          
-
-        </div>
-      </div>
+  
     </div>
 
     </body>

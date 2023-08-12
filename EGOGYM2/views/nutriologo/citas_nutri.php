@@ -116,7 +116,8 @@ $(document).ready(function() {
 
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#citas_hoy">Citas del día de hoy</a></li>
-            <li class="active"><a data-toggle="tab" href="#citas_pr" style="margin-left: 20px;">Citas próximas</a></li>
+            <li><a data-toggle="tab" href="#citas_pr" style="margin-left: 20px;">Citas próximas</a></li>
+            <li><a data-toggle="tab" href="#citas_can" style="margin-left: 20px;">Citas canceladas</a></li>
             <li><a data-toggle="tab" href="#citas" style="margin-left: 20px;">Citas pasadas</a></li>
         </ul>
         <?php
@@ -270,6 +271,8 @@ $(document).ready(function() {
                         echo "<td> $registro->cliente</td> ";
                         echo "<td> $registro->hora</td> ";
                         echo "<td><a href='modFicha.php?id=" . $registro->id_ficha . "'>Generar ficha médica</a></td>";
+                        $cita = $registro->cita;
+                        echo "<td><a href='../../scripts/noasistio-nutri.php?idcita=" . $cita . "' style='color:red;'>No asistio</a></td>";
                         echo "</tr>";
                     }
                     echo "</tbody>
@@ -293,7 +296,100 @@ $(document).ready(function() {
              servicios_empleados.id_empserv=citas.serv_emp
              inner join servicios on
              servicios.codigo=servicios_empleados.servicio
-             where citas.fecha > curdate() AND servicios.nombre='nutricion'
+             where citas.fecha > curdate() AND servicios.nombre='nutricion' and citas.estado = 'confirmada'
+             group by servicio;
+             ";
+              $conexion->seleccionar($consulta);
+              $tabla = $conexion->seleccionar($consulta);
+              foreach($tabla as $registro)
+              {
+                  $registro->cantidad;
+     
+                  $cant_2 = $registro;
+              }
+              
+            if(isset($cant_2) != '0')
+             {
+                $conexion = new database();
+                    $conexion->conectarDB();    
+                    $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente, 
+                    e.servicio as servicio,e.empleado AS empleado, citas.hora as hora,citas.fecha, citas.estado, citas.id_cita as cita
+                    from citas INNER JOIN cliente ON cliente.id_cliente= citas.cliente
+                    INNER JOIN persona ON persona.id_persona = cliente.id_cliente
+                    INNER JOIN
+                    (
+                    SELECT id_empserv, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS empleado,
+                    servicios.nombre as servicio
+                    FROM servicios_empleados 
+                    INNER JOIN servicios ON servicios.codigo=servicios_empleados.servicio
+                    INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
+                    INNER JOIN persona ON empleado.id_empleado = persona.id_persona
+                    ) AS e ON citas.serv_emp = e.id_empserv 
+                    where citas.fecha > curdate() AND e.servicio='nutricion'
+                    AND citas.serv_emp=$ID and citas.estado = 'confirmada'
+                    ";
+                    echo 
+                    "
+                    <table class='table' style='border-radius: 5px;width:80%'>
+                    <thead class='table-dark' style='text-align:'center;''>
+                        <tr>
+                        <br>
+                            <th style='color: goldenrod;'>
+                            Cliente
+                            </th>
+                            <th style='color: goldenrod;'>
+                            Fecha
+                            </th>
+                            <th style='color: goldenrod;'>
+                            Hora
+                            </th>
+                            <th style='color: goldenrod;'>
+                            Estatus
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>";
+
+                    $conexion->seleccionar($consulta);
+                    $tabla = $conexion->seleccionar($consulta);
+
+                    foreach ($tabla as $registro)
+                    {
+                        echo "<tr>";
+                        echo "<td> $registro->cliente</td> ";
+                        echo "<td> $registro->fecha</td> ";
+                        echo "<td> $registro->hora</td> ";
+                        echo "<td>$registro->estado</td>";
+                        $cita = $registro->cita;
+                        echo "<td><a href='../../scripts/cancelcita-nutri.php?idcita=" . $cita . "' style='color:red;'>Cancelar</a></td>";
+                        echo "</tr>";
+                    }
+                    echo "</tbody>
+                    </table>";
+                    $conexion->desconectarBD();
+             }
+             else
+            {
+               echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay citas pendientes!</h2>";
+            }
+            ?>
+            </div>
+
+
+
+        <div class="tab-pane fade" id="citas_can">
+            <?php
+             $conexion = new database();
+             $conexion->conectarDB();
+     
+             $consulta = "SELECT count(citas.id_cita) cantidad, servicios.nombre from citas
+             inner join servicios_empleados on 
+             servicios_empleados.id_empserv=citas.serv_emp
+             inner join servicios on
+             servicios.codigo=servicios_empleados.servicio
+             where citas.fecha > curdate() AND servicios.nombre='nutricion' and citas.estado = 'cancelada'
              group by servicio;
              ";
               $conexion->seleccionar($consulta);
@@ -323,11 +419,11 @@ $(document).ready(function() {
                     INNER JOIN persona ON empleado.id_empleado = persona.id_persona
                     ) AS e ON citas.serv_emp = e.id_empserv 
                     where citas.fecha > curdate() AND e.servicio='nutricion'
-                    AND citas.serv_emp=$ID
+                    AND citas.serv_emp=$ID and citas.estado = 'cancelada'
                     ";
                     echo 
                     "
-                    <table class='table' style='border-radius: 5px;width:60%'>
+                    <table class='table' style='border-radius: 5px;width:80%'>
                     <thead class='table-dark' style='text-align:'center;''>
                         <tr>
                         <br>
@@ -342,6 +438,8 @@ $(document).ready(function() {
                             </th>
                             <th style='color: goldenrod;'>
                             Estatus
+                            </th>
+                            <th>
                             </th>
                         </tr>
                     </thead>
@@ -370,6 +468,7 @@ $(document).ready(function() {
             ?>
             </div>
 
+        </div>
         </div>
    </div>
 

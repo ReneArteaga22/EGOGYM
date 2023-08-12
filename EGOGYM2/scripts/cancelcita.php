@@ -12,17 +12,12 @@
     $db ->conectarDB();
 
     extract($_POST);
+    $cita= $_GET['idcita'];
     $cadena= "update citas set estado = 'cancelada' where id_cita = $cita";
     $db->ejecutarSQL($cadena);
+    
+        header('refresh:2 ../views/recepcionista/vercitas.php');
 
-    if($si)
-    {
-        header('refresh:15 ../views/recepcionista/citas.php');
-    }
-    else 
-    {
-        header('refresh:15 ../views/recepcionista/vercitas.php');
-    }
     ?>
 </body>
 </html>
