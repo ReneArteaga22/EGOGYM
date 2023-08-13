@@ -139,7 +139,7 @@ $(document).ready(function() {
         </div>
     </nav>
 
-
+    <section class="kiara">
     <div class="container">
         <div class="main-body">
             
@@ -148,7 +148,7 @@ $(document).ready(function() {
                   <div class="card">
                     <div class="card-body">
                       <div class="d-flex flex-column align-items-center text-center">
-                      <img src="../../images/class/boxwax.jpg" alt="user" class="rounded-circle" width="250">
+                      <img src="../../images/class/boxwax.jpg" alt="user" class="rounded-circle" width="250px">
                       
                     
                       </div>
@@ -204,7 +204,17 @@ $(document).ready(function() {
                     echo "<p class='mb-0'>Días restantes de la suscripción:</p>";
                     echo "<span class='text-secondary'>" . $diasRestantes . " días</span>";
                     echo "</li>";
-
+                    echo "<li class='list-group-item d-flex justify-content-between align-items-center flex-wrap'>";
+                    echo "<p class='mb-0'>Estatus del plan:</p>";
+                      if($diasRestantes > 0)
+                      {
+                        echo "<span class='text-success'>Activo</span>";
+                      }
+                      else
+                      {
+                        echo "<span class='text-danger'>Inactivo</span>";
+                      }
+                      echo "</li>";
                    
                     }
 
@@ -384,6 +394,6 @@ $conexion->desconectarBD();
 </script>
 
 
-        
+</section>
 </body>
 </html>

@@ -171,22 +171,22 @@
         </div>
     </nav>
 
-
+    <section class="kiara">
     <!--Crea pills para todas las citas, citas canceladas, confirmadas, completadas, en las tres
      filtrar citas por fecha, entrenador, servicio-->
-    <div class="container" style="padding-top: 10%;">
+    <div class="container" style="padding-top: 3%;">
         <ul class="nav nav-tabs">
     <li><a data-toggle="tab" href="#agendar_nutri" style="margin-left: 20px;">Nutriologia</a></li>
     <li><a data-toggle="tab" href="#agendar_fisio" style="margin-left: 20px;">Fisioterapia</a></li>
         </ul>
-    </div>
+    </div><br>
   <div class="container">
-    <div class="tab-content">
+        <div class="tab-content">
 
-    <!--Agendar citas nutri-->
+          <!--Agendar citas nutri-->
          <div id="agendar_nutri" class="tab-pane active">
 
-         <form action="../../scripts/guardaCitas.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:5%;">
+         <form action="../../scripts/guardaCitas.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:7%;">
             <div class="row">
                   <legend class="form-label" style="color: goldenrod;">Agendar Cita</legend>
                   <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
@@ -247,7 +247,7 @@
 
     <!--Agendar cita fisio-->
       <div id="agendar_fisio" class="tab-pane fade">
-      <form action="../../scripts/guardaCitas.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:5%">
+        <form action="../../scripts/guardaCitas.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:7%">
             <div class="row">
                   <legend class="form-label" style="color: goldenrod;">Agendar Cita</legend>
                   <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
@@ -308,14 +308,15 @@
 
 
             </form>
-      </div>
+        </div>
     
-      
+        <!--Fin fisio-->
 
+
+       </div>
+       <!--fin tab-content-->
 
     </div>
-
-  </div>
-
+    </section>
     </body>
 </html>

@@ -14,8 +14,6 @@
       <script src="../../js/aos.js"></script>
       <script src="../../js/smoothscroll.js"></script>
       <script src="../../js/custom.js"></script>
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 
      <link rel="stylesheet" href="../../css/bootstrap.min.css">
      <link rel="stylesheet" href="../../css/font-awesome.min.css">
@@ -23,22 +21,6 @@
 
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
-
-     <script>
-$(document).ready(function() {
-
-  $('.dropdown-menu a.dropdown-item').click(function(event) {
- 
-    event.preventDefault();
-
-
-    var href = $(this).attr('href');
-
-    
-    window.location.href = href;
-  });
-});
-</script>
     </head>
     <body>
     <?php
@@ -63,11 +45,11 @@ $(document).ready(function() {
     }
     else 
     {
-        header("Location:../../index.php");
+        header("Location:../../First.php");
     }
        
     ?>
-   <nav class="navbar navbar-expand-lg fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
             <a class="navbar-brand" href="../recepcionista/principal.php">EGO GYM</a>
@@ -117,9 +99,8 @@ $(document).ready(function() {
         </div>
     </nav>
 
-
-      
-    <div class="container" style="padding-top: 14%;">
+    <section class="kiara">
+    <div class="container" style="padding-top: 3%;">
         <div class="main-body">
 
         <div class="row gutters-sm">
@@ -327,4 +308,5 @@ $(document).ready(function() {
       
       
     </body>
+</section>
 </html>

@@ -117,8 +117,9 @@ $(document).ready(function() {
         </div>
     </nav>
 
+    <section class="kiara">
     <!--Inicio de recepcionista-->
-    <div class="container" style="padding-top: 10%;">
+    <div class="container" style="padding-top: 1%;">
         <h1 data-aos="fade-up" style="text-align: center;">¡Bienvenido!</h1>
         <hr class="dropdown divider" style="height: 2px;">
 
@@ -190,12 +191,13 @@ $(document).ready(function() {
          }
          else
          {
-            echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay citas pendientes!</h2>";
+            echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay citas pendientes el día de hoy!</h2>";
          }
 
          
         ?>
     </div>
+    </section>
 
     </body>
 </html>

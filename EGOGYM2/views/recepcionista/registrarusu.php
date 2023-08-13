@@ -122,7 +122,8 @@ $(document).ready(function() {
         </div>
     </nav>
 
-    <div class="container" style="padding: 10%;">
+    <section class="kiara">
+    <div class="container" style="padding: 3%;">
     <form action="../../scripts/guardausu(rec).php" method="post" style="background-color: black; opacity: 0.8; border-radius: 5px; padding: 5%;margin: auto; width: 80%;">
                 <div class="row" style="padding: 1%;">
                   <legend class="form-label" style="color: goldenrod;">Registrar usuario</legend>
@@ -199,6 +200,7 @@ $(document).ready(function() {
           <?php
           ?>
     </div>
+    </section>
 
     </body>
     

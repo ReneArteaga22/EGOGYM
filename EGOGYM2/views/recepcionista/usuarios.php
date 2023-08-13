@@ -99,40 +99,39 @@
         </div>
     </nav>
 
-    <!--Pills para buscar por clientes, empleados, nuevos usuarios-->
-    <!--Pills para todos los usuarios-->
-  <div class="container" style="padding-top: 10%;">
+   <section class="kiara">
+
+    <!--Pills para buscar por clientes, empleados-->
+  <div class="container" style="padding-top: 3%;">
   <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#clientes">Clientes</a></li>
   <li><a data-toggle="tab" href="#empleados" style="margin-left: 10px;">Empleados</a></li>
-</ul>
+  </ul>
      <div class="container">
      <div class="tab-content">
   <div id="clientes" class="tab-pane active" style="margin-top: 5px;">
-
-    <form action="" method="post" class="form-inline">
+	<form action="" method="post" class="form-inline">
         <div class="mb-2 col-12">
         <input type="text" name="cliente" placeholder="Buscar Cliente" class="form-control w-25" style="height: 35px;" required>
         <input class="btn btn-warning btn-sm " type="submit" value="Buscar" style="margin-left:20px;">
         </div>
             
-    </form>   
-
+    	</form>   
+   
   <?php
-
-        if($_POST)
+         if($_POST)
         {
         extract($_POST);
         $conexion = new database();
         $conexion->conectarDB();
         
-        $consulta = " SELECT count(cliente.id_cliente) as cantidad, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_m>
+        $consulta = " SELECT count(cliente.id_cliente) as cantidad, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) as nombre,
         persona.tipo_usuario as tipo,persona.telefono as contacto, persona.id_persona
         from persona 
         inner join cliente on
         cliente.id_cliente=persona.id_persona where concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) like '%$cliente%'
         AND persona.id_persona IN(select cliente.id_cliente from cliente )
-        group by nombre,apellido_paterno, apellido_materno, tipo_usuario, telefono, id_persona";
+        group by nombre,apellido_paterno, apellido_materno";
          $conexion->seleccionar($consulta);
          $tabla = $conexion->seleccionar($consulta);
          
@@ -190,7 +189,7 @@
             $conexion->conectarDB();
         
             $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) as nombre_emp, 
-            persona.correo as correo, persona.telefono as contacto_emp, persona.id_persona
+            persona.correo as correo, persona.telefono as contacto_emp, persona.id_persona, empleado.tipo_empleado
             from persona 
             inner join empleado on
             empleado.id_empleado=persona.id_persona";
@@ -212,6 +211,9 @@
                     <th style='color: goldenrod;'>
                     Correo
                     </th>
+		    <th style='color: goldenrod;'>
+			Servicio
+		    </th>
                 </tr>
             </thead>
             <tbody>";
@@ -221,6 +223,7 @@
                 echo "<td><a href='perfilEmpleado.php?id=" . $registro->id_persona . "'>" . $registro->nombre_emp . "</a></td>";
                 echo "<td> $registro->contacto_emp</td> ";
                 echo "<td> $registro->correo</td> ";
+		        echo "<td>$registro->tipo_empleado</td>";
             }
             echo "</tbody>
             </table>";
@@ -230,6 +233,6 @@
       
      </div>
   </div>
-
+        </section>
     </body>
 </html>

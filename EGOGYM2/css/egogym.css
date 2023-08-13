@@ -667,3 +667,9 @@
     display: block;
   }
   }
+
+
+  .kiara {
+    background: var(--white-color);
+    padding: 5rem 0;
+    }
