@@ -14,6 +14,8 @@
       <script src="../../js/aos.js"></script>
       <script src="../../js/smoothscroll.js"></script>
       <script src="../../js/custom.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
      <link rel="stylesheet" href="../../css/bootstrap.min.css">
      <link rel="stylesheet" href="../../css/font-awesome.min.css">
@@ -23,6 +25,23 @@
      <link href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css" rel="stylesheet">
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
+
+     <script>
+$(document).ready(function() {
+
+  $('.dropdown-menu a.dropdown-item').click(function(event) {
+ 
+    event.preventDefault();
+
+
+    var href = $(this).attr('href');
+
+    
+    window.location.href = href;
+  });
+});
+</script>
+
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
     <?php
@@ -47,9 +66,11 @@
     }
     else 
     {
-        header("Location:../../First.php");
+        header("Location:../../index.php");
     }
        
+
+   
     ?>
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
@@ -101,9 +122,10 @@
         </div>
     </nav>
 
-    <div class="container" style="padding: 15%;">
-    <form action="../../scripts/guardarUsuario(rec).php" method="post" style="background-color: black; opacity: 0.8; border-radius: 5px; padding: 5%;margin: auto; width: 80%;">
-                <div class="row" style="padding: 3%;">
+    <section class="kiara">
+    <div class="container" style="padding: 3%;">
+    <form action="../../scripts/guardausu(rec).php" method="post" style="background-color: black; opacity: 0.8; border-radius: 5px; padding: 5%;margin: auto; width: 80%;">
+                <div class="row" style="padding: 1%;">
                   <legend class="form-label" style="color: goldenrod;">Registrar usuario</legend>
                   <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
                   <div class="col-12 col-lg-6">
@@ -118,14 +140,14 @@
 
                   </div>
                  <div class="col-12 col-lg-6">
-                 <label style="color: white; margin-top: 10px;">Sexo</label><br>
+                 <label style="color: white; margin-top: 5px;">Sexo</label><br>
               <input type="radio" value="femenino" name="sexo"> <b style="color: antiquewhite;">Femenino</b><br>
               <input type="radio" value="masculino" name="sexo"> <b style="color: antiquewhite;">Masculino</b><br>
                     <br>
                     <!--Fecha nac-->
                     <label style="color:white">Fecha de nacimiento</label >
             <div class="input-group date">
-            <input type="date" class="form-control" name="fecha_nacimiento">
+            <input type="date" class="form-control" name="fecha_nacimiento" required min="1950-01-01" max="2015-01-01">
             </div>
             <script>
         // Inicializar el selector de fecha
@@ -178,6 +200,7 @@
           <?php
           ?>
     </div>
+    </section>
 
     </body>
     

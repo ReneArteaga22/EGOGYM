@@ -40,7 +40,7 @@
           $tipo = $dato->tipo_empleado;
         }
 
-    if(isset($email) and $tipo == 'fisio' )
+    if(isset($email) and $tipo == 'nutri' )
     {
       
     }
@@ -89,7 +89,6 @@
             <img src="../../images/class/boxwax.jpg" class="rounded-circle" alt="..." style="width: 60%;">
           </div>
         <?php
-        include '../../scripts/database.php';
         $conexion = new Database();
         $conexion->conectarDB();
 

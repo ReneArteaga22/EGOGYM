@@ -39,7 +39,7 @@
           $tipo = $dato->tipo_empleado;
         }
 
-    if(isset($email) and $tipo == 'fisio' )
+    if(isset($email) and $tipo == 'nutri' )
     {
       
     }

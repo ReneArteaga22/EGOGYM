@@ -35,7 +35,7 @@
       showOtherMonths: true,
       selectOtherMonths: true,
       dateFormat: 'yy-mm-dd',
-      minDate: new Date(),
+      minDate: '+1D',
       maxDate: '+9D',
       beforeShowDay: $.datepicker.noWeekends,
       // Evento onchange para actualizar el selector de hora cuando se cambia la fecha
@@ -117,7 +117,7 @@
     }
     else 
     {
-        header("Location:../../First.php");
+        header("Location:../../index.php");
     }
        
     ?>
@@ -171,46 +171,29 @@
         </div>
     </nav>
 
-
+    <section class="kiara">
     <!--Crea pills para todas las citas, citas canceladas, confirmadas, completadas, en las tres
      filtrar citas por fecha, entrenador, servicio-->
-    <div class="container" style="padding-top: 15%;">
+    <div class="container" style="padding-top: 3%;">
         <ul class="nav nav-tabs">
     <li><a data-toggle="tab" href="#agendar_nutri" style="margin-left: 20px;">Nutriologia</a></li>
     <li><a data-toggle="tab" href="#agendar_fisio" style="margin-left: 20px;">Fisioterapia</a></li>
         </ul>
-    </div>
+    </div><br>
   <div class="container">
-    <div class="tab-content">
+        <div class="tab-content">
 
-    <!--Agendar citas nutri-->
-         <div id="agendar_nutri" class="tab-pane fade">
-         <form action="../../scripts/guardaCitas.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:5%">
+          <!--Agendar citas nutri-->
+         <div id="agendar_nutri" class="tab-pane active">
+
+         <form action="../../scripts/guardaCitas.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:7%;">
             <div class="row">
                   <legend class="form-label" style="color: goldenrod;">Agendar Cita</legend>
                   <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
                   <div class="col-12 col-lg-6">
                   <label style='color: white;'>Cliente</label><br>
-                    <?php
-                     $db=new Database();
-                     $db->conectarDB();
-                     $cadena="SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente,
-                     cliente.id_cliente from persona inner join cliente on cliente.id_cliente=persona.id_persona;";
-                     $reg = $db->seleccionar($cadena);
-                     echo 
-                     "
-                     <div class='mb-3' style='width: 30%;'>
-                    <select name='cliente_op' class='form-select'>
-                     ";
-                     foreach($reg as $value)
-                    {
-                        echo "<option value='".$value->id_cliente."'>".$value->cliente."</option>";
-                    }
-
-                    echo "</select>
-                    </div>";
-                    ?>              
-
+                  <input type="text" name="cliente" placeholder="Nombre del cliente"><br> 
+                      <p style="font-size: 12px; color:goldenrod; margin-left:5px">* Es obligatorio escribir el nombre completo</p>    
                     <?php
                     $db=new database();
                     $db->conectarDB();
@@ -222,13 +205,13 @@
                      inner join persona on persona.id_persona=empleado.id_empleado
                      where servicios.nombre='nutricion'";
                     $reg =$db->seleccionar($cadena);
-                    
                     echo 
-                    "<div class='mb-3' style='width: 30%;'>
+                    "<div class='mb-4'>
                     <label class='control-label' style='color:white;'>
-                    Servicio
+                    Empleado
                     </label>
-                    <select name='servicio' class='form-select'>
+                    <br>
+                    <select name='servicio' class='form-select w-75'>
                     ";
 
                     foreach($reg as $value)
@@ -243,52 +226,35 @@
 
                   </div>
 
-                 <div class="col-12 col-lg-6">
+                 <div class="col-12 col-lg-6 mb-2">
                  <label style="color:white">Fecha</label>
-            <div class="input-group date">
-            <input type="text" id="datepicker1" required name="fecha_cita">
-            </div>
-            <h5 style="color: white;">Seleccionar hora</h5>
-            <select class="form-select" id="timeSelect1" name="hora">
-              <option value="">Seleccione una hora</option>
-            </select>
-
-                 </div>
+                <div class="input-group date">
+                <input type="text" id="datepicker1" required name="fecha_cita">
                 </div>
+                <label style="color: white; margin-top: 30px;">Seleccionar hora</label>
+                <select class="form-select w-75" id="timeSelect1" name="hora">
+                  <option value="">Seleccione una hora</option>
+                </select>
+                 </div>
+            </div>
             <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
             <button type="reset" value="Limpiar" class="btn btn-secondary">Borrar cambios</button>
             <button type="submit"name="Registrar" class="btn btn-warning">Agendar</button>            
-          
+            
+
             </form>
          </div>
 
     <!--Agendar cita fisio-->
       <div id="agendar_fisio" class="tab-pane fade">
-      <form action="../../scripts/guardaCitas.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:5%">
+        <form action="../../scripts/guardaCitas.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:7%">
             <div class="row">
                   <legend class="form-label" style="color: goldenrod;">Agendar Cita</legend>
                   <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
                   <div class="col-12 col-lg-6">
                   <label style='color: white;'>Cliente</label><br>
-                    <?php
-                     $db=new database();
-                     $db->conectarDB();
-                     $cadena="SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente,
-                     cliente.id_cliente from persona inner join cliente on cliente.id_cliente=persona.id_persona;";
-                     $reg = $db->seleccionar($cadena);
-                     echo 
-                     "
-                     <div class='mb-3' style='width: 30%;'>
-                    <select name='cliente_op' class='form-select'>
-                     ";
-                     foreach($reg as $value)
-                    {
-                        echo "<option value='".$value->id_cliente."'>".$value->cliente."</option>";
-                    }
-
-                    echo "</select>
-                    </div>";
-                    ?>              
+                  <input type="text" name="cliente" placeholder="Nombre del cliente"><br> 
+                      <p style="font-size: 12px; color:goldenrod; margin-left:5px">* Es obligatorio escribir el nombre completo</p>  
 
                     <?php
                     $db=new database();
@@ -303,11 +269,12 @@
                     $reg =$db->seleccionar($cadena);
                     
                     echo 
-                    "<div class='mb-3' style='width: 30%;'>
+                    "<div class='mb-4'>
                     <label class='control-label' style='color:white;'>
-                    Servicio
+                    Empleado
                     </label>
-                    <select name='servicio' class='form-select'>
+                    <br>
+                    <select name='servicio' class='form-select w-75'>
                     ";
 
                     foreach($reg as $value)
@@ -327,8 +294,8 @@
             <div class="input-group date">
             <input type="text" id="datepicker2" required name="fecha_cita">
             </div>
-            <h5 style="color: white;">Seleccionar hora</h5>
-            <select class="form-select" id="timeSelect2" name="hora">
+            <label style="color: white; margin-top:30px;">Seleccionar hora</label>
+            <select class="form-select w-75" id="timeSelect2" name="hora">
               <option value="">Seleccione una hora</option>
             </select>
 
@@ -341,14 +308,15 @@
 
 
             </form>
-      </div>
+        </div>
     
-      
+        <!--Fin fisio-->
 
+
+       </div>
+       <!--fin tab-content-->
 
     </div>
-
-  </div>
-
+    </section>
     </body>
 </html>

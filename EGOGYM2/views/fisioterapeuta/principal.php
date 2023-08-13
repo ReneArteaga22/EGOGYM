@@ -62,10 +62,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                        <a href="principal.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="../fisioterapeuta/principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="citasfisio.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="../fisioterapeuta/citasfisio.php" class="nav-link smoothScroll">Citas</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-lg-2">

@@ -30,20 +30,27 @@
         $db= new database();
         $db->conectarDB();
 
-        extract($_POST);
 
-        if($hora < 8)
+        extract($_POST);
+        $consulta= " SELECT persona.id_persona as cliente_id
+        from persona 
+        inner join cliente on
+        cliente.id_cliente=persona.id_persona where 
+        concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) like '%$cliente%'
+        AND persona.id_persona IN(select cliente.id_cliente from cliente )";
+        $db->seleccionar($consulta);
+        $tabla = $db->seleccionar($consulta);
+        
+        $tabla = $db->seleccionar($consulta);
+        foreach($tabla as $registro)
         {
-            echo "<h1>¡Horario inválido!</h1>";
-            header("refresh:3; ../views/recepcionista/citas.php");
+            $cliente_id = $registro->cliente_id;
         }
-        else
-        {
-        $cadena = "call restriccion_citas_3($servicio, $cliente_op,'$fecha_cita','$hora')";
+
+        $cadena = "call restriccion_citas_3($servicio, $cliente_id,'$fecha_cita','$hora')";
         $db->ejecutarSQL($cadena);
         $db->desconectarBD();
         header("refresh:3; ../views/recepcionista/citas.php");
-        }
         ?>
     </div>
 </body>

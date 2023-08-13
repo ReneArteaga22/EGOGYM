@@ -99,8 +99,8 @@
         </div>
     </nav>
 
-      
-    <div class="container" style="padding-top: 14%;">
+    <section class="kiara">
+    <div class="container" style="padding-top: 3%;">
         <div class="main-body">
 
         <div class="row gutters-sm">
@@ -308,4 +308,5 @@
       
       
     </body>
+</section>
 </html>

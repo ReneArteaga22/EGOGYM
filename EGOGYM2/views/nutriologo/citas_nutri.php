@@ -14,6 +14,8 @@
       <script src="../../js/aos.js"></script>
       <script src="../../js/smoothscroll.js"></script>
       <script src="../../js/custom.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
      <link rel="stylesheet" href="../../css/bootstrap.min.css">
      <link rel="stylesheet" href="../../css/font-awesome.min.css">
@@ -25,6 +27,22 @@
 
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
+
+     <script>
+$(document).ready(function() {
+
+  $('.dropdown-menu a.dropdown-item').click(function(event) {
+ 
+    event.preventDefault();
+
+
+    var href = $(this).attr('href');
+
+    
+    window.location.href = href;
+  });
+});
+</script>
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
     <?php
@@ -43,19 +61,19 @@
           $tipo = $dato->tipo_empleado;
         }
 
-    if(isset($email) and $tipo == 'fisio' )
+    if(isset($email) and $tipo == 'nutri' )
     {
       
     }
     else 
     {
-        header("Location:../../First.php");
+        header("Location:../../index.php");
     }
        
     ?>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top">
+<nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
             <a class="navbar-brand" href="../nutriologo/principal.php">EGO GYM</a>
@@ -74,10 +92,21 @@
                         <a href="../nutriologo/citas_nutri.php" class="nav-link smoothScroll">Citas</a>
                     </li>
                 </ul>
+
+                <ul class="navbar-nav ml-lg-2">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" >
+                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
+                        </ul>
+                      </li>
+                </ul>
             </div>
         </div>
     </nav>
-
 
     <!--Crea pills para todas las citas, citas canceladas, confirmadas, completadas, en las tres
      filtrar citas por fecha, entrenador, servicio-->
@@ -92,7 +121,6 @@
         <?php
         $db= new database();
         $db->conectarDB();
-         session_start();
          $email = $_SESSION["correo"];
          $consulta = "SELECT servicios_empleados.id_empserv from servicios_empleados
          inner join empleado on empleado.id_empleado= servicios_empleados.empleado
@@ -102,7 +130,7 @@
      
              foreach ($datos as $dato)
              {
-               $ID = $dato->id_persona;
+               $ID = $dato->id_empserv;
              }
      
             
@@ -111,7 +139,6 @@
         <div class="tab-content">
         <div class="tab-pane fade" id="citas">
         <?php
-                include '../../scripts/database.php';
                 $conexion = new database();
                 $conexion->conectarDB();
                 $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente, 
@@ -172,7 +199,7 @@
                 </table>";
                 ?>
             </div>
-        <div class="tab-pane fade" id="citas_hoy">
+        <div class="tab-pane active" id="citas_hoy">
             <?php
              $conexion = new database();
              $conexion->conectarDB();
@@ -211,7 +238,7 @@
                     INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
                     INNER JOIN persona ON empleado.id_empleado = persona.id_persona
                     ) AS e ON citas.serv_emp = e.id_empserv 
-                    where e.servicio='nutricion' AND citas.fecha = curdate()
+                    where e.servicio='nutricion' AND citas.fecha = curdate() AND citas.estado='confirmada'
                     AND citas.serv_emp=$ID
                     ";
                     echo 
