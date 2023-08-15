@@ -23,8 +23,6 @@
      <link rel="stylesheet" href="../../css/egogym.css">
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
-<<<<<<< HEAD
-=======
     <?php
     include '../../scripts/database.php';
     $conexion = new Database();
@@ -51,7 +49,6 @@
     }
        
     ?>
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
@@ -108,10 +105,6 @@
 
 
         <?php
-<<<<<<< HEAD
-        include '../../scripts/database.php';
-=======
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
         $conexion = new Database();
         $conexion->conectarDB();
 

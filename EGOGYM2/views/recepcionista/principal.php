@@ -23,8 +23,6 @@
      <link rel="stylesheet" href="../../css/egogym.css">
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
-<<<<<<< HEAD
-=======
     <?php
     include '../../scripts/database.php';
     $conexion = new Database();
@@ -51,7 +49,6 @@
     }
        
     ?>
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
@@ -68,14 +65,6 @@
                         <a href="../recepcionista/principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
 
-<<<<<<< HEAD
-                    <li class="nav-item">
-                        <a href="citas.php" class="nav-link smoothScroll">Citas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="citas.php" class="nav-link smoothScroll">Agendar Cita</a>
-                    </li>
-=======
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false" > Citas</a>
@@ -84,7 +73,6 @@
                           <li><a class="dropdown-item" href="vercitas.php">Ver Citas</a></li>
                         </ul>
                       </li>
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
 
                     <li class="nav-item">
                         <a href="usuarios.php" class="nav-link smoothScroll">Usuarios</a>
@@ -93,8 +81,6 @@
                     <li class="nav-item">
                         <a href="registrarusu.php" class="nav-link smoothScroll">Registrar Nuevo Usuario</a>
                     </li>
-<<<<<<< HEAD
-=======
                     
                 </ul>
 
@@ -108,25 +94,20 @@
                           <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
                       </li>
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!--Inicio de recepcionista-->
+  
     <div class="container" style="padding-top: 10%;">
-        <h1 data-aos="fade-up" style="text-align: center;">¡Bienvenido!</h1>
+        <h1 data-aos="fade-up" style="text-align: center;">EGOGYM </h1>
         <hr class="dropdown divider" style="height: 2px;">
 
-        <!--Tablas de citas registradas para el día actual-->
+        
     </div>
     <div class="container">
         <?php
-<<<<<<< HEAD
-        include '../../scripts/database.php';
-=======
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
         $conexion = new database();
         $conexion->conectarDB();
 
@@ -153,11 +134,7 @@
 
              $cant = $registro;
          }
-<<<<<<< HEAD
-         if($cant != '0')
-=======
          if(isset($cant) != '0')
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
          {
             echo"<h3 data-aos='fade-right'>Citas del día de hoy</h3>";
             echo 
@@ -201,6 +178,97 @@
          
         ?>
     </div>
+    <?php
+ 
+ $conexion = new Database();
+$conexion->conectarDB();
 
+// Obtener el primer día del mes actual
+$primerDiaMesActual = date('Y-m-01');
+
+// Consulta para obtener la cantidad de citas por servicio de nutrición y fisioterapia en los últimos 5 meses
+$consulta = "SELECT MONTH(citas.fecha) as mes,
+                   SUM(CASE WHEN servicios.nombre = 'nutricion' THEN 1 ELSE 0 END) as citas_nutricion,
+                   SUM(CASE WHEN servicios.nombre = 'fisioterapia' THEN 1 ELSE 0 END) as citas_fisioterapia
+            FROM citas
+            INNER JOIN servicios_empleados ON citas.serv_emp = servicios_empleados.id_empserv
+            INNER JOIN servicios ON servicios_empleados.servicio = servicios.codigo
+            WHERE citas.fecha >= DATE_SUB(:primerDiaMesActual, INTERVAL 3 MONTH) AND
+                  citas.fecha <= LAST_DAY(:primerDiaMesActual) + INTERVAL 1 MONTH
+            GROUP BY mes
+            ORDER BY mes";
+
+try {
+    $stmt = $conexion->obtenerConexion()->prepare($consulta);
+    $stmt->bindParam(':primerDiaMesActual', $primerDiaMesActual);
+    $stmt->execute();
+
+    $citasNutricion = array_fill(0, 5, 0);
+    $citasFisioterapia = array_fill(0, 5, 0);
+    $nombresMeses = array();
+
+    while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $mes = $fila['mes'];
+        $citasNutricion[(date('n') - $mes + 5) % 5] = $fila['citas_nutricion'];
+        $citasFisioterapia[(date('n') - $mes + 5) % 5] = $fila['citas_fisioterapia'];
+        $nombresMeses[] = $conexion->obtenerNombreMes($mes);
+    }
+
+} catch (PDOException $e) {
+    echo $e->getMessage();
+}
+
+ 
+ $conexion->desconectarBD();
+ ?>
+ 
+ <div class="container" style="align-items: center;">
+    <h3 data-aos="fade-right">Gráfica de Citas por Servicio</h3>
+    
+    <canvas data-aos="fade-right" id="graficaCitas" width="400" height="200"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    
+    var citasNutricion = <?php echo json_encode($citasNutricion); ?>;
+    var citasFisioterapia = <?php echo json_encode($citasFisioterapia); ?>;
+    var nombresMeses = <?php echo json_encode($nombresMeses); ?>;
+
+   
+    var ctx = document.getElementById('graficaCitas').getContext('2d');
+
+   
+    var grafica = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: nombresMeses,
+            datasets: [{
+                label: 'Citas de Nutrición',
+                data: citasNutricion,
+                backgroundColor: 'rgb(218, 165, 32,0.5)',
+                borderColor: 'rgb(218, 165, 32,1)',
+                borderWidth: 1
+            }, {
+                label: 'Citas de Fisioterapia',
+                data: citasFisioterapia,
+                backgroundColor: 'rgb(0, 0, 0,0.4)',
+                borderColor: 'rgb(0, 0, 0,1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: false, // Desactivar la respuesta para ajustar el tamaño del gráfico
+            scales: {
+                y: {
+                    beginAtZero: true, // Empezar en el valor 0 en el eje Y
+                    ticks: {
+                        stepSize: 1 // Mostrar solo valores enteros en el eje Y
+                    }
+                }
+            }
+        }
+    });
+</script>
     </body>
 </html>

@@ -1,30 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
+
+     <title>EGOGYM</title>
+
+     <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=Edge">
      <meta name="description" content="">
      <meta name="keywords" content="">
      <meta name="author" content="">
      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-     <title>Registrar</title>
+
       <!-- SCRIPTS -->
       <script src="../../js/jquery.min.js"></script>
       <script src="../../js/bootstrap.min.js"></script>
       <script src="../../js/aos.js"></script>
       <script src="../../js/smoothscroll.js"></script>
-      <script src="../../js/custom.js"></script>
+      <script src="../..//js/custom.js"></script>
 
      <link rel="stylesheet" href="../../css/bootstrap.min.css">
      <link rel="stylesheet" href="../../css/font-awesome.min.css">
      <link rel="stylesheet" href="../../css/aos.css">
 
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
-    </head>
-    <body>
+     <link rel="stylesheet" href="../../css/profile.css">
+
+     <style>
+      body{
+        padding: 70px;
+    margin-top:20px;
+    color: #1a202c;
+    text-align: left;
+    background-color: #e2e8f0;    
+}
+.main-body {
+    padding: 15px;
+}
+    </style>
+
+</head>
+<body data-spy="scroll" data-target="#navbarNav" data-offset="50">
     <?php
-    include '../../scripts/database.php';
+include '../../scripts/database.php';
     $conexion = new Database();
     $conexion->conectarDB();
 
@@ -100,11 +121,10 @@
     </nav>
 
 
-      
-    <div class="container" style="padding-top: 14%;">
+    <div class="container">
         <div class="main-body">
-
-        <div class="row gutters-sm">
+            
+              <div class="row gutters-sm">
                 <div class="col-md-4 mb-3">
                   <div class="card">
                     <div class="card-body">
@@ -118,7 +138,7 @@
                   </div>
                   <div class="card mt-3">
                     <?php
-                    include '../../scripts/database.php';
+                   
                     $conexion = new Database();
                     $conexion->conectarDB();
                     
@@ -137,48 +157,44 @@
 
                     if ($persona) 
                     {
-                      echo "<ul class='list-group list-group-flush'>";
-                      echo"<li class='list-group-item d-flex justify-content-between align-items-center flex-wrap'>";
-                      echo"<p class='mb-0'>Plan</p>";  
-                      echo"<span class='text-secondary'>". $persona[0]->plan ." </span>";
-                      echo"</li>";
-    
-                        
-                      echo "<ul class='list-group list-group-flush'>";
-                      echo"<li class='list-group-item d-flex justify-content-between align-items-center flex-wrap'>";
-                      echo"<p class='mb-0'>Fecha de inicio</p>";  
-                      echo"<span class='text-secondary'>". $persona[0]->inicio_suscripcion ." </span>";
-                      echo"</li>";
+                    echo "<ul class='list-group list-group-flush'>";
+                    echo"<li class='list-group-item d-flex justify-content-between align-items-center flex-wrap'>";
+                    echo"<p class='mb-0'>Plan</p>";  
+                    echo"<span class='text-secondary' id='planElement'>". $persona[0]->plan ." </span>";
+                    echo"</li>";
+  
+                      
+                    echo "<ul class='list-group list-group-flush'>";
+                    echo"<li class='list-group-item d-flex justify-content-between align-items-center flex-wrap'>";
+                    echo"<p class='mb-0'>Fecha de inicio</p>";  
+                    echo"<span class='text-secondary' id='inicioElement'>". $persona[0]->inicio_suscripcion ." </span>";
+                    echo"</li>";
+                   
+                    echo "<ul class='list-group list-group-flush'>";
+                    echo"<li class='list-group-item d-flex justify-content-between align-items-center flex-wrap'>";
+                    echo"<p class='mb-0'>Fecha de fin</p>";  
+                    echo"<span class='text-secondary' id='finalElement'>". $persona[0]->final_suscripcion ." </span>";
+                    echo"</li>";
 
-                      echo "<ul class='list-group list-group-flush'>";
-                      echo"<li class='list-group-item d-flex justify-content-between align-items-center flex-wrap'>";
-                      echo"<p class='mb-0'>Fecha de fin</p>";  
-                      echo"<span class='text-secondary'>". $persona[0]->final_suscripcion ." </span>";
-                      echo"</li>";
+                    $fechaFinal = new DateTime($persona[0]->final_suscripcion);
+                    $fechaActual = new DateTime();
+                    $intervalo = $fechaActual->diff($fechaFinal);
+                    $diasRestantes = $intervalo->format('%r%a'); // El modificador %r agrega el signo negativo si la fecha ya ha pasado.
 
-                      $fechaFinal = new DateTime($persona[0]->final_suscripcion);
-                      $fechaActual = new DateTime();
-                      $intervalo = $fechaActual->diff($fechaFinal);
-                      $diasRestantes = $intervalo->format('%r%a'); // El modificador %r agrega el signo negativo si la fecha ya ha pasado.
+                    echo "<ul class='list-group list-group-flush'>";
+                    echo "<li class='list-group-item d-flex justify-content-between align-items-center flex-wrap'>";
+                    echo "<p class='mb-0'>Días restantes de la suscripción:</p>";
+                    echo "<span class='text-secondary' id='diasRestantesElement'>" . $diasRestantes . " días</span>";
+                    echo "</li>";
 
-                      echo "<ul class='list-group list-group-flush'>";
-                      echo "<li class='list-group-item d-flex justify-content-between align-items-center flex-wrap'>";
-                      echo "<p class='mb-0'>Días restantes de la suscripción:</p>";
-                      echo "<span class='text-secondary'>" . $diasRestantes . " días</span>";
-                      echo "</li>";
-                      echo "<li class='list-group-item d-flex justify-content-between align-items-center flex-wrap'>";
-                      echo "<p class='mb-0'>Estatus del plan:</p>";
-                      if($diasRestantes > 0)
-                      {
-                        echo "<span class='text-success'>Activo</span>";
-                      }
-                      else
-                      {
-                        echo "<span class='text-danger'>Inactivo</span>";
-                      }
-                      echo "</li>";
                    
                     }
+                    if (isset($_SESSION['mensaje'])) {
+                        echo '<div class="alert alert-success">' . $_SESSION['mensaje'] . '</div>';
+                        // Eliminar el mensaje de la sesión para que no se muestre en futuras visitas
+                        unset($_SESSION['mensaje']);
+                    }
+                    
 
                     ?>
                     
@@ -201,29 +217,31 @@
                 </div>
                 <div class="col-md-8">
                   <div class="card mb-3">
-            <?php
+                  <?php
 
 
-                $conexion = new Database();
-                $conexion->conectarDB();
+$conexion = new Database();
+$conexion->conectarDB();
 
 
-                $idPersona = $_GET['id'];
+$idPersona = $_GET['id'];
 
-                $consulta = "SELECT id_persona as matricula,concat(persona.nombre,' ',apellido_paterno,' ', apellido_materno) as usuario, correo, 
-                telefono, fecha_nacimiento,
-                FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad, 
-                cliente.fecha_ini as inicio_suscripcion, cliente.fecha_fin as final_suscripcion FROM persona 
-                inner join cliente on persona.id_persona=cliente.id_cliente 
-                WHERE id_persona = $idPersona";
-                $parametros = array(':id' => $idPersona);
-                $persona = $conexion->seleccionar($consulta, $parametros);
+$consulta = "SELECT id_persona as matricula,concat(persona.nombre,' ',apellido_paterno,' ', apellido_materno) as usuario, correo, 
+telefono, fecha_nacimiento,
+FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad, 
+cliente.fecha_ini as inicio_suscripcion, cliente.fecha_fin as final_suscripcion FROM persona 
+inner join cliente on persona.id_persona=cliente.id_cliente 
+WHERE id_persona = $idPersona";
+$parametros = array(':id' => $idPersona);
+$persona = $conexion->seleccionar($consulta, $parametros);
 
-                if ($persona) {
-                    echo "<div class='card-body'>";
+if ($persona) {
+   
+   
+    echo "<div class='card-body'>";
                       echo "<div class='row'>";
                        echo " <div class='col-sm-3'>";
-                          echo "<h6 class='mb-0'>Nombre: </h6>";
+                          echo "<h6 class='mb-0'>Nombre </h6>";
                         echo "</div>";
                         echo "<div class='col-sm-9 text-secondary'>";
                         echo "<h4> " . $persona[0]->usuario . "</h4>";
@@ -232,7 +250,7 @@
                       echo "<hr>";
                       echo"<div class='row'>";
                         echo "<div class='col-sm-3'>";
-                        echo"  <h6 class='mb-0'>Email:</h6>";
+                        echo"  <h6 class='mb-0'>Email</h6>";
                         echo"</div>";
                        echo" <div class='col-sm-9 text-secondary'>";
                        echo "<h4>" . $persona[0]->correo . "</h4>";
@@ -262,23 +280,162 @@
 
     
 
-                } else {
-                  echo "Persona no encontrada";
-                }
-                
-                $conexion->desconectarBD();
-                ?>
-                        <div class="row">
-                      </div>
+} else {
+    echo "Persona no encontrada";
+}
+
+$conexion->desconectarBD();
+?>
+                        
                     </div>
                     
                   </div>
     
-                  <div class="class-info" style="text-align: center; display: flex; ">
-
-
+                
+    
+    
+    
+                </div>
+              </div>
+    
+            </div>
         </div>
-    </div>
-      
-    </body>
+
+        <div class="modal fade" id="plan_up" tabindex="-1" role="dialog" aria-labelledby="membershipFormLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+          <div class="modal-header">
+
+            <h4 class="modal-title" id="membershipFormLabel">Dar de alta o actualizar plan</h4>
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <form id="formulario_actualizacion" class="membership-form webform" role="form"  action="../../scripts/update_plan.php" method="post">
+                
+
+
+                
+            <?php
+$conexion = new Database();
+$conexion->conectarDB();
+
+$cadena = "SELECT codigo, plan.nombre, precio FROM plan";
+$reg = $conexion->seleccionar($cadena);
+?>
+
+<input type="hidden" name="clienteId" value="<?php echo $idPersona; ?>">
+
+    <label style="position: relative; display: block;">
+        <select required name="plan" id="planSelect" style="display: block; width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-top: 20px;">
+            <option value="Seleccione una" selected disabled hidden></option>
+            
+    <?php
+    foreach ($reg as $value) {
+      echo "<option value='" . $value->codigo . "' data-precio='" . $value->precio . "'>" . $value->nombre . "</option>";
+
+    }
+    ?>
+  </select>
+  <span style="position: absolute; top: -10px; left: 10px; background-color: #fff; padding: 0 5px; font-size: 14px; color: #999;">Tipo de plan</span>
+</label>
+
+<!-- Agrega un div para mostrar el precio -->
+<div id="precioPlan" style="display: none; margin-top: 10px; font-weight: bold;"></div>
+
+<?php
+$conexion->desconectarBD();
+?>
+
+
+                <button type="submit" class="form-control" id="submit-button" name="submit">Ingresar el plan</button>
+                
+                
+            </form>
+          </div>
+          
+
+          <div class="modal-footer"></div>
+          <div id="mensaje_alerta"></div>
+
+         <script>
+  // Función para mostrar el precio del plan seleccionado
+  $(document).ready(function() {
+    $("#planSelect").change(function() {
+      const selectedPlan = $(this).find("option:selected");
+      const precio = selectedPlan.data("precio");
+
+      if (precio) {
+        $("#precioPlan").text("Precio: $" + precio).show();
+      } else {
+        $("#precioPlan").hide();
+      }
+    });
+  });
+</script>
+<!--
+<script>
+$(document).ready(function() {
+  var lastUpdateId = 0;
+  var updateInterval = 3000;
+  
+  function updateData() {
+    console.log("Actualizando datos...");
+    
+    $.ajax({
+      type: 'GET',
+      url: '../../scripts/update_plan.php',
+      data: { lastUpdateId: lastUpdateId },
+      success: function(response) {
+        if (response.newUpdate) {
+          console.log("Nuevos datos disponibles.");
+          lastUpdateId = response.updateId; 
+          $('#planElement').text(response.newData.plan);
+          $('#inicioElement').text(response.newData.inicio);
+          $('#finalElement').text(response.newData.final);
+          $('#diasRestantesElement').text(response.newData.diasRestantes + ' días');
+          $('#contenido').html(response.newData);
+        }
+      }
+    });
+  }
+  
+  function checkForUpdates() {
+    updateData();
+    setTimeout(checkForUpdates, updateInterval);
+  }
+  
+  checkForUpdates();
+  
+  $('#formulario_actualizacion').on('submit', function(e) {
+    e.preventDefault();
+    $.ajax({
+      type: 'POST',
+      url: '../../scripts/update_plan.php',
+      data: $(this).serialize(),
+      success: function(response) {
+        console.log("Formulario enviado correctamente.");
+        $('#mensaje_alerta').html('<div class="alert alert-success">Plan actualizado</div>');
+        updateData();
+        setTimeout(function() {
+          $('#mensaje_alerta').empty();
+        }, 3000);
+      },
+      error: function() {
+        console.log("Error en el envío del formulario.");
+      }
+    });
+  });
+});
+
+  
+</script>
+
+-->
+        
+</body>
 </html>

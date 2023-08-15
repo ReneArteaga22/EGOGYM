@@ -23,8 +23,6 @@
      <link rel="stylesheet" href="../../css/egogym.css">
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
-<<<<<<< HEAD
-=======
     <?php
     include '../../scripts/database.php';
     $conexion = new Database();
@@ -51,7 +49,6 @@
     }
        
     ?>
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
@@ -65,14 +62,6 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-<<<<<<< HEAD
-                        <a href="principal.php" class="nav-link smoothScroll">Inicio</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="citas.php" class="nav-link smoothScroll">Citas</a>
-                    </li>
-=======
                         <a href="../recepcionista/principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
 
@@ -84,7 +73,6 @@
                           <li><a class="dropdown-item" href="vercitas.php">Ver Citas</a></li>
                         </ul>
                       </li>
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
 
                     <li class="nav-item">
                         <a href="usuarios.php" class="nav-link smoothScroll">Usuarios</a>
@@ -93,8 +81,6 @@
                     <li class="nav-item">
                         <a href="registrarusu.php" class="nav-link smoothScroll">Registrar Nuevo Usuario</a>
                     </li>
-<<<<<<< HEAD
-=======
                     
                 </ul>
 
@@ -108,7 +94,6 @@
                           <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
                       </li>
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
                 </ul>
             </div>
         </div>
@@ -120,19 +105,11 @@
   <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#clientes">Clientes</a></li>
   <li><a data-toggle="tab" href="#empleados" style="margin-left: 10px;">Empleados</a></li>
-<<<<<<< HEAD
-  <li><a data-toggle="tab" href="#usuarios" style="margin-left: 10px;">Nuevos usuarios</a></li>
-=======
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
 </ul>
      <div class="container">
      <div class="tab-content">
   <div id="clientes" class="tab-pane fade in active">
   <?php
-<<<<<<< HEAD
-        include '../../scripts/database.php';
-=======
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
         $conexion = new database();
         $conexion->conectarDB();
 
@@ -159,26 +136,13 @@
                  <th style='color: goldenrod;'>
                  Contacto
                  </th>
-<<<<<<< HEAD
-                 <th style='color: goldenrod;'>
-                 Estatus de membresía
-                 </th>
-                 <th>
-                    </th>
-                 
-=======
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
              </tr>
          </thead>
          <tbody>";
          foreach ($tabla as $registro)
          {
              echo "<tr>";
-<<<<<<< HEAD
-             echo "<td><a href='perfil.php?id=" . $registro->id_persona . "'>" . $registro->nombre . "</a></td>";
-=======
              echo "<td><a href='perfilCliente.php?id=" . $registro->id_persona . "'>" . $registro->nombre . "</a></td>";
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
              echo "<td> $registro->tipo</td> ";
              echo "<td> $registro->contacto</td> ";
          }
@@ -199,11 +163,7 @@
             empleado.id_empleado=persona.id_persona
             left join servicios_empleados on
             servicios_empleados.empleado=empleado.id_empleado
-<<<<<<< HEAD
-            left join servicios on 
-=======
             inner join servicios on 
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
             servicios.codigo=servicios_empleados.servicio";
             $conexion->seleccionar($consulta);
             $tabla = $conexion->seleccionar($consulta);
@@ -235,11 +195,7 @@
             foreach ($tabla as $registro)
             {
                 echo "<tr>";
-<<<<<<< HEAD
-                echo "<td><a href='perfil.php?id=" . $registro->id_persona . "'>" . $registro->nombre_emp . "</a></td>";
-=======
                 echo "<td><a href='perfilEmpleado.php?id=" . $registro->id_persona . "'>" . $registro->nombre_emp . "</a></td>";
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
                 echo "<td> $registro->tipo_us</td> ";
                 echo "<td> $registro->contacto_emp</td> ";
                 echo "<td> $registro->servicio_emp</td> ";
@@ -249,54 +205,7 @@
             ?> 
         </div>
 
-<<<<<<< HEAD
-        <div id="usuarios" class="tab-pane fade">
-        <?php
-            $conexion = new database();
-            $conexion->conectarDB();
         
-            $consulta = "SELECT concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) as nombre, persona.telefono as contacto, persona.tipo_usuario as tipo, persona.id_persona 
-            from persona where persona.tipo_usuario IS NULL;";
-            $conexion->seleccionar($consulta);
-            $tabla = $conexion->seleccionar($consulta);
-        
-            echo 
-            "
-            <table class='table' style='border-radius: 5px;'>
-            <thead class='table-dark'>
-                <tr>
-                <br>
-                    <th style='color: goldenrod;'>
-                    Nombre
-                    </th>
-                    <th style='color: goldenrod;'>
-                    Contacto
-                    </th>
-                    <th style='color: goldenrod;'>
-                    Tipo de usuario
-                    </th>
-                    <th>
-                    </th>
-                    
-                </tr>
-            </thead>
-            <tbody>";
-            foreach ($tabla as $registro)
-            {
-                
-                echo "<tr>";
-                echo "<td><a href='perfilNuevo.php?id=" . $registro->id_persona . "'>" . $registro->nombre . "</a></td>";
-                echo "<td>$registro->contacto</td> ";
-                echo "<td> $registro->tipo</td> ";
-            }
-            echo "</tbody>
-            </table>";
-            $conexion->desconectarBD();
-            ?> 
-        </div>
-=======
-        
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
      </div>
   </div>
 

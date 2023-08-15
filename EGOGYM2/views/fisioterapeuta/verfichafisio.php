@@ -23,12 +23,6 @@
      <link rel="stylesheet" href="../../css/egogym.css">
     </head>
     <body>
-<<<<<<< HEAD
-    <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container">
-
-            <a class="navbar-brand" href="../fisioterapeuta/principal.php" >EGO GYM</a>
-=======
     <?php
     include '../../scripts/database.php';
     $conexion = new Database();
@@ -59,7 +53,6 @@
         <div class="container">
 
             <a class="navbar-brand" href="../fisioterapeuta/principal.php">EGO GYM</a>
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -69,14 +62,6 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-<<<<<<< HEAD
-                        <a href="../fisioterapeuta/principal.php" class="nav-link smoothScroll">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="../fisioterapeuta/citas_fisio.php" class="nav-link smoothScroll">Citas</a>
-                    </li>
-                </ul>
-=======
                         <a href="principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
@@ -93,17 +78,12 @@
                           <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
                           <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
             </div>
         </div>
     </nav>
     
 
         <?php
-<<<<<<< HEAD
-      include '../../scripts/database.php';
-=======
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
       $conexion = new Database();
       $conexion->conectarDB();
 

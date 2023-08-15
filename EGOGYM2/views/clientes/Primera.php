@@ -10,21 +10,11 @@
      <meta name="keywords" content="">
      <meta name="author" content="">
      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-      <!-- SCRIPTS -->
-      <script src="../../js/jquery.min.js"></script>
-      <script src="../../js/bootstrap.min.js"></script>
-      <script src="../../js/aos.js"></script>
-      <script src="../../js/smoothscroll.js"></script>
-      <script src="../../js/custom.js"></script>
-
+      
      <link rel="stylesheet" href="../../css/bootstrap.min.css">
      <link rel="stylesheet" href="../../css/font-awesome.min.css">
      <link rel="stylesheet" href="../../css/font-awesome.min.css">
-<<<<<<< HEAD
      <link rel="stylesheet" href="../../css/aos.css">
-=======
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
 
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
@@ -58,11 +48,6 @@
 </head>
 <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
 <?php
-<<<<<<< HEAD
-    session_start();
-    
-    if(isset($_SESSION["correo"]) )
-=======
     include '../../scripts/database.php';
     $conexion = new Database();
     $conexion->conectarDB();
@@ -79,7 +64,6 @@
         }
 
     if(isset($email) and $tipo == 'cliente' )
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
     {
       
     }
@@ -87,22 +71,14 @@
     {
         header("Location:../../First.php");
     }
-<<<<<<< HEAD
-
-=======
        
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
     ?>
 
     <!-- MENU BAR -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-<<<<<<< HEAD
-            <a class="navbar-brand" href="index.html">EGO GYM</a>
-=======
-            <a class="navbar-brand" href="Primera.php#home">EGO GYM</a>
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
+            <a class="navbar-brand" href="#home">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -112,30 +88,26 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="#home" class="nav-link smoothScroll">Home</a>
+                        <a href="#home" class="nav-link link-smooth smoothScroll">Home</a>
                     </li>
 
-                    <li class="nav-item">
-<<<<<<< HEAD
-                        <a href="Primera.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
-=======
-                        <a href="#about" class="nav-link smoothScroll">Sobre Nosotros</a>
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
-                    </li>
+                   
 
                     <li class="nav-item">
-                        <a href="#serv" class="nav-link smoothScroll">Servicios</a>
+                        <a href="#servicio" class="nav-link link-smooth smoothScroll">Servicios</a>
                     </li>
+                   
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false" > Citas</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <li><a class="dropdown-item" href="citas.php">Agendar Cita</a></li>
-                          <li><a class="dropdown-item" href="vercitas.php">Ver Citas</a></li>
+                          <li><a class="dropdown-item link-smooth" href="citas.php">Agendar Cita</a></li>
+                          <li><a class="dropdown-item link-smooth" href="vercitas.php">Ver Citas</a></li>
                         </ul>
                       </li>
                     <li class="nav-item">
-                        <a href="staff.php" class="nav-link smoothScroll">Staff</a>
+                        <a href="staff.php" class="nav-link link-smooth smoothScroll">Staff</a>
                     </li>
                 </ul>
 
@@ -147,8 +119,8 @@
                          <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
-                          <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
+                          <li><a class="dropdown-item link-smooth" href="../clientes/Perfil.php">Perfil</a></li>
+                          <li><a class="dropdown-item link-smooth" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
                       </li>
                 </ul>
@@ -234,7 +206,7 @@
 
 
  <!-- CLASS -->
- <section class="class section" id="serv">
+ <section class="class section" id="servicio">
         <div class="container">
           <div class="row">
             <div class="col-lg-12 col-12 text-center mb-3">
@@ -302,11 +274,7 @@
                         <div class="col-lg-12 col-12 text-center">
                             <h6 data-aos="fade-up">Cronograma de clases</h6>
 
-<<<<<<< HEAD
-                            <h2 class="text-white" data-aos="fade-up" data-aos-delay="250"></h2>
-=======
                             <h2 class="text-white" data-aos="fade-up" data-aos-delay="200"></h2>
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
                          </div>
 
                          <div class="col-lg-12 py-5 col-md-12 col-12">
@@ -554,8 +522,11 @@
     </div>
   </div>
 
-
-    
-
+  <!-- SCRIPTS -->
+  <script src="../../js/jquery.min.js"></script>
+  <script src="../../js/bootstrap.min.js"></script>
+  <script src="../../js/smoothscroll.js"></script>
+  <script src="../../js/aos.js"></script>
+  <script src="../../js/custom.js"></script>
 </body>
 </html>

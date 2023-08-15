@@ -1,10 +1,9 @@
 
   $(function () {
 
-    // MENU
-    $('.navbar-collapse a').on('click',function(){
-      $(".navbar-collapse").collapse('hide');
-    });
+   
+    
+  
 
     // AOS ANIMATION
     AOS.init({
@@ -13,10 +12,24 @@
       anchorPlacement: 'center-bottom'
     });
 
+    $(document).ready(function() {
+
+      $('.dropdown-menu a.dropdown-item').click(function(event) {
+    
+        event.preventDefault();
+  
+  
+        var href = $(this).attr('href');
+  
+        
+        window.location.href = href;
+      });
+    });
+
 
     // SMOOTHSCROLL NAVBAR
     $(function() {
-      $('.navbar a, .hero-text a').on('click', function(event) {
+      $('.link-smooth, .hero-text a' ).on('click', function(event) {
         var $anchor = $(this);
         $('html, body').stop().animate({
             scrollTop: $($anchor.attr('href')).offset().top - 49

@@ -23,7 +23,7 @@
      <link rel="stylesheet" href="css/aos.css">
 
      <!-- MAIN CSS -->
-     <link rel="stylesheet" href="css/egogym.css">
+<link rel="stylesheet" href="css/egogym.css">
 
      <style>
         .zoomable {

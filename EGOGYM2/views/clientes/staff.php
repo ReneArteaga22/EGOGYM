@@ -105,11 +105,6 @@
 </style>
 <body  data-spy="scroll" data-target="#navbarNav" data-offset="50">
 <?php
-<<<<<<< HEAD
-    session_start();
-    
-    if(isset($_SESSION["correo"]) )
-=======
     include '../../scripts/database.php';
     $conexion = new Database();
     $conexion->conectarDB();
@@ -126,7 +121,6 @@
         }
 
     if(isset($email) and $tipo == 'cliente' )
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
     {
       
     }
@@ -134,11 +128,7 @@
     {
         header("Location:../../First.php");
     }
-<<<<<<< HEAD
-
-=======
        
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
     ?>
 
     <!-- MENU BAR -->
@@ -158,10 +148,7 @@
                         <a href="Primera.php#home" class="nav-link smoothScroll">Home</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="Primera.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
-                    </li>
-
+                  
                     <li class="nav-item">
                         <a href="Primera.php#serv" class="nav-link smoothScroll">Servicios</a>
                     </li>
@@ -201,10 +188,6 @@
     <div class="row" style="align-self: center;">
 
     <?php
-<<<<<<< HEAD
-include '../../scripts/database.php';
-=======
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
 $conexion = new Database();
 $conexion->conectarDB();
 

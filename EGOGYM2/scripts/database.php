@@ -3,24 +3,24 @@ class Database
 {
     private $PDOLocal;
     private $user = "root";
-<<<<<<< HEAD
     private $password = "ranagasu22";
     private $server = "mysql:host=localhost; dbname=egogym2";
-=======
-    private $password = "";
-    private $server = "mysql:host=127.0.0.1:3307; dbname=egogym2";
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
 
     function conectarDB()
     {
         try
         {
             $this->PDOLocal = new PDO($this->server, $this->user, $this->password);
+            
         }
         catch(PDOException $e)
         {
             echo $e->getMessage(); 
         }
+    }
+    public function obtenerConexion()
+    {
+        return $this->PDOLocal;
     }
 
     function desconectarBD()
@@ -67,11 +67,7 @@ class Database
         try 
         {
         $pase = false;
-<<<<<<< HEAD
-        $query = "SELECT * from persona  inner join cliente on persona.id_persona = cliente.id_cliente
-=======
         $query = "SELECT * from persona  left join cliente on persona.id_persona = cliente.id_cliente
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
         where correo ='$email'";
         $consulta=$this->PDOLocal->query($query);
        
@@ -108,16 +104,6 @@ class Database
                     $resu = $this->PDOLocal->query($consulta1);
                         $fila = $resu->fetch(PDO::FETCH_ASSOC);
     
-<<<<<<< HEAD
-                    if($fila['tipo_empleado'] == 'recepcionista')
-                    {
-                        header("Location: ../views/recepcionista/principal.php");
-                    }
-                    if ($fila['tipo_empleado'] == 'fisio')
-                    {
-                        header("Location: ../views/fisioterapeuta/principal.php");
-                    }
-=======
                     if($fila['tipo_empleado'] === 'recepcionista')
                     {
                         header("Location: ../views/recepcionista/principal.php");
@@ -130,7 +116,10 @@ class Database
                     {
                         header("Location: ../views/nutriologo/principal.php ");
                     }
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
+                    else if ($fila['tipo_empleado'] === 'entrenador')
+                    {
+                        header("Location: ../views/entrenador/inicio.php");
+                    }
                     else
                     {
                         echo "NO SE PUDO ACCEDER";  
@@ -164,11 +153,7 @@ class Database
             echo "<h2 align='center'>Usuario o contraseña incorrecto ...</h2>";
             echo "</div>";
 
-<<<<<<< HEAD
-            header("refresh:2 ../First.php");
-=======
             header("refresh:20 ../First.php");
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
         }
     } catch (PDOException $e) {
         echo $e->getMessage();
@@ -182,6 +167,31 @@ class Database
         header("Location: ../First.php");
     }
 
+    function grafica($consulta, $parametros = array()) {
+        $stmt = $this->PDOLocal->prepare($consulta);
+        $stmt->execute($parametros);
+        return $stmt;
+    }
+    
+    
+            function obtenerNombreMes($numeroMes) {
+                $meses = array(
+                    1 => 'Enero',
+                    2 => 'Febrero',
+                    3 => 'Marzo',
+                    4 => 'Abril',
+                    5 => 'Mayo',
+                    6 => 'Junio',
+                    7 => 'Julio',
+                    8 => 'Agosto',
+                    9 => 'Septiembre',
+                    10 => 'Octubre',
+                    11 => 'Noviembre',
+                    12 => 'Diciembre'
+                );
+                return $meses[$numeroMes];
+            }
 
 }
+
 ?>
