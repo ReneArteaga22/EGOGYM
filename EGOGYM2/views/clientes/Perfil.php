@@ -17,6 +17,8 @@
       <script src="../../js/aos.js"></script>
       <script src="../../js/smoothscroll.js"></script>
       <script src="../../js/custom.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
      <link rel="stylesheet" href="../../css/bootstrap.min.css">
      <link rel="stylesheet" href="../../css/font-awesome.min.css">
@@ -26,6 +28,23 @@
      <link rel="stylesheet" href="../../css/egogym.css">
      <link rel="stylesheet" href="../../css/profile.css">
      <style></style>
+
+     <script>
+$(document).ready(function() {
+
+  $('.dropdown-menu a.dropdown-item').click(function(event) {
+ 
+    event.preventDefault();
+
+
+    var href = $(this).attr('href');
+
+    
+    window.location.href = href;
+  });
+});
+</script>
+
 
 </head>
 <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
@@ -51,7 +70,7 @@
     }
     else 
     {
-        header("Location:../../First.php");
+        header("Location:../../index.php");
     }
        
     ?>
@@ -69,15 +88,15 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="Primera.php#home" class="nav-link smoothScroll">Home</a>
+                        <a href="index.php#home" class="nav-link smoothScroll">Home</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="Primera.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
+                        <a href="index.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="Primera.php#serv" class="nav-link smoothScroll">Servicios</a>
+                        <a href="index.php#serv" class="nav-link smoothScroll">Servicios</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -133,7 +152,7 @@
         left join plan on cliente.codigo_plan = plan.codigo
         where persona.correo = '$email'";
         $datos_per = $conexion ->seleccionar($consulta);
-        $imagenPorDefecto = "../../images/class/boxwax.jpg"; 
+        $imagenPorDefecto = "../../images/class/imagenxdefect.webp"; 
 
         
         foreach($datos_per as $registro)
@@ -190,7 +209,7 @@
                 echo "<div class='card w-75' style='margin-top:10px;'>";
                 echo "<div class='card-body'>";
                 echo "<div class='row'>";
-                echo "<div class='col-lg-4 col-5'>";
+                echo "<div class='col-lg-4 col-5'>";  
                 echo "<p>Id Cita: $dato->id_cita</p>";
                 echo "</div>";
                 echo "<div class='col-lg-4 col-7'>";
@@ -206,8 +225,10 @@
                 echo "<p>Servicio: $dato->servicio</p>";
                 echo "</div>";
                 echo "<div class='col-lg-4 col-6'>
-                <button type='button' class='btn btn-outline-info btn-sm' data-toggle='modal' data-target='#fichamedicanutri'>Ver Detalles</button>
-                </div>";
+                <a class='btn btn-outline-info btn-sm' data-toggle='collapse' data-target= '#nutri' role='button' aria-expanded='false' aria-controls='nutri'>
+                Ver Detalles
+              </a>                
+              </div>";
                 echo "</div>";
                 echo "</div>";
                 echo "</div>";
@@ -215,7 +236,7 @@
               ?>
               
               <?php
-                $consulta = "select citas.id_cita, citas.fecha, citas.hora, ficha_fisio.motivo, servicios.nombre as servicio
+                $consulta2 = "select citas.id_cita, citas.fecha, citas.hora, ficha_fisio.motivo, servicios.nombre as servicio
                 from persona
                 inner join cliente on persona.id_persona=cliente.id_cliente
                 inner join citas on cliente.id_cliente=citas.cliente
@@ -223,30 +244,33 @@
                 inner join servicios_empleados on citas.serv_emp = servicios_empleados.id_empserv
                 inner join servicios on servicios_empleados.servicio = servicios.codigo
                 where persona.correo = '$email' and citas.estado= 'completada'";
-              $cita = $conexion -> seleccionar($consulta);
+              $cita2 = $conexion -> seleccionar($consulta2);
 
-              foreach($cita as $dato)
+              foreach($cita2 as $dato2)
               {
                 echo "<div class='card w-75' style='margin-top:10px;'>";
                 echo "<div class='card-body'>";
                 echo "<div class='row'>";
                 echo "<div class='col-lg-4 col-5'>";
-                echo "<p>Id Cita: $dato->id_cita</p>";
+                $cita = $dato2->id_cita;
+                echo "<p>Id Cita:$dato2->id_cita</p>";
                 echo "</div>";
                 echo "<div class='col-lg-4 col-7'>";
-                echo "<p>Fecha: $dato->fecha </p>";
+                echo "<p>Fecha: $dato2->fecha </p>";
                 echo "</div>";
                 echo "<div class='col-lg-4 col-5'>";
-                echo "<p>Hora: $dato->hora</p>";
+                echo "<p>Hora: $dato2->hora</p>";
                 echo "</div>";
                 echo "<div class='col-lg-4 col-7'>";
-                echo "<p>Motivo: $dato->motivo </p>";
+                echo "<p>Motivo: $dato2->motivo </p>";
                 echo "</div>";
                 echo "<div class='col-lg-4 col-6'>";
-                echo "<p>Servicio: $dato->servicio</p>";
+                echo "<p>Servicio: $dato2->servicio</p>";
                 echo "</div>";
                 echo "<div class='col-lg-4 col-6'>
-                <button type='button' class='btn btn-outline-info btn-sm' data-toggle='modal' data-target='#fisio'>Ver Detalles</button>
+                <a class='btn btn-outline-info btn-sm' data-toggle='collapse' data-target= '#fisio' role='button' aria-expanded='false' aria-controls='fisio'>
+                Ver Detalles
+              </a>      
                 </div>";
                 echo "</div>";
                 echo "</div>";
@@ -268,81 +292,158 @@
 
 
 <!-- Modal Ficha Medica Nutri -->
-<div class="modal fade" id="fichamedicanutri" tabindex="-1" role="dialog" aria-labelledby="membershipFormLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="collapse text-center" id="nutri">
+<div class="container">
 
-    <div class="modal-content">
-      <div class="modal-header">
+    
+<?php
+  $conexion = new Database();
+  $conexion->conectarDB();
 
-        <h2 class="modal-title" id="membershipFormLabel">Ficha Medica</h2>
-        
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
+  $consulta="SELECT concat(nombre,' ',apellido_paterno,' ',apellido_materno) as nombre, citas.fecha, 
+  FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad FROM persona INNER JOIN cliente on cliente.id_cliente=persona.id_persona
+  INNER JOIN citas on citas.cliente=cliente.id_cliente INNER JOIN ficha_nutri 
+  ON ficha_nutri.cita=citas.id_cita WHERE ficha_nutri.cita=$dato->id_cita";
+  $persona =$conexion->seleccionar($consulta);
+ 
+  if($persona)
+  {
 
-      <?php 
-      $consulta = "select ficha_nutri.edad, ficha_nutri.objetivo, ficha_nutri.motivo, ficha_nutri.peso,
-      ficha_nutri.altura, ficha_nutri.med_cintura, ficha_nutri.med_cadera, ficha_nutri.med_cuello,
-      ficha_nutri.porc_grasa_corporal, ficha_nutri.masa_corp_magra, ficha_nutri.observaciones
-      from ficha_nutri 
-      where ficha_nutri.cita= 501";
-      $ficha = $conexion->seleccionar($consulta);
+    foreach($persona as $per)
+    {
+    echo "<div class='container' style='padding-top:3%'>
+    <div class='container text-center'><h3>Ficha médica</<h3></div>
+    <div class='card-header' style='color:grey; float: right'><h6> Fecha: ".$per->fecha."</h6></div>
+     <div class='card-header'><h6>Cliente: ".$per->nombre."</h6></div>";
+    
+    echo"<div class='card'>";
+  }
+  
+    $consulta3 = "SELECT ficha_nutri.objetivo, ficha_nutri.motivo, ficha_nutri.peso,
+    ficha_nutri.altura, ficha_nutri.med_cintura, ficha_nutri.med_cadera, ficha_nutri.med_cuello,
+    ficha_nutri.porc_grasa_corporal, ficha_nutri.masa_corp_magra, ficha_nutri.observaciones
+    from ficha_nutri 
+    where ficha_nutri.cita= $dato->id_cita";
+    $ficha = $conexion->seleccionar($consulta3);
 
-      foreach($ficha as $fila)
-      {
-      echo "<div class='modal-body' style='margin-top:15px;'>";
-      echo "<p>Edad: $fila->edad</p>";
-      echo "<p>Objetivo: $fila->objetivo</p>";
-      echo "<p>Motivo: $fila->motivo</p>";
-      echo "<p>Peso: $fila->peso</p>";
-      echo "<p>Altura: $fila->altura</p>";
-      echo "<p>Cintura: $fila->med_cintura</p>";
-      echo "<p>Cadera: $fila->med_cadera</p>";
-      echo "<p>Cuello: $fila->med_cuello</p>";
-      echo "<p>Grasa Corporal: $fila->porc_grasa_corporal</p>";
-      echo "<p>Masa Corporal Magra: $fila->masa_corp_magra</p>";
-      echo "<p>Observaciones: $fila->observaciones</p>";
-      echo "</div>";
-      }
-      ?>
-      
+    foreach($ficha as $fila)
+    {
+    echo "<div class='row'>";
 
-      <div class="modal-footer"></div>
-      
-</div>
-  </div>
+    echo "<div class='col-lg-6 col-6'>";
+    echo "<div class='modal-body' style='padding: 3%'>";
+    echo "<h6 style='font-weight:bold;color:black; opacity:0.7;'>Datos del paciente</h6><br>"; 
+    echo "<p>Edad: ".$per->edad." años</p>";  
+    echo "<p>Altura: ".$fila->altura." m</p>";
+    echo "<p>Peso: ".$fila->peso." kg</p>";
+    echo "<p>Cintura: ".$fila->med_cintura." cm</p>";
+    echo "<p>Cadera: ".$fila->med_cadera." cm</p>";
+    echo "<p>Cuello: ".$fila->med_cuello." cm</p>";
+    echo "</div>";
+    echo "</div>";
+
+    echo "<div class='col-lg-6 col-6'>";
+    echo "<div class='modal-body' style='padding: 3%'>";
+    echo "<h6 style='font-weight:bold;color:black; opacity:0.7;'>Detalles: </h6><br>"; 
+    echo "<p>Grasa Corporal: $fila->porc_grasa_corporal</p>";
+    echo "<p>Masa Corporal Magra: $fila->masa_corp_magra</p>";
+    echo "<p>Objetivo: ". $fila->objetivo." kg</p>";
+    echo "<p>Motivo: $fila->motivo</p>";
+    echo "<p>Observaciones: $fila->observaciones</p>";
+    echo "</div>";
+    echo "</div>";
+
+    echo "</div>";
+    }
+    echo "</div>
+    </div>";
+
+    echo "</div>
+    </div>";
+
+  }
+  else
+  {
+    echo "¡Esta cita no tiene una ficha médica!";
+  }
+  
+  $conexion->desconectarBD();
+  ?>
 </div>
 
 
 <!-- Modal Ficha Medica Fisio -->
-<div class="modal fade" id="fisio" tabindex="-1" role="dialog" aria-labelledby="membershipFormLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="collapse text-center" id="fisio">
+<div class="container">
 
-    <div class="modal-content">
-      <div class="modal-header">
+    
+<?php
+  $conexion = new Database();
+  $conexion->conectarDB();
 
-        <h2 class="modal-title" id="membershipFormLabel">Ficha Medica</h2>
-        
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
+  $consulta4 ="SELECT concat(nombre,' ',apellido_paterno,' ',apellido_materno) as nombre, citas.fecha, 
+  FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad FROM persona INNER JOIN cliente on cliente.id_cliente=persona.id_persona
+  INNER JOIN citas on citas.cliente=cliente.id_cliente INNER JOIN ficha_fisio
+  ON ficha_fisio.cita=citas.id_cita WHERE ficha_fisio.cita=$dato2->id_cita";
+  $persona2 =$conexion->seleccionar($consulta4);
+ 
+  if($persona2)
+  {
 
-          <?php 
-        echo "<div class='modal-body' style='margin-top:15px;'>";
-        echo "<p>Edad: $fila->edad</p>";
-        echo "<p>Motivo: $fila->motivo</p>";
-        echo "<p>Peso: $fila->peso</p>";
-        echo "<p>Altura: $fila->altura</p>";
-        echo "<p>Observaciones: $fila->observaciones</p>";
-        echo "</div>";
-          ?>
-      
+    foreach($persona2 as $per2)
+    {
+    echo "<div class='container' style='padding-top:3%'>
+    <div class='container text-center'><h3>Ficha médica</<h3></div>
+    <div class='card-header' style='color:grey; float: right'><h6> Fecha: ".$per2->fecha."</h6></div>
+     <div class='card-header'><h6>Cliente: ".$per2->nombre."</h6></div>";
+    
+    echo"<div class='card'>";
+  }
+  
+    $consulta5 = "SELECT ficha_fisio.motivo, ficha_fisio.peso,
+    ficha_fisio.altura, ficha_fisio.observaciones
+    from ficha_fisio
+    where ficha_fisio.cita= $dato2->id_cita";
+    $ficha2 = $conexion->seleccionar($consulta5);
 
-      <div class="modal-footer"></div>
-    </div>
-  </div>
+    foreach($ficha2 as $fila2)
+    {
+    echo "<div class='row'>";
+
+    echo "<div class='col-lg-6 col-6'>";
+    echo "<div class='modal-body' style='padding: 3%'>";
+    echo "<h6 style='font-weight:bold;color:black; opacity:0.7;'>Datos del paciente</h6><br>"; 
+    echo "<p>Edad: ".$per2->edad." años</p>";  
+    echo "<p>Altura: ".$fila2->altura." m</p>";
+    echo "<p>Peso: ".$fila2->peso." kg</p>";
+    echo "</div>";
+    echo "</div>";
+
+    echo "<div class='col-lg-6 col-6'>";
+    echo "<div class='modal-body' style='padding: 3%'>";
+    echo "<h6 style='font-weight:bold;color:black; opacity:0.7;'>Detalles: </h6><br>"; 
+    echo "<p>Motivo: $fila2->motivo</p>";
+    echo "<p>Observaciones: $fila2->observaciones</p>";
+    echo "</div>";
+    echo "</div>";
+
+    echo "</div>";
+    }
+    echo "</div>
+    </div>";
+
+    echo "</div>
+    </div>";
+
+  }
+  else
+  {
+    echo "¡Esta cita no tiene una ficha médica!";
+  }
+  
+  $conexion->desconectarBD();
+  ?>
+</div>
       
 </div>
 

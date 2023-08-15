@@ -1,16 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-     <title>EGOGYM</title>
-
-     <meta charset="UTF-8">
-     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-     <meta name="description" content="">
-     <meta name="keywords" content="">
-     <meta name="author" content="">
-     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio fisio</title>
       <!-- SCRIPTS -->
       <script src="../../js/jquery.min.js"></script>
       <script src="../../js/bootstrap.min.js"></script>
@@ -22,12 +16,10 @@
 
      <link rel="stylesheet" href="../../css/bootstrap.min.css">
      <link rel="stylesheet" href="../../css/font-awesome.min.css">
-     <link rel="stylesheet" href="../../css/font-awesome.min.css">
      <link rel="stylesheet" href="../../css/aos.css">
 
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
-     <style></style>
 
      <script>
 $(document).ready(function() {
@@ -44,27 +36,25 @@ $(document).ready(function() {
   });
 });
 </script>
-
-
-</head>
+    </head>
 <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
-<?php
+    <?php
     include '../../scripts/database.php';
     $conexion = new Database();
     $conexion->conectarDB();
 
     session_start();
     $email = $_SESSION["correo"];
-    $consulta = "SELECT tipo_usuario from persona
+    $consulta = "SELECT tipo_empleado from persona inner join empleado on persona.id_persona = empleado.id_empleado
         where correo ='$email'";
     $datos = $conexion -> seleccionar($consulta);
 
         foreach ($datos as $dato)
         {
-          $tipo = $dato->tipo_usuario;
+          $tipo = $dato->tipo_empleado;
         }
 
-    if(isset($email) and $tipo == 'cliente' )
+    if(isset($email) and $tipo == 'fisio' )
     {
       
     }
@@ -74,12 +64,10 @@ $(document).ready(function() {
     }
        
     ?>
-
-    <!-- MENU BAR -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="index.html">EGO GYM</a>
+            <a class="navbar-brand" href="index.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -88,31 +76,13 @@ $(document).ready(function() {
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
-                    <li class="nav-item">
-                        <a href="index.php#home" class="nav-link smoothScroll">Home</a>
+                <li class="nav-item">
+                        <a href="index.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
-
                     <li class="nav-item">
-                        <a href="index.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="index.php#serv" class="nav-link smoothScroll">Servicios</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false" > Citas</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <li><a class="dropdown-item" href="citas.php">Agendar Cita</a></li>
-                          <li><a class="dropdown-item" href="vercitas.php">Ver Citas</a></li>
-                        </ul>
-                      </li>
-                    <li class="nav-item">
-                        <a href="staff.php" class="nav-link smoothScroll">Staff</a>
+                        <a href="citasfisio.php" class="nav-link smoothScroll">Citas</a>
                     </li>
                 </ul>
-
-
                 <ul class="navbar-nav ml-lg-2">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -120,31 +90,19 @@ $(document).ready(function() {
                          <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
+                        <li><a class="dropdown-item" href="../nutriologo/perfil_fisio.php">Perfil</a></li>
                           <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
-                      </li>
-                </ul>
             </div>
-
         </div>
     </nav>
 
-
 <div class="container">
-
-    <div class="card bg-light" style="margin-top: 99px;">
-        <div class="card-header bg-dark text-white">
-          Informacion Personal
+        <div class="card-header" style="color:black; margin-top:100px;">
+          Tu información
         </div>
-        
 
-
-        <?php
-<<<<<<< HEAD
-       
-=======
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
+            <?php
         $conexion = new Database();
         $conexion->conectarDB();
 
@@ -167,32 +125,27 @@ $(document).ready(function() {
 
     // Operador ternario para determinar qué URL de imagen utilizar
     
-    echo "<form action='../../scripts/editar/actualizar_clien.php' method='POST' enctype='multipart/form-data'>";
     $urlImagenMostrar = $registro->foto ? $registro->foto : $imagenPorDefecto;
    
     echo "<img src='$urlImagenMostrar' class='rounded-circle' alt='...' style='width: 60%'>";
-    echo "<input class='form-control form-control-sm' id='foto' name='foto' type='file' >";
     echo "</div>";
            
             echo "<div class='col-lg-6 col-12 col-sm-12 col-md-12'>";
             echo "<p>Nombre: $registro->nombre </p>";
             echo "<p>Correo: $registro->correo </p>";
-            echo "<p>Telefono:</p><input type='text' value='$registro->telefono' class='form-control w-50' name='telefono'>";
+            echo "<p>Telefono: $registro->telefono </p>";
             echo "<p>Fecha de nacimiento: $registro->fecha_nacimiento </p>";
             echo "<p>Sexo: $registro->sexo </p>";
-            echo "<p>Contraseña:</p><input type='password' value='$registro->contraseña' class='form-control w-50' name='contra'>";
             echo "<p>Plan: $registro->plan </p>";
             echo "<p>Periodo: $registro->periodo </p>";
+            echo "<a href='editarfisio.php'>Editar Perfil</a>";
+
 
         }    
-        ?>
-        <a href="perfil.php"class="btn btn-secondary">Cancelar</a>
-        <button type="submit" class="btn btn-success">Guardar</button>
-      </div>
+        ?> </div>
+        
+        
+       
         </div>
-      </form>
-    </div>
-    </div>
-
 </body>
 </html>

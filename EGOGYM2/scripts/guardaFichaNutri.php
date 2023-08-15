@@ -23,36 +23,30 @@
      <link rel="stylesheet" href="../css/egogym.css">
     </head>
     <body>
-    <body>
     <div class="container">
-    <?php
-        include 'database.php';
-        $db= new database();
-        $db->conectarDB();
-
-
-        extract($_POST);
-        $consulta= " SELECT persona.id_persona as cliente_id
-        from persona 
-        inner join cliente on
-        cliente.id_cliente=persona.id_persona where 
-        concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) like '%$cliente%'
-        AND persona.id_persona IN(select cliente.id_cliente from cliente )";
-        $db->seleccionar($consulta);
-        $tabla = $db->seleccionar($consulta);
+        <?php
+         include '../scripts/database.php';
+         $conexion = new Database();
+         $conexion->conectarDB();
         
-        $tabla = $db->seleccionar($consulta);
-        foreach($tabla as $registro)
-        {
-            $cliente_id = $registro->cliente_id;
-        }
+         
+         extract($_POST);
+         $idFicha = $_POST['idFicha'];
 
-        $cadena = "call restriccion_citas_3($servicio, $cliente_id,'$fecha_cita','$hora')";
-        $db->ejecutarSQL($cadena);
-        $db->desconectarBD();
-        header("refresh:3; ../views/recepcionista/citas.php");
+         $cadena ="UPDATE ficha_nutri set peso=$peso, altura=$altura, med_cintura=$cintura,
+          med_cadera=$cadera, med_cuello=$cuello, porc_grasa_corporal=$grasa, masa_corp_magra=$masa,
+          objetivo='$objetivo', observaciones='$observaciones', motivo='$motivo'
+           WHERE ficha_nutri.id_ficha=$idFicha";
+        $parametros = array(':idFicha' => $idFicha);
+
+
+        $conexion->ejecutarSQL($cadena, $parametros);
+        header("refresh:2  ../views/nutriologo/citas_nutri.php");
+
+        $conexion->desconectarBD();
+
+ 
         ?>
     </div>
-</body>
     </body>
 </html>

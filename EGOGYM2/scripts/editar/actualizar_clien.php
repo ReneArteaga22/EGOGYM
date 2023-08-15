@@ -12,6 +12,7 @@ include '../database.php';
 $conexion = new Database();
 $conexion->conectarDB();
 extract($_POST);
+$hash = password_hash($contra, PASSWORD_DEFAULT);
 
 session_start();
 isset($_SESSION["correo"]);
@@ -33,7 +34,32 @@ if ($_FILES['foto']['size'] > 0) {
 $hash = password_hash($contra,PASSWORD_DEFAULT);
 
 $pase = false;
+<<<<<<< HEAD:EGOGYM2/scripts/editar/actualizarPerfil.php
 $cadena= "update persona set telefono='$telefono', contraseña='$hash' where correo= '$email' ";    
+=======
+$consulta= "select contraseña from persona where correo = '$email'";
+$datos = $conexion->seleccionar($consulta);
+foreach($datos as $dato)
+{
+    $contra = $dato->contraseña;
+}
+
+if($contra != $hash)
+{
+    $upcontra = "update persona set contraseña = '$hash' where correo= '$email'";
+    $conexion->ejecutarSQL($upcontra);
+}
+else
+{
+    echo "<div class='alert alert-warning'>No se pudo actualizar la constraseña</div>";
+    header("refresh:2 ../views/clientes/editarPerfil.php");
+
+}
+
+
+$cadena= "update persona set telefono='$telefono' where correo= '$email' ";  
+ 
+>>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119:EGOGYM2/scripts/editar/actualizar_clien.php
 while($conexion->ejecutarSQL($cadena))
 {
     $pase=true;
@@ -42,7 +68,7 @@ while($conexion->ejecutarSQL($cadena))
 if($pase=true)
 {
     echo"<div class='alert alert-success text-center'>Actualizacion de datos realizada con exito</div>";
-    header("refresh:2 ../../views/clientes/perfil.php");
+    header("refresh:2 ../../views/clientes/Perfil.php");
 }
 else
 {

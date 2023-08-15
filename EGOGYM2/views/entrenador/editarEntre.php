@@ -57,7 +57,7 @@ $(document).ready(function() {
           $tipo = $dato->tipo_empleado;
         }
 
-    if(isset($email) and $tipo == 'nutri' )
+    if(isset($email) and $tipo == 'entrenador' )
     {
       
     }
@@ -71,7 +71,7 @@ $(document).ready(function() {
 <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../nutriologo/index.php">EGO GYM</a>
+            <a class="navbar-brand" href="../nutriologo//index.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -81,13 +81,12 @@ $(document).ready(function() {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                        <a href="../nutriologo/index.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="index.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="../nutriologo/citas_nutri.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="citas.php" class="nav-link smoothScroll">Clases</a>
                     </li>
                 </ul>
-
                 <ul class="navbar-nav ml-lg-2">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -95,24 +94,20 @@ $(document).ready(function() {
                          <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="../nutriologo/perfil_nutri.php">Perfil</a></li>
+                        <li><a class="dropdown-item" href="../entrenador/perfil_entre.php">Perfil</a></li>
                           <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
-                      </li>
-                </ul>
             </div>
         </div>
     </nav>
-
+    
     <div class="container">
 
-<div class="card bg-light" style="margin-top: 99px;">
-    <div class="card-header bg-dark text-white">
-      Informacion Personal
-    </div>
-    
-
-
+        <div class="card bg-light" style="margin-top: 99px;">
+        <div class="card-header bg-dark text-white">
+          Informacion Personal
+        </div>
+        
     <?php
     $conexion = new Database();
     $conexion->conectarDB();
@@ -136,7 +131,7 @@ $(document).ready(function() {
 
 // Operador ternario para determinar qué URL de imagen utilizar
 
-echo "<form action='../../scripts/editar/actualizar_nutri.php' method='POST' enctype='multipart/form-data'>";
+echo "<form action='../../scripts/editar/actualizar_entre.php' method='POST' enctype='multipart/form-data'>";
 $urlImagenMostrar = $registro->foto ? $registro->foto : $imagenPorDefecto;
 
 echo "<img src='$urlImagenMostrar' class='rounded-circle' alt='...' style='width: 60%'>";
@@ -150,18 +145,18 @@ echo "</div>";
         echo "<p>Fecha de nacimiento: $registro->fecha_nacimiento </p>";
         echo "<p>Sexo: $registro->sexo </p>";
         echo "<p>Contraseña:</p><input type='password' value='$registro->contraseña' class='form-control w-50' name='contra'>";
-        echo "<p>Plan: $registro->plan </p>";
-        echo "<p>Periodo: $registro->periodo </p>";
+     
 
 
     }    
     ?>
-           <a href="perfil_nutri.php"class="btn btn-secondary">Cancelar</a>
-    <button type="submit" class="btn btn-warning">Guardar</button>
-  </div>
+       
+       <a href="perfil_entre.php"class="btn btn-secondary">Cancelar</a>
+            <button type="submit"name="Guardar" class="btn btn-warning">Guardar cambios</button>      
+      </div>
+        </div>
+      </form>
+        </div>
     </div>
-  </form>
-</div>
-</div>
     </body>
 </html>

@@ -225,10 +225,10 @@
             <div class="col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="400">
               <div class="class-thumb zoomable">
                 <div class="service-wrapper">
-                  <a href="views/noUser/nutriologo.html">
+                  <a href="nutriologo.html">
                   <img src="images/class/nutri.jpg" class="img-fluid" alt="Class">
                   <div class="service-info">
-                    <a href="views/noUser/nutriologo.html"><h3 class="mb-1">Nutricion</h3></a>
+                    <a href="nutriologo.html"><h3 class="mb-1">Nutricion</h3></a>
                     <span><strong>Nutriólogo:</strong> - Cesar Ruiz</span>
                     <span class="class-price">$100</span>
                     <p class="mt-3">Los suplementos alimenticios se han convertido en un recurso muy popular. Con grandes avances e investigacion...</p>
@@ -242,10 +242,10 @@
             <div class="mt-5 mt-lg-0 mt-md-0 col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="500">
               <div class="class-thumb zoomable">
                 <div class="service-wrapper">
-                  <a href="views/noUser/fisioterapia.html">
+                  <a href="fisioterapia.html">
                   <img src="images/class/fisio.jpg" class="img-fluid" alt="Class">
                   <div class="service-info">
-                    <a href="views/noUser/fisioterapia.html"><h3 class="mb-1">Fisioterapia</h3></a>
+                    <a href="fisioterapia.html"><h3 class="mb-1">Fisioterapia</h3></a>
                     <span><strong>Fisioterapeuta:</strong> - Cesar Ruiz</span>
                     <span class="class-price">$100</span>
                     <p class="mt-3">Un fisioterapeuta deportivo no sólo cura sobre la lesión, sino que asesorar a los deportistas ... </p>
@@ -257,10 +257,10 @@
             <div class="mt-5 mt-lg-0 col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="600">
               <div class="class-thumb zoomable">
                 <div class="service-wrapper">
-                  <a href="views/noUser/spinning.html">
+                  <a href="spinning.html">
                   <img src="images/class/spinm.jpg" class="img-fluid" alt="Class">
                   <div class="service-info">
-                    <a href="views/noUser/spinning.html"><h3 class="mb-1">Spinning</h3></a>
+                    <a href="spinning.html"><h3 class="mb-1">Spinning</h3></a>
                     <span><strong>Entrenador:</strong> Marcos Camacho</span>
                     <span class="class-price">$100</span>
                     <p class="mt-3">El spinning es un ejercicio cardiovascular y aeróbico que se lleva a cabo utilizando una bicicleta estática ...</p>
@@ -488,9 +488,9 @@
             <form class="membership-form webform" role="form" action="scripts/verificaLogin.php" method="post">
                 
 
-                <input type="email" class="form-control" name="email" placeholder="Escribe tu correo">
+                <input type="email" class="form-control" name="email" placeholder="Escribe tu correo" required>
 
-                <input type="text" class="form-control" name="contraseña" placeholder="Escribe tu contraseña">
+                <input type="password" class="form-control" name="contraseña" placeholder="Escribe tu contraseña" required>
 
 
                 <button type="submit" class="form-control" id="submit-button" name="submit">Ingresar</button>
@@ -522,20 +522,20 @@
             <d class="modal-body">
               <form class="membership-form webform" role="form" action="scripts/guardauser.php" method="post">
                   
-                  <input type="text" class="form-control" name="nombre" placeholder="Nombre">
-                  <input type="text" class="form-control" name="ap_paterno" placeholder="Apellido Paterno">
-                  <input type="text" class="form-control" name="ap_materno" placeholder="Apellido Materno">
-                  <input type="email" class="form-control" name="correo" placeholder="Escribe tu correo">
-                  <input type="text" class="form-control" name="contraseña" placeholder="Escribe tu contraseña">
+                  <input type="text" class="form-control" name="nombre" placeholder="Nombre" required>
+                  <input type="text" class="form-control" name="ap_paterno" placeholder="Apellido Paterno" required>
+                  <input type="text" class="form-control" name="ap_materno" placeholder="Apellido Materno" required>
+                  <input type="email" class="form-control" name="correo" placeholder="Escribe tu correo" required>
+                  <input type="password" class="form-control" name="contraseña" placeholder="Escribe tu contraseña" required>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="sexo" id="inlineRadio1" value="1">
+                    <input class="form-check-input" type="radio" name="sexo" id="inlineRadio1" value="1" required>
                     <label class="form-check-label" for="inlineRadio1">Hombre</label>
                   </div>
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="sexo" id="inlineRadio2" value="2">
                     <label class="form-check-label" for="inlineRadio2">Mujer</label>
                   </div>
-                  <input type="date" class="form-control" name="fecha_nacimiento">
+                  <input type="date" class="form-control" name="fecha_nacimiento" required min="1950-01-01" max="2015-01-01">
                   <button type="submit" class="form-control" id="submit-button" name="submit">Guardar</button>
                   
                   

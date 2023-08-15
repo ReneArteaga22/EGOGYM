@@ -14,6 +14,8 @@
       <script src="../../js/aos.js"></script>
       <script src="../../js/smoothscroll.js"></script>
       <script src="../../js/custom.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
      <link rel="stylesheet" href="../../css/bootstrap.min.css">
      <link rel="stylesheet" href="../../css/font-awesome.min.css">
@@ -21,6 +23,22 @@
 
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
+
+     <script>
+$(document).ready(function() {
+
+  $('.dropdown-menu a.dropdown-item').click(function(event) {
+ 
+    event.preventDefault();
+
+
+    var href = $(this).attr('href');
+
+    
+    window.location.href = href;
+  });
+});
+</script>
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
     <?php
@@ -45,14 +63,14 @@
     }
     else 
     {
-        header("Location:../../First.php");
+        header("Location:../../index.php");
     }
        
     ?>
-    <nav class="navbar navbar-expand-lg fixed-top">
+<nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../fisioterapeuta/principal.php">EGO GYM</a>
+            <a class="navbar-brand" href="index.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -63,6 +81,7 @@
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
 <<<<<<< HEAD
+<<<<<<< HEAD
                         <a href="../fisioterapeuta/principal.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
@@ -71,6 +90,9 @@
                 </ul>
 =======
                         <a href="principal.php" class="nav-link smoothScroll">Inicio</a>
+=======
+                        <a href="index.php" class="nav-link smoothScroll">Inicio</a>
+>>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
                     </li>
                     <li class="nav-item">
                         <a href="citasfisio.php" class="nav-link smoothScroll">Citas</a>
@@ -83,7 +105,7 @@
                          <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
+                        <li><a class="dropdown-item" href="../fisioterapeuta/perfil_fisio.php">Perfil</a></li>
                           <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
 >>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
@@ -97,40 +119,50 @@
         <div class="card-header bg-dark text-white">
           Informacion Personal
         </div>
-        <div class="card-body row">
-            <div class="col-lg-6 col-xs-12  col-sm-12 col-md-7 text-center">
-            <img src="../../images/class/boxwax.jpg" class="rounded-circle" alt="..." style="width: 60%;">
-            <input class="form-control form-control-sm" id="formFileSm" type="file" form="../../scripts/actualizarPerfil.php" method="post">
-          </div>
-
-
         <?php
-        $conexion = new Database();
-        $conexion->conectarDB();
+    $conexion = new Database();
+    $conexion->conectarDB();
 
-        $idPersona = $_GET['id'];
+    $email = $_SESSION["correo"];
 
-        $consulta = "SELECT concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
-        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña from persona 
-        where persona.id_persona=$idPersona";
-        $datos_per = $conexion ->seleccionar($consulta);
+    $consulta = "select persona.foto as foto,concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
+    persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña, plan.nombre as plan,
+    concat(cliente.fecha_ini,'  ','de','  ',cliente.fecha_fin) as periodo from persona
+    left join cliente on persona.id_persona = cliente.id_cliente
+    left join plan on cliente.codigo_plan = plan.codigo
+    where persona.correo = '$email'";
+    $datos_per = $conexion ->seleccionar($consulta);
+    $imagenPorDefecto = "../../images/class/imagenxdefect.webp"; 
 
-        foreach($datos_per as $registro)
-        {
-            echo "<form action='../../scripts/actualizarPerfil.php' method='POST'>";
-            echo "<div class='col-lg-12 col-12 col-sm-12 col-md-12'>";
-            echo "<p>Nombre: $registro->nombre </p>";
-            echo "<input type='mail' value='$registro->correo' class='form-control w-75' name='correo'>";
-            echo "<input type='text' value='$registro->telefono' class='form-control w-50' name='telefono'>";
-            echo "<p>Fecha de nacimiento: $registro->fecha_nacimiento </p>";
-            echo "<p>Sexo: $registro->sexo </p>";
-            echo "<p>Contraseña:</p><input type='password' value='$registro->contraseña' class='form-control w-50' name='contra'>";
+    
+    foreach($datos_per as $registro)
+    {
+      echo "<div class='card-body row'>";
+      echo "<div class='col-lg-6 col-xs-12  col-sm-12 col-md-7 text-center'>";
 
-        }    
-        ?>
+// Operador ternario para determinar qué URL de imagen utilizar
+
+echo "<form action='../../scripts/editar/actualizar_fisio.php' method='POST' enctype='multipart/form-data'>";
+$urlImagenMostrar = $registro->foto ? $registro->foto : $imagenPorDefecto;
+
+echo "<img src='$urlImagenMostrar' class='rounded-circle' alt='...' style='width: 60%'>";
+echo "<input class='form-control form-control-sm' id='foto' name='foto' type='file' >";
+echo "</div>";
        
-       <button type="reset" value="Limpiar" class="btn btn-secondary">Borrar cambios</button>
-            <button type="submit"name="Guardar" class="btn btn-warning">Guardar cambios</button>      
+        echo "<div class='col-lg-6 col-12 col-sm-12 col-md-12'>";
+        echo "<p>Nombre: $registro->nombre </p>";
+        echo "<p>Correo: $registro->correo </p>";
+        echo "<p>Telefono:</p><input type='text' value='$registro->telefono' class='form-control w-50' name='telefono'>";
+        echo "<p>Fecha de nacimiento: $registro->fecha_nacimiento </p>";
+        echo "<p>Sexo: $registro->sexo </p>";
+        echo "<p>Contraseña:</p><input type='password' value='$registro->contraseña' class='form-control w-50' name='contra'>";
+
+
+    }    
+    ?>
+       
+       <a href="perfil_fisio.php"class="btn btn-secondary">Cancelar</a>
+            <button type="submit" name="Guardar" class="btn btn-warning">Guardar </button>      
       </div>
         </div>
       </form>

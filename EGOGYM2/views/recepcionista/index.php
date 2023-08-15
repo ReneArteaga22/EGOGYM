@@ -14,6 +14,8 @@
       <script src="../../js/aos.js"></script>
       <script src="../../js/smoothscroll.js"></script>
       <script src="../../js/custom.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
      <link rel="stylesheet" href="../../css/bootstrap.min.css">
      <link rel="stylesheet" href="../../css/font-awesome.min.css">
@@ -21,6 +23,22 @@
 
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
+
+     <script>
+$(document).ready(function() {
+
+  $('.dropdown-menu a.dropdown-item').click(function(event) {
+ 
+    event.preventDefault();
+
+
+    var href = $(this).attr('href');
+
+    
+    window.location.href = href;
+  });
+});
+</script>
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
     <?php
@@ -45,14 +63,14 @@
     }
     else 
     {
-        header("Location:../../First.php");
+        header("Location:../../index.php");
     }
        
     ?>
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../recepcionista/principal.php">EGO GYM</a>
+            <a class="navbar-brand" href="../recepcionista/index.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -62,7 +80,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="../recepcionista/principal.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="../recepcionista/index.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
 
                     <li class="nav-item dropdown">
@@ -99,9 +117,16 @@
         </div>
     </nav>
 
+<<<<<<< HEAD:EGOGYM2/views/recepcionista/principal.php
   
     <div class="container" style="padding-top: 10%;">
         <h1 data-aos="fade-up" style="text-align: center;">EGOGYM </h1>
+=======
+    <section class="kiara">
+    <!--Inicio de recepcionista-->
+    <div class="container" style="padding-top: 1%;">
+        <h1 data-aos="fade-up" style="text-align: center;">¡Bienvenido!</h1>
+>>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119:EGOGYM2/views/recepcionista/index.php
         <hr class="dropdown divider" style="height: 2px;">
 
         
@@ -125,7 +150,7 @@
         INNER JOIN persona ON empleado.id_empleado = persona.id_persona
         ) AS e ON citas.serv_emp = e.id_empserv 
          where citas.fecha = curdate()
-         group by cliente;
+         group by citas.id_cita;
         ";
          $tabla = $conexion->seleccionar($consulta);
          foreach($tabla as $registro)
@@ -172,16 +197,20 @@
          }
          else
          {
-            echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay citas pendientes!</h2>";
+            echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay citas pendientes el día de hoy!</h2>";
          }
 
          
         ?>
     </div>
+<<<<<<< HEAD:EGOGYM2/views/recepcionista/principal.php
     <?php
  
  $conexion = new Database();
 $conexion->conectarDB();
+=======
+    </section>
+>>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119:EGOGYM2/views/recepcionista/index.php
 
 // Obtener el primer día del mes actual
 $primerDiaMesActual = date('Y-m-01');

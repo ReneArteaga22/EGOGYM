@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>
+    <head>
     <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=Edge">
      <meta name="description" content="">
      <meta name="keywords" content="">
      <meta name="author" content="">
      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-     <title>Inicio nutri</title>
+     <title>Inicio fisio</title>
       <!-- SCRIPTS -->
       <script src="../../js/jquery.min.js"></script>
       <script src="../../js/bootstrap.min.js"></script>
@@ -57,7 +57,7 @@ $(document).ready(function() {
           $tipo = $dato->tipo_empleado;
         }
 
-    if(isset($email) and $tipo == 'nutri' )
+    if(isset($email) and $tipo == 'fisio' )
     {
       
     }
@@ -67,11 +67,10 @@ $(document).ready(function() {
     }
        
     ?>
-
-<nav class="navbar navbar-expand-lg fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../nutriologo/index.php">EGO GYM</a>
+            <a class="navbar-brand" href="index.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -81,13 +80,12 @@ $(document).ready(function() {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                        <a href="../nutriologo/index.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="index.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="../nutriologo/citas_nutri.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="citasfisio.php" class="nav-link smoothScroll">Citas</a>
                     </li>
                 </ul>
-
                 <ul class="navbar-nav ml-lg-2">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -95,73 +93,23 @@ $(document).ready(function() {
                          <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="../nutriologo/perfil_nutri.php">Perfil</a></li>
+                        <li><a class="dropdown-item" href="../fisioterapeuta/perfil_fisio.php">Perfil</a></li>
                           <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
-                      </li>
-                </ul>
             </div>
         </div>
     </nav>
 
+    <section class="kiara">
+    <!--Inicio de recepcionista-->
     <div class="container">
-
-<div class="card bg-light" style="margin-top: 99px;">
-    <div class="card-header bg-dark text-white">
-      Informacion Personal
+        <h1 style="text-align: center;" data-aos="fade-right">¡Hola!</h1>
+        <!--Tablas de citas registradas para el día actual-->
     </div>
     
-
-
-    <?php
-    $conexion = new Database();
-    $conexion->conectarDB();
-
-    $email = $_SESSION["correo"];
-
-    $consulta = "select persona.foto as foto,concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
-    persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña, plan.nombre as plan,
-    concat(cliente.fecha_ini,'  ','de','  ',cliente.fecha_fin) as periodo from persona
-    left join cliente on persona.id_persona = cliente.id_cliente
-    left join plan on cliente.codigo_plan = plan.codigo
-    where persona.correo = '$email'";
-    $datos_per = $conexion ->seleccionar($consulta);
-    $imagenPorDefecto = "../../images/class/imagenxdefect.webp"; 
-
-    
-    foreach($datos_per as $registro)
-    {
-      echo "<div class='card-body row'>";
-      echo "<div class='col-lg-6 col-xs-12  col-sm-12 col-md-7 text-center'>";
-
-// Operador ternario para determinar qué URL de imagen utilizar
-
-echo "<form action='../../scripts/editar/actualizar_nutri.php' method='POST' enctype='multipart/form-data'>";
-$urlImagenMostrar = $registro->foto ? $registro->foto : $imagenPorDefecto;
-
-echo "<img src='$urlImagenMostrar' class='rounded-circle' alt='...' style='width: 60%'>";
-echo "<input class='form-control form-control-sm' id='foto' name='foto' type='file' >";
-echo "</div>";
-       
-        echo "<div class='col-lg-6 col-12 col-sm-12 col-md-12'>";
-        echo "<p>Nombre: $registro->nombre </p>";
-        echo "<p>Correo: $registro->correo </p>";
-        echo "<p>Telefono:</p><input type='text' value='$registro->telefono' class='form-control w-50' name='telefono'>";
-        echo "<p>Fecha de nacimiento: $registro->fecha_nacimiento </p>";
-        echo "<p>Sexo: $registro->sexo </p>";
-        echo "<p>Contraseña:</p><input type='password' value='$registro->contraseña' class='form-control w-50' name='contra'>";
-        echo "<p>Plan: $registro->plan </p>";
-        echo "<p>Periodo: $registro->periodo </p>";
-
-
-    }    
-    ?>
-           <a href="perfil_nutri.php"class="btn btn-secondary">Cancelar</a>
-    <button type="submit" class="btn btn-warning">Guardar</button>
-  </div>
     </div>
-  </form>
-</div>
-</div>
+    <br>
+    <br>
+    </section>
     </body>
 </html>

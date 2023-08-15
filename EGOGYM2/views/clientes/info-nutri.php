@@ -21,9 +21,27 @@
      <link rel="stylesheet" href="../../css/bootstrap.min.css">
      <link rel="stylesheet" href="../../css/font-awesome.min.css">
      <link rel="stylesheet" href="../../css/aos.css">
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
+
+     <script>
+$(document).ready(function() {
+
+  $('.dropdown-menu a.dropdown-item').click(function(event) {
+ 
+    event.preventDefault();
+
+
+    var href = $(this).attr('href');
+
+    
+    window.location.href = href;
+  });
+});
+</script>
 
 </head>
   
@@ -31,12 +49,38 @@
 <body>
 
   <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
+  <?php
+    include '../../scripts/database.php';
+    $conexion = new Database();
+    $conexion->conectarDB();
+
+    session_start();
+    $email = $_SESSION["correo"];
+    $consulta = "SELECT tipo_usuario from persona
+        where correo ='$email'";
+    $datos = $conexion -> seleccionar($consulta);
+
+        foreach ($datos as $dato)
+        {
+          $tipo = $dato->tipo_usuario;
+        }
+
+    if(isset($email) and $tipo == 'cliente' )
+    {
+      
+    }
+    else 
+    {
+        header("Location:../../index.php");
+    }
+       
+    ?>
 
     <!-- MENU BAR -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../../First.php">EGO GYM</a>
+            <a class="navbar-brand" href="index.php#home">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -46,36 +90,47 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="../../First.php#home" class="nav-link smoothScroll">Home</a>
+                        <a href="index.php#home" class="nav-link smoothScroll">Home</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="../../First.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
+                        <a href="index.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="../../First.php#serv" class="nav-link smoothScroll">Servicios</a>
+                        <a href="index.php#serv" class="nav-link smoothScroll">Servicios</a>
                     </li>
-
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" > Citas</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="citas.php">Agendar Cita</a></li>
+                          <li><a class="dropdown-item" href="vercitas.php">Ver Citas</a></li>
+                        </ul>
+                      </li>
                     <li class="nav-item">
-                        <a href="../../First.php#schedule" class="nav-link smoothScroll">Calendario</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="../../First.php#contact" class="nav-link smoothScroll">Contacto</a>
-                    </li>
-                    <li class="nav-item">
-                        <!---->
-                        <div class="btn-group-sm"> 
-                            <a href="#" class="btn btn-sm custom-btn bg-color "  data-toggle="modal" data-target="#membershipForm">Inicia Sesión</a> 
+                        <a href="staff.php" class="nav-link smoothScroll">Staff</a>
                     </li>
                 </ul>
 
+
+                <ul class="navbar-nav ml-lg-2">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                          aria-haspopup="true" aria-expanded="false" >
+                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
+                          <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
+                        </ul>
+                      </li>
+                </ul>
             </div>
 
         </div>
-
     </nav>
+
 
   
   <div class="container">
@@ -108,10 +163,10 @@
       <div class="col-12 col-lg-12 text-center">
         <div class="row">
           <div class="col-6 col-lg-5">
-        <a href="https://www.ejemplo.com/agenda" class="btn bg-color btn-lg">Agenda una cita</a>
+        <a href="citas.php" class="btn bg-color btn-lg">Agenda una cita</a>
         </div>
         <div class="col-6 col-lg-6">
-        <a href="../../First.php#serv" class="btn bg-color btn-lg">Regresar a Servicios</a>
+        <a href="index.php#serv" class="btn bg-color btn-lg">Regresar a Servicios</a>
         </div>
         </div>
       </div>
@@ -129,6 +184,8 @@
 </div>
 </body>
 </html>
+
+  
 
   
 

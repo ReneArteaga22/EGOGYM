@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
-
-     <title>Staff</title>
+<head>
+  <title>Spinning</title>
+  
 
      <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -42,87 +42,14 @@ $(document).ready(function() {
   });
 });
 </script>
- 
+
 </head>
+  
 
-<style>
-    body
-    {
-        align-content: center;
-        background-color: #424949 ;
-    }
-    /* pequeñas */
-@media (max-width: 567px) {
-  .card {
-    width: 53%;
-    margin: 10px;
-    text-align: center;
-  }
-  .row
-  {
-    margin-top: 120px;
-  }
-   #cards
-  {
-    margin-left: 100px;
-  }
-}
-@media (min-width: 568px) and (max-width: 766px) {
-  .card {
-    width: 43%;
-    margin: 10px;
-    text-align: center;
-  }
-  .row
-  {
-    margin-top: 110px;
-    margin-bottom: 40px;
-  }
-   #cards
-  {
-    margin-left: 70px;
-  }
-}
+<body>
 
-/* medianas */
-@media (min-width: 767px) and (max-width: 991px) {
-  .card {
-    width: 28%;
-    margin: 10px;
-    text-align: center;
-  }
-  .row
-    {
-      margin-top: 120px;
-      margin-bottom: 30px;
-    }
-    #cards
-  {
-    margin-left: 100px;
-  }
-}
-
-/* grandes */
-@media (min-width: 992px) {
-  .card {
-    width: 22%;
-    margin: 10px;
-    text-align: center;
-  }
-  .row
-  {
-    margin-top: 115px;
-    margin-bottom: 40px;
-  }
-  #cards
-  {
-    margin-left: 130px;
-  }
-} 
-
-</style>
-<body  data-spy="scroll" data-target="#navbarNav" data-offset="50">
-<?php
+  <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
+  <?php
     include '../../scripts/database.php';
     $conexion = new Database();
     $conexion->conectarDB();
@@ -153,7 +80,7 @@ $(document).ready(function() {
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="index.html">EGO GYM</a>
+            <a class="navbar-brand" href="index.php#home">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -166,14 +93,10 @@ $(document).ready(function() {
                         <a href="index.php#home" class="nav-link smoothScroll">Home</a>
                     </li>
 
-<<<<<<< HEAD
-                  
-=======
                     <li class="nav-item">
                         <a href="index.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
                     </li>
 
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
                     <li class="nav-item">
                         <a href="index.php#serv" class="nav-link smoothScroll">Servicios</a>
                     </li>
@@ -208,73 +131,49 @@ $(document).ready(function() {
         </div>
     </nav>
 
-
-<div class="container" id="cards">
-    <div class="row" style="align-self: center;">
-
-    <?php
-$conexion = new Database();
-$conexion->conectarDB();
-
-try {
-    $consulta = "SELECT persona.id_persona, persona.nombre, persona.apellido_paterno, persona.apellido_materno, empleado.tipo_empleado, persona.telefono, persona.correo FROM persona INNER JOIN empleado ON persona.id_persona = empleado.id_empleado WHERE persona.tipo_usuario = 'empleado'";
-    $resultado = $conexion->seleccionar($consulta);
-
-      if (!empty($resultado)) {
-
-        foreach ($resultado as $row) {
-          echo '<div class="card">';
-          echo '<img src="images/fp.jpg" style="width: 90%; align-self: center; margin: 10px;" class="card-img-top" alt="...">';
-          echo '<div class="card-body">';
-          echo '<h5 class="card-title" style="align-content: center;">'. $row->nombre . " " . $row->apellido_paterno .'</h5>';
-
-          if ($row->tipo_empleado  == 'nutri') {
-            echo '<p class="card-text">Nutricionista</p>';
-        } elseif ($row->tipo_empleado == 'entrenador') {
-            echo '<p class="card-text">Entrenador</p>';
-        } elseif ($row->tipo_empleado == 'fisio') {
-          echo '<p class="card-text">Fisiologo</p>';
-        } elseif ($row->tipo_empleado == 'recepcionista') {
-          echo '<p class="card-text">Recepcionista</p>';
-        }
-        
-          echo '<button style="background-color:#D4AC0D ;" type="button" class="btn" data-toggle="modal" data-target="#ctc-' . $row->id_persona . '">Contacto</button> <br>';
-          echo '</div>';
-          echo '</div>'; 
-      
-          echo '<div class="modal fade" id="ctc-' . $row->id_persona . '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
-          echo '<div class="modal-dialog">';
-          echo '<div class="modal-content">';
-          echo '<div class="modal-header">';
-          echo '<h4 class="modal-title fs-5" id="exampleModalLabel">'. $row->nombre . " " . $row->apellido_paterno . " " . $row->apellido_materno .'</h4>';
-          echo '</div>';
-          echo '<div class="modal-body">';
-          echo '<hr><h5>Contacto:</h5>';
-          echo '<hr>';
-          echo '<p>'. "Telefono: " . $row->telefono . '</p> <p>'. "Correo: " . $row->correo . '</p>';
-          echo '</div>';
-          echo '<div class="modal-footer">';
-          echo '<button type="button" class="btn bg-color" data-bs-dismiss="modal">Cerrar</button>';
-          echo '</div>';
-          echo '</div>';
-          echo '</div>';
-          echo '</div>';
-        
-        }
-      }
-
-  else {
-    echo "No se encontraron resultados.";
-  }
-
-} catch (PDOException $e) {
-    echo $e->getMessage();
-}
-
-$conexion->desconectarBD();
-?>
+  
+  <div class="container">
+    <div class="d-flex justify-content-center">
+      <h1 class="text-center"></h1>
     </div>
+   
+  <br>
+  <div class="row">
+    <div class="col-12 col-xs-12 col-lg-6 card-text-center">
+      <h1 class="text-center">¿Para qué sirve el spinning?</h1>
+      <p style="font-size: 20px; text-align: justify;"> 
+      El spinning es un ejercicio cardiovascular y aeróbico que se lleva a cabo utilizando una bicicleta estática o, 
+      más bien, una bicicleta de spinning.
 
-  </div>
+      A la hora de practicar spinning, el objetivo del deportista suele ser perder peso y tonificar su musculatura. No obstante, entrenando a través de este
+      deporte se puede conseguir también una importante mejora tanto de la resistencia como de la fuerza.
+      Pensado para personas de todas las edades y estaturas. 
+      Para poder practiarlo hace falta una bicicleta estática que cumpla con un requisito fundamental: tener un volante de inercia que se encarga de hacer 
+      resistencia y dar realismo al pedaleo.
+      </p>
+                
+      <div class="col-12 col-lg-12 text-center">
+        <div class="row">
+          <div class="col-6 col-lg-5">
+        <a href="citas.php" class="btn bg-color btn-lg">Agenda una cita</a>
+        </div>
+        <div class="col-6 col-lg-6">
+        <a href="index.php#serv" class="btn bg-color btn-lg">Regresar a Servicios</a>
+        </div>
+        </div>
+      </div>
+    
+    <br>
+    </div>
+       
+    <div class="col-12 col-lg-6 text-center d-none d-md-block">
+        <img src="../../images/class/IntructorSpinning.jpg" class="img-fluid" style="margin-top: 30px;">
+      </div>
+</div>
+
 </body>
 </html>
+
+
+
+

@@ -1,9 +1,14 @@
 
   $(function () {
 
+<<<<<<< HEAD
    
     
   
+=======
+    // MENU
+   
+>>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
 
     // AOS ANIMATION
     AOS.init({

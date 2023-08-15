@@ -1,3 +1,4 @@
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -95,6 +96,17 @@ class emailvalidator
             echo "<div class='alert alert-danger'>$validationResult</div>";
         }
         
+<<<<<<< HEAD
+=======
+        //2021-10-08
+        $cadena= "INSERT INTO persona(nombre, apellido_paterno, apellido_materno,correo, sexo, contraseña, telefono, fecha_nacimiento, tipo_usuario, foto)
+         values('$nombre','$ap_paterno','$ap_materno','$correo','$sexo', '$hash', null, '$fecha_nacimiento','cliente',default)";
+         $conexion->ejecutarSQL($cadena);
+
+
+         echo"<div class='alert alert-success'>Cliente Registrado</>";
+        header("refresh:2 ../index.php");
+>>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
         $conexion->desconectarBD();
         
         ?>

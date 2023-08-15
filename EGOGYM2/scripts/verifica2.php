@@ -15,7 +15,7 @@
         extract($_POST);
 
     
-        $db->verifica("$email","$contraseña");
+        $db->verifica2("$email","$contraseña");
         $db->desconectarBD();
         ?>
 
