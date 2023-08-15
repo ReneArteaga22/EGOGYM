@@ -90,7 +90,13 @@
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
+              
+        <?php
+            if (isset($_SESSION['inicio_exitoso']) && $_SESSION['inicio_exitoso']) {
+                echo '<div class="alert alert-success">Inicio de sesión exitoso</div>';
+                $_SESSION['inicio_exitoso'] = false; // Limpiar la variable de sesión
+            }
+        ?>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">

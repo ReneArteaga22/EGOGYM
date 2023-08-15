@@ -258,8 +258,9 @@
                   <div class='row justify-content-center'>
                   <form action='../../scripts/updatecontra.php?id=".$idPersona."' method='post' style=' width: 80%; margin-top:25px;'>
                   <label>Nueva Contraseña</label><br>
-                  <input type='password' placeholder='' name='contra' required>
+                  <input type='password' placeholder='' name='contra'>
                   <button type='submit' class='btn btn-success btn-sm' style='margin-left: 15px;'>Guardar</button>
+                  </form>
                   </div>
                   </div>";
                     

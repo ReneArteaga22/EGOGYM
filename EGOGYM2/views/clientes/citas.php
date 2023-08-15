@@ -55,8 +55,8 @@
       startHour = 8; // Hora de inicio para el selector 2
       endHour = 18;   // Hora de fin para el selector 2
     } else if (id === 'timeSelect3') {
-      startHour = 7; // Hora de inicio para el selector 3
-      endHour = 10;   // Hora de fin para el selector 3
+      startHour = 19; // Hora de inicio para el selector 3
+      endHour = 22;   // Hora de fin para el selector 3
     } 
 
     for (let hour = startHour; hour <= endHour; hour++) {

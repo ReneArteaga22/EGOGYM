@@ -24,7 +24,13 @@ $parametros = array(':nuevoPlanCodigo' => $nuevoPlanCodigo, ':clienteId' => $cli
 $conexion->ejecutarSQL($cadena, $parametros);
 $conexion->desconectarBD();
 
+<<<<<<< HEAD
 $_SESSION['mensaje'] = 'Plan actualizado';
+=======
+// Redirigir al usuario de vuelta a la página del perfil del cliente
+echo"<div class='alert alert-success'>Cliente Registrado</>";
+header("refresh:2 ../views/recepcionista/perfilCliente.php?id=".$clienteId."");
+>>>>>>> f095cba04979ac2fd128e0428a0f22aebb1cecb0
 
 header("Location: ../views/recepcionista/perfilCliente.php?id=$clienteId");
 ?>

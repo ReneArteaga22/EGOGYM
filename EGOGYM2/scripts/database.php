@@ -78,6 +78,7 @@ class Database
             {
                 $pase=true;
                 
+             
                
                 $nombreUsuario = $renglon['nombre'];
                 if ($renglon['tipo_usuario'] === 'cliente') {
@@ -146,8 +147,8 @@ class Database
             session_start();
 
             $_SESSION["correo"] = $email;
-
-            header("refresh:0 ../views/clientes/Primera.php");
+            $_SESSION['inicio_exitoso'] = true;
+            header("refresh:0 ../views/clientes/");
         } else {
             echo "<div class='alert alert-danger'>";
             echo "<h2 align='center'>Usuario o contraseña incorrecto ...</h2>";
