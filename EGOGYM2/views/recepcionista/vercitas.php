@@ -124,7 +124,7 @@
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../recepcionista/principal.php">EGO GYM</a>
+            <a class="navbar-brand" href="../recepcionista/index.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -134,7 +134,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="../recepcionista/principal.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="../recepcionista/index.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
 
                     <li class="nav-item dropdown">
@@ -372,7 +372,7 @@
                 INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
                 INNER JOIN persona ON empleado.id_empleado = persona.id_persona
                 ) AS e ON citas.serv_emp = e.id_empserv
-                where citas.fecha between '$fecha_1' AND '$fecha_2'
+                where citas.fecha between '$fecha_1' AND '$fecha_2' and e.servicio = '$servicio'
                 GROUP BY nombre,apellido_paterno,apellido_materno;";
          $conexion->seleccionar($consulta);
          $tabla = $conexion->seleccionar($consulta);

@@ -80,7 +80,7 @@ $(document).ready(function() {
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="Primera.php#home">EGO GYM</a>
+            <a class="navbar-brand" href="index.php#home">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -90,15 +90,15 @@ $(document).ready(function() {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="Primera.php#home" class="nav-link smoothScroll">Home</a>
+                        <a href="index.php#home" class="nav-link smoothScroll">Home</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="Primera.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
+                        <a href="index.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="Primera.php#serv" class="nav-link smoothScroll">Servicios</a>
+                        <a href="index.php#serv" class="nav-link smoothScroll">Servicios</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -159,7 +159,7 @@ $(document).ready(function() {
           <a href="citas.php" class="btn bg-color btn-lg">Agenda una cita</a>
           </div>
           <div class="col-6 col-lg-6">
-          <a href="Primera.php#serv" class="btn bg-color btn-lg">Regresar a Servicios</a>
+          <a href="index.php#serv" class="btn bg-color btn-lg">Regresar a Servicios</a>
           </div>
           </div>
         </div>

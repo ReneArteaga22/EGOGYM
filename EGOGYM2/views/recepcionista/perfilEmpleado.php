@@ -52,7 +52,7 @@
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../recepcionista/principal.php">EGO GYM</a>
+            <a class="navbar-brand" href="../recepcionista/index.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -62,7 +62,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="../recepcionista/principal.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="../recepcionista/index.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
 
                     <li class="nav-item dropdown">
@@ -108,8 +108,33 @@
                   <div class="card">
                     <div class="card-body">
                       <div class="d-flex flex-column align-items-center text-center">
-                      <img src="../images/class/boxwax.jpg" alt="user" class="rounded-circle" width="250">
-                      
+                      <?php
+        $conexion = new Database();
+        $conexion->conectarDB();
+
+        $email = $_SESSION["correo"];
+        $idPersona = $_GET['id'];
+
+        $consulta = "select persona.foto as foto,concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
+        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña, plan.nombre as plan,
+        concat(cliente.fecha_ini,'  ','de','  ',cliente.fecha_fin) as periodo from persona
+        left join cliente on persona.id_persona = cliente.id_cliente
+        left join plan on cliente.codigo_plan = plan.codigo
+        where persona.id_persona = $idPersona";
+        $datos_per = $conexion ->seleccionar($consulta);
+        $imagenPorDefecto = "../../images/class/imagenxdefect.webp"; 
+
+        
+        foreach($datos_per as $registro)
+        {
+
+    // Operador ternario para determinar qué URL de imagen utilizar
+    
+    $urlImagenMostrar = $registro->foto ? $registro->foto : $imagenPorDefecto;
+   
+    echo "<img src='$urlImagenMostrar' class='rounded-circle' alt='user' style='width: 250px'>";
+        }
+        ?>
                     
                       </div>
                     
@@ -177,7 +202,7 @@
 
                 $consulta = "SELECT id_persona as matricula,concat(persona.nombre,' ',persona.apellido_paterno,' ', persona.apellido_materno) as usuario, correo, 
                 telefono, fecha_nacimiento, empleado.tipo_empleado as tipo,
-                FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad FROM persona 
+                FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad, persona.contraseña FROM persona 
                 inner join empleado on empleado.id_empleado=persona.id_persona
                 WHERE id_persona = $idPersona";
                 $parametros = array(':id' => $idPersona);
@@ -223,6 +248,20 @@
                       echo"</div>";
                     echo"</div>";
                     echo"<hr>";
+                    echo"<div class='row justify-content-center'>";
+                    echo"<div class='text-center'>";
+                    echo "<a class='btn btn-sm btn-success' data-toggle='collapse' data-target= '#contra' role='button' aria-expanded='false' aria-controls='contra' style='color:white;'>
+                    Editar Contraseña </a>";
+                    echo"</div>";
+                    echo"</div>";
+                  echo "<div class='collapse' id='contra'>
+                  <div class='row justify-content-center'>
+                  <form action='../../scripts/updatecontra.php?id=".$idPersona."' method='post' style=' width: 80%; margin-top:25px;'>
+                  <label>Nueva Contraseña</label><br>
+                  <input type='password' placeholder='' name='contra' required>
+                  <button type='submit' class='btn btn-success btn-sm' style='margin-left: 15px;'>Guardar</button>
+                  </div>
+                  </div>";
                     
     
 

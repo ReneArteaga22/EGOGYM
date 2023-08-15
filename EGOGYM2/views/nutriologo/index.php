@@ -70,7 +70,7 @@ $(document).ready(function() {
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../nutriologo/principal.php">EGO GYM</a>
+            <a class="navbar-brand" href="../nutriologo/index.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -80,7 +80,7 @@ $(document).ready(function() {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                        <a href="../nutriologo/principal.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="../nutriologo/index.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a href="../nutriologo/citas_nutri.php" class="nav-link smoothScroll">Citas</a>
@@ -103,8 +103,9 @@ $(document).ready(function() {
         </div>
     </nav>
 
+    <section class="kiara">
     <!--Inicio de recepcionista-->
-    <div class="container" style="padding-top: 10%;">
+    <div class="container" >
         <h1 style="text-align: center;" data-aos="fade-right">¡Hola!</h1>
         <!--Tablas de citas registradas para el día actual-->
     </div>
@@ -112,5 +113,6 @@ $(document).ready(function() {
     </div>
     <br>
     <br>
+    </section>
     </body>
 </html>

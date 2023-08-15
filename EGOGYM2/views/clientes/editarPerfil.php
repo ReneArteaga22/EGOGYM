@@ -89,15 +89,15 @@ $(document).ready(function() {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="Primera.php#home" class="nav-link smoothScroll">Home</a>
+                        <a href="index.php#home" class="nav-link smoothScroll">Home</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="Primera.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
+                        <a href="index.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="Primera.php#serv" class="nav-link smoothScroll">Servicios</a>
+                        <a href="index.php#serv" class="nav-link smoothScroll">Servicios</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -153,7 +153,7 @@ $(document).ready(function() {
         left join plan on cliente.codigo_plan = plan.codigo
         where persona.correo = '$email'";
         $datos_per = $conexion ->seleccionar($consulta);
-        $imagenPorDefecto = "../../images/class/boxwax.jpg"; 
+        $imagenPorDefecto = "../../images/class/imagenxdefect.webp"; 
 
         
         foreach($datos_per as $registro)
@@ -163,7 +163,7 @@ $(document).ready(function() {
 
     // Operador ternario para determinar qué URL de imagen utilizar
     
-    echo "<form action='../../scripts/editar/actualizarclien.php' method='POST' enctype='multipart/form-data'>";
+    echo "<form action='../../scripts/editar/actualizar_clien.php' method='POST' enctype='multipart/form-data'>";
     $urlImagenMostrar = $registro->foto ? $registro->foto : $imagenPorDefecto;
    
     echo "<img src='$urlImagenMostrar' class='rounded-circle' alt='...' style='width: 60%'>";
@@ -183,9 +183,8 @@ $(document).ready(function() {
 
         }    
         ?>
-        <div class="text-center"> 
-        <button type="submit" class="btn btn-success btn-sm">Guardar</button>
-        </div>
+        <a href="perfil.php"class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-success">Guardar</button>
       </div>
         </div>
       </form>

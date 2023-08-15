@@ -33,7 +33,27 @@ if ($_FILES['foto']['size'] > 0) {
 }
 
 $pase = false;
-$cadena= "update persona set telefono='$telefono', contraseña='$hash' where correo= '$email' ";  
+$consulta= "select contraseña from persona where correo = '$email'";
+$datos = $conexion->seleccionar($consulta);
+foreach($datos as $dato)
+{
+    $contra = $dato->contraseña;
+}
+
+if($contra != $hash)
+{
+    $upcontra = "update persona set constraseña = '$hash' where correo= '$email'";
+    $conexion->ejecutarSQL($upcontra);
+}
+else
+{
+    echo "<div class='alert alert-warning'>No se pudo actualizar la constraseña</div>";
+    header("refresh:2 ../views/nutriologo/editarNutri.php");
+
+}
+
+
+$cadena= "update persona set telefono='$telefono' where correo= '$email' ";  
  
 while($conexion->ejecutarSQL($cadena))
 {
@@ -43,7 +63,7 @@ while($conexion->ejecutarSQL($cadena))
 if($pase=true)
 {
     echo"<div class='alert alert-success text-center'>Actualizacion de datos realizada con exito</div>";
-    header("refresh:2 ../../views/nutriologo/principal.php");
+    header("refresh:2 ../../views/nutriologo/perfil_nutri.php");
 }
 else
 {

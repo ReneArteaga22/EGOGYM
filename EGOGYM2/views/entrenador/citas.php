@@ -113,7 +113,7 @@ $(document).ready(function() {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                        <a href="inicio.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="index.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a href="citas.php" class="nav-link smoothScroll">Clases</a>

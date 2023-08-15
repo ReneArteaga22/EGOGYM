@@ -67,7 +67,7 @@ $(document).ready(function() {
      <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../nutriologo/principal.php">EGO GYM</a>
+            <a class="navbar-brand" href="../nutriologo/index.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -77,7 +77,7 @@ $(document).ready(function() {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                        <a href="../nutriologo/principal.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="../nutriologo/index.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a href="../nutriologo/citas_nutri.php" class="nav-link smoothScroll">Citas</a>
@@ -123,7 +123,7 @@ $(document).ready(function() {
         left join plan on cliente.codigo_plan = plan.codigo
         where persona.correo = '$email'";
         $datos_per = $conexion ->seleccionar($consulta);
-        $imagenPorDefecto = "../../images/class/boxwax.jpg"; 
+        $imagenPorDefecto = "../../images/class/imagenxdefect.webp"; 
 
         
         foreach($datos_per as $registro)

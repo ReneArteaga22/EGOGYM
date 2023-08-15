@@ -52,6 +52,39 @@ $(document).ready(function() {
   });
 });
 </script>
+<script>
+    $( function() {
+    $( "#datepicker2" ).datepicker({
+      showOtherMonths: true,
+      selectOtherMonths: true,
+      dateFormat: 'yy-mm-dd',
+      minDate: '-1M',
+      maxDate: '-1D',
+      beforeShowDay: $.datepicker.noWeekends
+    });} 
+    );
+    </script>
+<!--Calendario fecha_2-->
+    <script type="text/javascript">
+           $(function(){
+    var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+
+      today = yyyy + '/' + mm + '/' + dd;
+  })
+  $( function() {
+    $( "#datepicker3" ).datepicker({
+      showOtherMonths: true,
+      selectOtherMonths: true,
+      dateFormat: 'yy-mm-dd',
+      minDate: '-1M',
+      maxDate: '+9D',
+      beforeShowDay: $.datepicker.noWeekends
+    });} 
+    );
+    </script>
 
 </head>
   
@@ -101,15 +134,15 @@ $(document).ready(function() {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="Primera.php#home" class="nav-link smoothScroll">Home</a>
+                        <a href="index.php#home" class="nav-link smoothScroll">Home</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="Primera.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
+                        <a href="index.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="Primera.php#serv" class="nav-link smoothScroll">Servicios</a>
+                        <a href="index.php#serv" class="nav-link smoothScroll">Servicios</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -257,7 +290,7 @@ $(document).ready(function() {
              }
              else
             {
-               echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay citas pendientes!</h2>";
+               echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No tienes citas pendientes!</h2>";
             }
             ?>
             </div>
@@ -323,7 +356,7 @@ $(document).ready(function() {
                         }
                         else
                         {
-                            echo "<h3 data-aos='fade-right' style='color: goldenrod'>No hay clases agendadas el día de hoy </h3>";
+                            echo "<h3 data-aos='fade-right' style='color: goldenrod'>No tienes clases agendadas el día de hoy </h3>";
                         }
                     ?>
             </div>
@@ -331,24 +364,35 @@ $(document).ready(function() {
 
             <div class="tab-pane fade" id="citas_can">
             
-            <form>
+            <form method="post" action="">
             <div class="row" style="margin-top: 5px;">
 
-                <div class="col-lg-4">
+                <div class="col-lg-2">
                     <label style="color: grey;">Servicio</label><br>
-                    <select style="border:none;"></select>
+                    <select style="border:none;" name="servicio">
+                    <option value="nutricion">Nutrición</option>
+                    <option value="fisioterapia">Fisioterapia</option>
+                    </select>
                 </div>
 
-                <div class="col-lg-4">
-                <label style="color: grey;">Periodo</label><br>
-                    <select style="border:none;"></select>
+                <div class="col-lg-6">
+                <label style="color:grey">Rango</label>
+                <div class="input-group date">
+                <input type="text" id="datepicker2" required name="fecha_1" placeholder="Selecciona una fecha" 
+                style="border:none; background-color:lightgrey;color:grey">
+                <input type="text" id="datepicker3" required name="fecha_2" style="margin-left: 10px;border:none;background-color:lightgrey;color:grey" 
+                placeholder="Selecciona una fecha">
                 </div>
-
+                </div>
+                <input class="btn" type="submit" name="boton_past" value="Buscar" style="margin-top: 20px;">
             </div>
             
             </form>
             
             <?php
+            if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['boton_past']))
+            {
+            extract($_POST);
              $conexion = new database();
              $conexion->conectarDB();
      
@@ -357,7 +401,8 @@ $(document).ready(function() {
              servicios_empleados.id_empserv=citas.serv_emp
              inner join servicios on
              servicios.codigo=servicios_empleados.servicio
-             where citas.fecha > curdate()  and citas.estado= 'cancelada' and citas.cliente = $id_per;
+             where  citas.estado= 'cancelada' and citas.cliente = $id_per and servicios.nombre = '$servicio' and
+             citas.fecha between '$fecha_1' and '$fecha_2'
              group by servicio;
              ";
               $conexion->seleccionar($consulta);
@@ -447,8 +492,9 @@ $(document).ready(function() {
              }
              else
             {
-               echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay citas pendientes!</h2>";
+               echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay resultados!</h2>";
             }
+        }
             ?>
             </div>
         </div>

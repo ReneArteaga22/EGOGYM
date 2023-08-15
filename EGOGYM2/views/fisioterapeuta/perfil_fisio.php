@@ -67,7 +67,7 @@ $(document).ready(function() {
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="principal.php">EGO GYM</a>
+            <a class="navbar-brand" href="index.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -77,7 +77,7 @@ $(document).ready(function() {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                        <a href="principal.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="index.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a href="citasfisio.php" class="nav-link smoothScroll">Citas</a>
@@ -102,40 +102,50 @@ $(document).ready(function() {
           Tu información
         </div>
 
-        <div class="card-body row">
-            <div class="col-lg-6 col-xs-12  col-sm-12 col-md-6 text-center">
-            <img src="../../images/class/boxwax.jpg" class="rounded-circle" alt="..." style="width: 60%;">
-          </div>
-        
-        
-        <?php
+            <?php
         $conexion = new Database();
         $conexion->conectarDB();
 
-        $consulta = "SELECT concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
-        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña, persona.id_persona,
-        FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad 
-         from persona
-        where persona.id_persona in (select fisioterapeuta.id_fisio from fisioterapeuta) AND persona.correo='$email'";
-        $datos_per = $conexion ->seleccionar($consulta);
+        $email = $_SESSION["correo"];
 
+        $consulta = "select persona.foto as foto,concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
+        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña, plan.nombre as plan,
+        concat(cliente.fecha_ini,'  ','de','  ',cliente.fecha_fin) as periodo from persona
+        left join cliente on persona.id_persona = cliente.id_cliente
+        left join plan on cliente.codigo_plan = plan.codigo
+        where persona.correo = '$email'";
+        $datos_per = $conexion ->seleccionar($consulta);
+        $imagenPorDefecto = "../../images/class/imagenxdefect.webp"; 
+
+        
         foreach($datos_per as $registro)
         {
-            echo "<div class='col-lg-6 col-xs-12 col-sm-12 col-md-6'>";
+          echo "<div class='card-body row'>";
+          echo "<div class='col-lg-6 col-xs-12  col-sm-12 col-md-7 text-center'>";
+
+    // Operador ternario para determinar qué URL de imagen utilizar
+    
+    $urlImagenMostrar = $registro->foto ? $registro->foto : $imagenPorDefecto;
+   
+    echo "<img src='$urlImagenMostrar' class='rounded-circle' alt='...' style='width: 60%'>";
+    echo "</div>";
+           
+            echo "<div class='col-lg-6 col-12 col-sm-12 col-md-12'>";
             echo "<p>Nombre: $registro->nombre </p>";
             echo "<p>Correo: $registro->correo </p>";
             echo "<p>Telefono: $registro->telefono </p>";
-            echo "<p>Edad: ".$registro->edad." años</p>";
+            echo "<p>Fecha de nacimiento: $registro->fecha_nacimiento </p>";
             echo "<p>Sexo: $registro->sexo </p>";
-            echo "</div>";
+            echo "<p>Plan: $registro->plan </p>";
+            echo "<p>Periodo: $registro->periodo </p>";
+            echo "<a href='editarfisio.php'>Editar Perfil</a>";
 
-            echo "<a href='editarFisio.php?id=".$registro->id_persona."' style='margin:auto; font-size:15px; color:goldenrod ; font-style:oblique;'>
-            Editar perfil
-          </a>";
+
         }    
-        ?>
+        ?> </div>
+        
+        
        
-
         </div>
 </body>
 </html>

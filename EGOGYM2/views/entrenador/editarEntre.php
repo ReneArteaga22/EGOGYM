@@ -81,7 +81,7 @@ $(document).ready(function() {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                        <a href="inicio.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="index.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a href="citas.php" class="nav-link smoothScroll">Clases</a>
@@ -121,7 +121,7 @@ $(document).ready(function() {
     left join plan on cliente.codigo_plan = plan.codigo
     where persona.correo = '$email'";
     $datos_per = $conexion ->seleccionar($consulta);
-    $imagenPorDefecto = "../../images/class/boxwax.jpg"; 
+    $imagenPorDefecto = "../../images/class/imagenxdefect.webp"; 
 
     
     foreach($datos_per as $registro)
@@ -145,14 +145,13 @@ echo "</div>";
         echo "<p>Fecha de nacimiento: $registro->fecha_nacimiento </p>";
         echo "<p>Sexo: $registro->sexo </p>";
         echo "<p>Contraseña:</p><input type='password' value='$registro->contraseña' class='form-control w-50' name='contra'>";
-        echo "<p>Plan: $registro->plan </p>";
-        echo "<p>Periodo: $registro->periodo </p>";
+     
 
 
     }    
     ?>
        
-       <button type="reset" value="Limpiar" class="btn btn-secondary">Borrar cambios</button>
+       <a href="perfil_entre.php"class="btn btn-secondary">Cancelar</a>
             <button type="submit"name="Guardar" class="btn btn-warning">Guardar cambios</button>      
       </div>
         </div>
