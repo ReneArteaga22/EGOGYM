@@ -28,7 +28,7 @@ $conexion->desconectarBD();
 
 // Redirigir al usuario de vuelta a la página del perfil del cliente
 echo"<div class='alert alert-success'>Cliente Registrado</>";
-header("refresh:2 ../views/recepcionista/usuarios.php");
+header("refresh:2 ../views/recepcionista/perfilCliente.php?id=".$clienteId."");
 
 ?>
     </div>

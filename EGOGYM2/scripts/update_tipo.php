@@ -27,7 +27,7 @@ $conexion->desconectarBD();
 
 // Redirigir al usuario de vuelta a la página del perfil del cliente
 echo"<div class='alert alert-success'>Cambios guardados</>";
-header("refresh:3 ../views/recepcionista/usuarios.php");
+header("refresh:3 ../views/recepcionista/perfilEmpleado.php?id=".$empleadoId."");
 
 ?>
     </div>

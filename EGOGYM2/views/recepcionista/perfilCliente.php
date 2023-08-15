@@ -323,18 +323,19 @@ if ($persona) {
                         echo"</div>";
                       echo"</div>";
                       echo"<hr>";
-                      echo"<div class='row justify-content-center'>";
+                      echo"<div class='row' style='margin-left: 10px'>";
                       echo"<div class='text-center'>";
-                      echo "<a class='btn btn-sm btn-success' data-toggle='collapse' data-target= '#contra' role='button' aria-expanded='false' aria-controls='contra' style='color:white;'>
+                      echo "<a class='btn btn-sm' data-toggle='collapse' data-target= '#contra' role='button' aria-expanded='false' aria-controls='contra' style='color:white;background-color: gray;'>
                       Editar Contraseña </a>";
                       echo"</div>";
                       echo"</div>";
-                    echo "<div class='collapse' id='contra'>
-                    <div class='row justify-content-center'>
+                    echo "<div class='collapse' id='contra' style='margin-left: 25px'>
+                    <div class='row'>
                     <form action='../../scripts/updatecontra.php?id=".$idPersona."' method='post' style=' width: 80%; margin-top:25px;'>
                     <label>Nueva Contraseña</label><br>
-                    <input type='password' placeholder='' name='contra' required>
-                    <button type='submit' class='btn btn-success btn-sm' style='margin-left: 15px;'>Guardar</button>
+                    <input type='password' placeholder='' name='contra'>
+                    <button type='submit' class='btn btn-sm' style='margin-left: 15px; background-color: goldenrod; color:white;'>Guardar</button>
+                    </form>
                     </div>
                     </div>";
                       

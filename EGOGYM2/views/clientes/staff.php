@@ -121,7 +121,7 @@ $(document).ready(function() {
 } 
 
 </style>
-<body  data-spy="scroll" data-target="#navbarNav" data-offset="50">
+<body  data-spy="scroll" data-target="#navbarNav" data-offset="50" style="background-color:gainsboro">
 <?php
     include '../../scripts/database.php';
     $conexion = new Database();
@@ -220,7 +220,26 @@ try {
 
         foreach ($resultado as $row) {
           echo '<div class="card">';
-          echo '<img src="images/fp.jpg" style="width: 90%; align-self: center; margin: 10px;" class="card-img-top" alt="...">';
+        
+
+
+        $consulta = "select persona.foto as foto from persona
+        left join empleado on persona.id_persona = empleado.id_empleado
+        where persona.id_persona= '$row->id_persona'";
+        $datos_per = $conexion ->seleccionar($consulta);
+        $imagenPorDefecto = "../../images/class/imagenxdefect.webp"; 
+
+        
+        foreach($datos_per as $registro)
+        {
+
+    // Operador ternario para determinar qué URL de imagen utilizar
+    
+    $urlImagenMostrar = $registro->foto ? $registro->foto : $imagenPorDefecto;
+   
+    echo "<img src='$urlImagenMostrar' alt='user' style='width: 90%; align-self: center; margin: 10px;' class='card-img-top' alt='...''>";
+        }
+        
           echo '<div class="card-body">';
           echo '<h5 class="card-title" style="align-content: center;">'. $row->nombre . " " . $row->apellido_paterno .'</h5>';
 
