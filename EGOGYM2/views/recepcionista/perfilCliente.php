@@ -16,13 +16,9 @@
       <script src="../../js/bootstrap.min.js"></script>
       <script src="../../js/aos.js"></script>
       <script src="../../js/smoothscroll.js"></script>
-<<<<<<< HEAD
-      <script src="../..//js/custom.js"></script>
-=======
       <script src="../../js/custom.js"></script>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
 
      <link rel="stylesheet" href="../../css/bootstrap.min.css">
      <link rel="stylesheet" href="../../css/font-awesome.min.css">
@@ -33,11 +29,7 @@
 
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
-<<<<<<< HEAD
      <link rel="stylesheet" href="../../css/profile.css">
-=======
-     <link rel="stylesheet" href="../../css/prof.css">
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
 
      <style>
       body{
@@ -52,33 +44,10 @@
 }
     </style>
 
-<<<<<<< HEAD
 </head>
 <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
     <?php
 include '../../scripts/database.php';
-=======
-<script>
-$(document).ready(function() {
-
-  $('.dropdown-menu a.dropdown-item').click(function(event) {
- 
-    event.preventDefault();
-
-
-    var href = $(this).attr('href');
-
-    
-    window.location.href = href;
-  });
-});
-</script>
-
-</head>
-<body data-spy="scroll" data-target="#navbarNav" data-offset="50">
-<?php
-    include '../../scripts/database.php';
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
     $conexion = new Database();
     $conexion->conectarDB();
 
@@ -154,11 +123,7 @@ $(document).ready(function() {
         </div>
     </nav>
 
-<<<<<<< HEAD
-
-=======
     <section class="kiara">
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
     <div class="container">
         <div class="main-body">
             
@@ -201,10 +166,6 @@ $(document).ready(function() {
                   </div>
                   <div class="card mt-3">
                     <?php
-<<<<<<< HEAD
-                   
-=======
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
                     $conexion = new Database();
                     $conexion->conectarDB();
                     
@@ -225,34 +186,21 @@ $(document).ready(function() {
                     {
                     echo "<ul class='list-group list-group-flush'>";
                     echo"<li class='list-group-item d-flex justify-content-between align-items-center flex-wrap'>";
-<<<<<<< HEAD
                     echo"<p class='mb-0'>Plan</p>";  
                     echo"<span class='text-secondary' id='planElement'>". $persona[0]->plan ." </span>";
-=======
-                    echo"<p class='mb-0'>Fecha de fin</p>";  
-                    echo"<span class='text-secondary'>". $persona[0]->plan ." </span>";
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
                     echo"</li>";
   
                       
                     echo "<ul class='list-group list-group-flush'>";
                     echo"<li class='list-group-item d-flex justify-content-between align-items-center flex-wrap'>";
                     echo"<p class='mb-0'>Fecha de inicio</p>";  
-<<<<<<< HEAD
                     echo"<span class='text-secondary' id='inicioElement'>". $persona[0]->inicio_suscripcion ." </span>";
-=======
-                    echo"<span class='text-secondary'>". $persona[0]->inicio_suscripcion ." </span>";
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
                     echo"</li>";
                    
                     echo "<ul class='list-group list-group-flush'>";
                     echo"<li class='list-group-item d-flex justify-content-between align-items-center flex-wrap'>";
                     echo"<p class='mb-0'>Fecha de fin</p>";  
-<<<<<<< HEAD
                     echo"<span class='text-secondary' id='finalElement'>". $persona[0]->final_suscripcion ." </span>";
-=======
-                    echo"<span class='text-secondary'>". $persona[0]->final_suscripcion ." </span>";
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
                     echo"</li>";
 
                     $fechaFinal = new DateTime($persona[0]->final_suscripcion);
@@ -263,12 +211,7 @@ $(document).ready(function() {
                     echo "<ul class='list-group list-group-flush'>";
                     echo "<li class='list-group-item d-flex justify-content-between align-items-center flex-wrap'>";
                     echo "<p class='mb-0'>Días restantes de la suscripción:</p>";
-<<<<<<< HEAD
-                    echo "<span class='text-secondary' id='diasRestantesElement'>" . $diasRestantes . " días</span>";
-                    echo "</li>";
-
-=======
-                    echo "<span class='text-secondary'>" . $diasRestantes . " días</span>";
+                    echo "<span class='text-secondary'id='diasRestantesElement'>" . $diasRestantes . " días</span>";
                     echo "</li>";
                     echo "<li class='list-group-item d-flex justify-content-between align-items-center flex-wrap'>";
                     echo "<p class='mb-0'>Estatus del plan:</p>";
@@ -281,7 +224,6 @@ $(document).ready(function() {
                         echo "<span class='text-danger'>Inactivo</span>";
                       }
                       echo "</li>";
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
                    
                     }
                     if (isset($_SESSION['mensaje'])) {
@@ -400,24 +342,12 @@ $conexion->desconectarBD();
                     
                   </div>
     
-<<<<<<< HEAD
-                
-    
-    
-    
-                </div>
-=======
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
               </div>
     
             </div>
         </div>
 
-<<<<<<< HEAD
         <div class="modal fade" id="plan_up" tabindex="-1" role="dialog" aria-labelledby="membershipFormLabel" aria-hidden="true">
-=======
-        <div class="modal fade" id="plan" tabindex="-1" role="dialog" aria-labelledby="membershipFormLabel" aria-hidden="true">
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
       <div class="modal-dialog" role="document">
 
         <div class="modal-content">
@@ -431,11 +361,7 @@ $conexion->desconectarBD();
           </div>
 
           <div class="modal-body">
-<<<<<<< HEAD
             <form id="formulario_actualizacion" class="membership-form webform" role="form"  action="../../scripts/update_plan.php" method="post">
-=======
-            <form class="membership-form webform" role="form"  action="../../scripts/update_plan.php" method="post">
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
                 
 
 
@@ -477,15 +403,10 @@ $conexion->desconectarBD();
                 
             </form>
           </div>
-<<<<<<< HEAD
           
 
           <div class="modal-footer"></div>
           <div id="mensaje_alerta"></div>
-=======
-
-          <div class="modal-footer"></div>
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
 
          <script>
   // Función para mostrar el precio del plan seleccionado
@@ -502,7 +423,6 @@ $conexion->desconectarBD();
     });
   });
 </script>
-<<<<<<< HEAD
 <!--
 <script>
 $(document).ready(function() {
@@ -563,10 +483,5 @@ $(document).ready(function() {
 
 -->
         
-=======
-
-
-</section>
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
 </body>
 </html>

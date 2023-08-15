@@ -117,16 +117,9 @@ $(document).ready(function() {
         </div>
     </nav>
 
-<<<<<<< HEAD:EGOGYM2/views/recepcionista/principal.php
   
     <div class="container" style="padding-top: 10%;">
         <h1 data-aos="fade-up" style="text-align: center;">EGOGYM </h1>
-=======
-    <section class="kiara">
-    <!--Inicio de recepcionista-->
-    <div class="container" style="padding-top: 1%;">
-        <h1 data-aos="fade-up" style="text-align: center;">¡Bienvenido!</h1>
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119:EGOGYM2/views/recepcionista/index.php
         <hr class="dropdown divider" style="height: 2px;">
 
         
@@ -203,14 +196,10 @@ $(document).ready(function() {
          
         ?>
     </div>
-<<<<<<< HEAD:EGOGYM2/views/recepcionista/principal.php
     <?php
  
  $conexion = new Database();
 $conexion->conectarDB();
-=======
-    </section>
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119:EGOGYM2/views/recepcionista/index.php
 
 // Obtener el primer día del mes actual
 $primerDiaMesActual = date('Y-m-01');

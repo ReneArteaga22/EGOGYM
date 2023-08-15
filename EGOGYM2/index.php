@@ -70,23 +70,23 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="#home" class="nav-link smoothScroll">Home</a>
+                        <a href="#home" class="nav-link link-smooth smoothScroll">Home</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="#about" class="nav-link smoothScroll">Sobre Nosotros</a>
+                      <a href="#about" class="nav-link link-smooth smoothScroll">Sobre Nosotros</a>
+                      </li>
+
+                    <li class="nav-item">
+                        <a href="#serv" class="nav-link link-smooth smoothScroll">Servicios</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="#serv" class="nav-link smoothScroll">Servicios</a>
+                        <a href="#schedule" class="nav-link link-smooth smoothScroll">Calendario</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="#schedule" class="nav-link smoothScroll">Calendario</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="#contact" class="nav-link smoothScroll">Contacto</a>
+                        <a href="#contact" class="nav-link link-smooth smoothScroll">Contacto</a>
                     </li>
                     <li class="nav-item">
                         <!---->

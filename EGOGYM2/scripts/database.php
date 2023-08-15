@@ -3,13 +3,8 @@ class Database
 {
     private $PDOLocal;
     private $user = "root";
-<<<<<<< HEAD
     private $password = "ranagasu22";
     private $server = "mysql:host=localhost; dbname=egogym2";
-=======
-    private $password = "";
-    private $server = "mysql:host=127.0.0.1:3307; dbname=egogym_prueba";
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
 
     function conectarDB()
     {
@@ -95,7 +90,7 @@ class Database
                         echo "<div class='alert alert-danger'>";
                         echo "<h2 align='center'>La membresía ha expirado, no se permite el inicio de sesión.</h2>";
                         echo "</div>";
-                        header("refresh:2 ../index.php");
+                        header("refresh:2 ../First.php");
                         return;
                     }
                    
@@ -111,19 +106,15 @@ class Database
     
                     if($fila['tipo_empleado'] === 'recepcionista')
                     {
-                        header("Location: ../views/recepcionista/index.php");
+                        header("Location: ../views/recepcionista/indexrcp.php");
                     }
                     else if ($fila['tipo_empleado'] === 'fisio')
                     {
-                        header("Location: ../views/fisioterapeuta/index.php");
+                        header("Location: ../views/fisioterapeuta/principal.php");
                     }
                     else if ($fila['tipo_empleado'] === 'nutri')
                     {
-                        header("Location: ../views/nutriologo/index.php ");
-                    }
-                    else if ($fila['tipo_empleado'] === 'entrenador')
-                    {
-                        header("Location: ../views/entrenador/index.php");
+                        header("Location: ../views/nutriologo/principal.php ");
                     }
                     else if ($fila['tipo_empleado'] === 'entrenador')
                     {
@@ -143,7 +134,7 @@ class Database
                
             
                
-                header("refresh:2 ../index.php#membershipForm");
+                header("refresh:20 ../First.php#membershipForm");
             }
             
             
@@ -156,19 +147,18 @@ class Database
 
             $_SESSION["correo"] = $email;
 
-            header("refresh:0 ../views/clientes/index.php");
+            header("refresh:0 ../views/clientes/Primera.php");
         } else {
             echo "<div class='alert alert-danger'>";
             echo "<h2 align='center'>Usuario o contraseña incorrecto ...</h2>";
             echo "</div>";
 
-            header("refresh:2 ../index.php");
+            header("refresh:20 ../First.php");
         }
     } catch (PDOException $e) {
         echo $e->getMessage();
     }
 }
-
 
 
 function verifica2($email,$contraseña)
@@ -301,31 +291,7 @@ function verifica2($email,$contraseña)
                 return $meses[$numeroMes];
             }
 
-    function grafica($consulta, $parametros = array()) {
-        $stmt = $this->PDOLocal->prepare($consulta);
-        $stmt->execute($parametros);
-        return $stmt;
-    }
     
-    
-            function obtenerNombreMes($numeroMes) {
-                $meses = array(
-                    1 => 'Enero',
-                    2 => 'Febrero',
-                    3 => 'Marzo',
-                    4 => 'Abril',
-                    5 => 'Mayo',
-                    6 => 'Junio',
-                    7 => 'Julio',
-                    8 => 'Agosto',
-                    9 => 'Septiembre',
-                    10 => 'Octubre',
-                    11 => 'Noviembre',
-                    12 => 'Diciembre'
-                );
-                return $meses[$numeroMes];
-            }
-
 
 }
 

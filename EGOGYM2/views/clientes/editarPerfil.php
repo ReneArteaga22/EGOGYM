@@ -141,10 +141,6 @@ $(document).ready(function() {
 
 
         <?php
-<<<<<<< HEAD
-       
-=======
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
         $conexion = new Database();
         $conexion->conectarDB();
 

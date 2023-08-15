@@ -166,14 +166,7 @@ $(document).ready(function() {
                         <a href="index.php#home" class="nav-link smoothScroll">Home</a>
                     </li>
 
-<<<<<<< HEAD
                   
-=======
-                    <li class="nav-item">
-                        <a href="index.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
-                    </li>
-
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
                     <li class="nav-item">
                         <a href="index.php#serv" class="nav-link smoothScroll">Servicios</a>
                     </li>
