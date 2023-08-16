@@ -85,7 +85,7 @@ $(document).ready(function() {
                         <a href="inicio.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="citas.php" class="nav-link smoothScroll">Clases</a>
+                        <a href="clases.php" class="nav-link smoothScroll">Clases</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-lg-2">

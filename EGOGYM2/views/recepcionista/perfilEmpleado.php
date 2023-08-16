@@ -307,6 +307,7 @@
                 <label style="position: relative; display: block;">
                     <select required name="tipo" id="planSelect" style="display: block; width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-top: 20px;">
                         <option value="Seleccione una" selected disabled hidden></option>
+                        <option value="1">No Seleccionado</option>
                         <option value="3">Nutriólogo</option>
                         <option value="4">Fisioterapeuta</option>
                         <option value="5">Entrenador</option>

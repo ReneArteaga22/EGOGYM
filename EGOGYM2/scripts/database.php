@@ -49,10 +49,12 @@ class Database
         try
         {
             $this->PDOLocal->query($cadena);
+            return true;
         }
         catch(PDOException $e)
         {
             echo $e->getMessage();
+            return false;
         }
     }
 

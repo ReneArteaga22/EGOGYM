@@ -51,54 +51,10 @@
     });} 
     );
     </script>
-<!--Calendario fecha_1-->
-<script type="text/javascript">
-         $(function(){
-    var today = new Date();
-      var dd = String(today.getDate()).padStart(2, '0');
-      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-      var yyyy = today.getFullYear();
 
-      today = yyyy + '/' + mm + '/' + dd;
-  })
-  $( function() {
-    $( "#datepicker2" ).datepicker({
-      showOtherMonths: true,
-      selectOtherMonths: true,
-      dateFormat: 'yy-mm-dd',
-      minDate: '-1M',
-      maxDate: '-1D',
-      beforeShowDay: $.datepicker.noWeekends
-    });} 
-    );
-    </script>
-<!--Calendario fecha_2-->
-    <script type="text/javascript">
-           $(function(){
-    var today = new Date();
-      var dd = String(today.getDate()).padStart(2, '0');
-      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-      var yyyy = today.getFullYear();
-
-      today = yyyy + '/' + mm + '/' + dd;
-  })
-  $( function() {
-    $( "#datepicker3" ).datepicker({
-      showOtherMonths: true,
-      selectOtherMonths: true,
-      dateFormat: 'yy-mm-dd',
-      minDate: '-1M',
-      maxDate: '-1D',
-      beforeShowDay: $.datepicker.noWeekends
-    });} 
-    );
-    </script>
-
-    <link rel="stylesheet" href="../../css/egogym.css">
-
-    </head>
-    <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
-    <?php
+</head>
+<body data-spy="scroll" data-target="#navbarNav" data-offset="50"> 
+<?php
     include '../../scripts/database.php';
     $conexion = new Database();
     $conexion->conectarDB();
@@ -125,7 +81,8 @@
     }
        
     ?>
-    <nav class="navbar navbar-expand-lg fixed-top">
+
+<nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
             <a class="navbar-brand" href="../recepcionista/index.php">EGO GYM</a>
@@ -175,36 +132,29 @@
         </div>
     </nav>
 
-
     <section class="kiara">
 
-	<!--Menú de tabs-->  
-
-
     <div class="container" style="padding-top: 3%;">
-        <ul class="nav nav-tabs">
-        <li><a href="../recepcionista/citas_prox.php" style="margin-right: 20px;">Citas próximas</a></li>
-        <li class="active"><a href="../recepcionista/citas_pasadas.php">Citas pasadas</a></li>
-        <li><a href="../recepcionista/clases_ag.php" style="margin-left: 20px;">Clases agendadas</a></li>
-        
+    
+    <ul class="nav nav-tabs">
+        <li><a data-toggle="tab" href="citas_pr" style="margin-right: 20px;">Citas próximas</a></li>
+    <li class="active"><a href="../recepcionista/citas_pasadas.php">Citas pasadas</a></li>
+    <li><a href="../recepcionista/clases_ag.php" style="margin-left: 20px;">Clases agendadas</a></li>
         </ul>
     </div>
 
-	<!--Inicio tab-content-->
-        <div class="container">
-            <div class="tab-content">
+    <div class="tab-content container">
+        <div class="tab-pane active" id="citas_pr">
+             <form method="post" action="">
+            <div class="row" style="margin-top: 5px;">
 
-                <div class="tab-pane active" id="citas_pr">
-                <form method="post" action="">
-                <div class="row" style="margin-top: 5px;">
-
-                    <div class="col-lg-4">
-                        <label style="color: grey;">Servicio</label><br>
-                        <select style="border:none;" name="servicio">
-                        <option value="nutricion">Nutrición</option>
-                        <option value="fisioterapia">Fisioterapia</option>
-                        </select>
-                    </div>
+                <div class="col-lg-4">
+                    <label style="color: grey;">Servicio</label><br>
+                    <select style="border:none;" name="servicio">
+                    <option value="nutricion">Nutrición</option>
+                    <option value="fisioterapia">Fisioterapia</option>
+                    </select>
+                </div>
 
                 <div class="col-lg-4">
                 <label style="color:grey">Fecha</label>
@@ -322,15 +272,16 @@
                  {
                   echo "<h2 data-aos='fade-right' style='color: goldenrod'>No existen citas con esas características</h2>";
                  }    
-                }
+           }
    
-                 ?>
-             </div>
+            ?>
+
+
 
             </div>
 
-         </div>
-
- </section>
-    </body>
+    </div>
+    </div>
+    </section>
+</body>
 </html>

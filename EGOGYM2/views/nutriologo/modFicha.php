@@ -14,8 +14,6 @@
       <script src="../../js/aos.js"></script>
       <script src="../../js/smoothscroll.js"></script>
       <script src="../../js/custom.js"></script>
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 
      <link rel="stylesheet" href="../../css/bootstrap.min.css">
      <link rel="stylesheet" href="../../css/font-awesome.min.css">
@@ -23,22 +21,6 @@
 
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
-
-     <script>
-$(document).ready(function() {
-
-  $('.dropdown-menu a.dropdown-item').click(function(event) {
- 
-    event.preventDefault();
-
-
-    var href = $(this).attr('href');
-
-    
-    window.location.href = href;
-  });
-});
-</script>
     </head>
     <body>
     <?php
@@ -63,12 +45,12 @@ $(document).ready(function() {
     }
     else 
     {
-        header("Location:../../index.php");
+        header("Location:../../First.php");
     }
        
     ?>
 
-<nav class="navbar navbar-expand-lg fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
             <a class="navbar-brand" href="../nutriologo/index.php">EGO GYM</a>
@@ -100,12 +82,13 @@ $(document).ready(function() {
                         </ul>
                       </li>
                 </ul>
-            </div>
+                
+            </div> 
         </div>
     </nav>
 
     <section class="kiara">
-    <div class="container" style="padding-top:3%;">
+    <div class="container" style="padding-top: 5%;">
 
     
     <?php
@@ -139,7 +122,7 @@ $(document).ready(function() {
 
         foreach($ficha as $fila)
         {
-        echo "<form action='../../scripts/guardaFichaNutri.php' method='post'>";
+        echo "<form action='../../scripts/guardarFichaNutri.php' method='post'>";
         echo "<div class='row'>";
         
         echo "<div class='col-lg-6 col-6'>";
@@ -147,22 +130,22 @@ $(document).ready(function() {
         echo "<input type='hidden' name='idFicha' value='$idFicha'>";
         echo "<h6 style='font-weight:bold;color:black; opacity:0.7;'>Datos del paciente</h6><br>"; 
         echo "<p>Edad: ".$persona[0]->edad." años</p>";  
-        echo "<p>Altura:</p>"." <input type='text' name='altura' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' value='$fila->altura'></input>";
-        echo "<p>Peso: </p>"." <input type='text' name='peso' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' value='$fila->peso'></input>";
-        echo "<p>Cintura: </p>"." <input type='text' name='cintura' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' value='$fila->med_cintura'></input>";
-        echo "<p>Cadera: </p>"." <input type='text' name='cadera' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' value='$fila->med_cadera'></input>";
-        echo "<p>Cuello: </p>"." <input type='text' name='cuello' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' value='$fila->med_cuello'></input>";
+        echo "<p>Altura:</p>"." <input required type='text' name='altura' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' placeholder='$fila->altura'></input>";
+        echo "<p>Peso: </p>"." <input required type='text' name='peso' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' placeholder='$fila->peso'></input>";
+        echo "<p>Cintura: </p>"." <input required type='text' name='cintura' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' placeholder='$fila->med_cintura'></input>";
+        echo "<p>Cadera: </p>"." <input required type='text' name='cadera' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' placeholder='$fila->med_cadera'></input>";
+        echo "<p>Cuello: </p>"." <input required type='text' name='cuello' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' placeholder='$fila->med_cuello'></input>";
         echo "</div>";
         echo "</div>";
 
         echo "<div class='col-lg-6 col-6'>";
         echo "<div class='modal-body' style='padding: 3%'>";
         echo "<h6 style='font-weight:bold;color:black; opacity:0.7;'>Detalles de la cita: </h6><br>"; 
-        echo "<p>Grasa Corporal: </p>"." <input type='text' name='grasa' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' value='$fila->porc_grasa_corporal'></input>";
-        echo "<p>Masa Corporal Magra: </p>"." <input type='text' name='masa' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' value='$fila->masa_corp_magra'></input>";
-        echo "<p>Objetivo:</p>"." <input type='text' name='objetivo' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' value='$fila->objetivo'> kg</input>";
-        echo "<p>Motivo: </p>"." <textarea name='motivo' style='border-radius:4%;padding:3px; width:50%; border: none;background-color:lightgrey' value='$fila->motivo' placeholder='$fila->motivo'></textarea>";
-        echo "<p>Observaciones: </p>"." <textarea name='observaciones' style='border-radius:4%;padding:3px; width:50%; border: none;background-color:lightgrey' value='$fila->observaciones' placeholder='$fila->observaciones'></textarea>";
+        echo "<p>Grasa Corporal: </p>"." <input required type='text' name='grasa' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' placeholder='$fila->porc_grasa_corporal'></input>";
+        echo "<p>Masa Corporal Magra: </p>"." <input required type='text' name='masa' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' placeholder='$fila->masa_corp_magra'></input>";
+        echo "<p>Objetivo:</p>"." <input required type='text' name='objetivo' style='border-radius:4%;padding:3px; border: none; width:20%;background-color:lightgrey' placeholder='$fila->objetivo'> kg</input>";
+        echo "<p>Motivo: </p>"." <textarea  name='motivo' style='border-radius:4%;padding:3px; width:50%; border: none;background-color:lightgrey' placeholder='$fila->motivo'></textarea>";
+        echo "<p>Observaciones: </p>"." <textarea name='observaciones' style='border-radius:4%;padding:3px; width:50%; border: none;background-color:lightgrey' placeholder='$fila->observaciones'></textarea>";
         echo "</div>";
         echo "</div>";
 

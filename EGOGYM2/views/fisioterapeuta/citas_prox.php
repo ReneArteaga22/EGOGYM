@@ -70,8 +70,9 @@ $(document).ready(function() {
 });
 </script>
     </head>
-    <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
-    <?php
+
+<body data-spy="scroll" data-target="#navbarNav" data-offset="50">
+<?php
     include '../../scripts/database.php';
     $conexion = new Database();
     $conexion->conectarDB();
@@ -130,18 +131,16 @@ $(document).ready(function() {
             </div>
         </div>
     </nav>
+
     <section class="kiara">
-    <!--Crea pills para todas las citas, citas canceladas, confirmadas, completadas, en las tres
-     filtrar citas por fecha, entrenador, servicio-->
-    <div class="container" style="padding-top: 3%;"> 
+        <div class="container" style="padding-top: 3%;">
         <h3 data-aos="fade-right">Citas agendadas</h3>
 
         <ul class="nav nav-tabs">
             <li class="active"><a href="../fisioterapeuta/citas_hoy.php">Citas del día de hoy</a></li>
-            <li class="active"><a href="../fisioterapeuta/citas_prox.php" style="margin-left: 20px;">Citas próximas</a></li>
+            <li class="active"><a data-toggle="tab" href="#citas_pr" style="margin-left: 20px;">Citas próximas</a></li>
             <li><a href="../fisioterapeuta/citas_pasadas.php" style="margin-left: 20px;">Citas pasadas</a></li>
         </ul>
-        
 
         <?php
         $db= new database();
@@ -157,89 +156,127 @@ $(document).ready(function() {
              {
                $ID = $dato->id_empserv;
              }
-     
-            
          ?>
 
-            <div class="tab-content">
+        <div class="tab-content container">
+        <div class="tab-pane active" id="citas_pr">
+
+        <form method="post" action="">
+        <div class="row" style="margin-top: 5px;">
+
+            <div class="col-lg-2">
+            <label style="color:grey">Fecha</label>
+            <div class="input-group date">
+            <input type="text" id="datepicker" required name="fecha_cita">
+            </div>
+            </div>
+
+            <div class="col-lg-2" style="margin-left: 30px;">
+                    <label style="color: grey;">Estado</label><br>
+                    <select style="border:none;" name="estado">
+                    <option value="1">Confirmada</option>
+                    <option value="2">Cancelada</option>
+                    </select>
+                </div>
+            <input class="btn" type="submit" name="boton_prox" value="Buscar" style="margin-top: 20px; margin-left:40px">
+        </div>
+
+        </form>
+
+        <?php
+        if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['boton_prox']))
+        {
+        extract($_POST);
+        $conexion = new database();
+        $conexion->conectarDB();
+
+        $consulta = "SELECT count(citas.id_cita) as cantidad,concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente, 
+        e.servicio as servicio,e.empleado AS empleado, citas.hora as hora,citas.fecha, citas.estado, citas.id_cita
+        from citas INNER JOIN cliente ON cliente.id_cliente= citas.cliente
+        INNER JOIN persona ON persona.id_persona = cliente.id_cliente
+        INNER JOIN
+        (
+        SELECT id_empserv, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS empleado,
+        servicios.nombre as servicio
+        FROM servicios_empleados 
+        INNER JOIN servicios ON servicios.codigo=servicios_empleados.servicio
+        INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
+        INNER JOIN persona ON empleado.id_empleado = persona.id_persona
+        ) AS e ON citas.serv_emp = e.id_empserv 
+        where citas.fecha = '$fecha_cita' AND e.servicio='fisioterapia' AND citas.estado=$estado
+        AND citas.serv_emp=$ID
+        GROUP BY nombre,apellido_paterno,apellido_materno, servicio,empleado,hora,fecha,estado,id_cita
+        ";
+        $conexion->seleccionar($consulta);
+        $tabla = $conexion->seleccionar($consulta);
+        foreach($tabla as $registro)
+        {
+            $registro->cantidad;
+
+            $cant_2 = $registro;
+        }
         
-            <div class="tab-pane active" id="citas_hoy">
-            <?php
-             $conexion = new database();
-             $conexion->conectarDB();
-     
-             $consulta = "SELECT count(citas.id_cita) as cantidad, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente, 
-             e.servicio as servicio,e.empleado AS empleado, citas.hora as hora, citas.fecha as fecha, citas.estado as estado, citas.id_cita as num,
-             ficha_fisio.id_ficha from citas INNER JOIN cliente ON cliente.id_cliente= citas.cliente
-             INNER JOIN persona ON persona.id_persona = cliente.id_cliente
-             INNER JOIN ficha_fisio on ficha_fisio.cita=citas.id_cita
-             INNER JOIN
-             (
-             SELECT id_empserv, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS empleado,
-             servicios.nombre as servicio 
-             FROM servicios_empleados 
-             INNER JOIN servicios ON servicios.codigo=servicios_empleados.servicio
-             INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
-             INNER JOIN persona ON empleado.id_empleado = persona.id_persona
-             ) AS e ON citas.serv_emp = e.id_empserv 
-             where citas.fecha = curdate() AND e.servicio='fisioterapia'
-             AND citas.serv_emp=$ID
-             GROUP BY nombre,apellido_paterno,apellido_materno, servicio,empleado,hora,fecha,estado,num
-             ";
-              $conexion->seleccionar($consulta);
-              $tabla = $conexion->seleccionar($consulta);
-              foreach($tabla as $registro)
-              {
-                  $registro->cantidad;
-     
-                  $cant = $registro;
-              }
-            if(isset($cant) != '0')
-             {
-                    echo 
-                    "
-                    <table class='table' style='border-radius: 5px;width:60%'>
-                    <thead class='table-dark' style='text-align:'center;''>
-                        <tr>
-                        <br>
-                            <th style='color: goldenrod;'>
-                            Cliente
-                            </th>
-                            <th style='color: goldenrod;'>
-                            Hora
-                            </th>
-                            <th style='color: goldenrod;'>
-                            Ficha medica
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>";
+        if(isset($cant_2) != '0')
+        {
+        echo 
+        "
+        <table class='table' style='border-radius: 5px;width:60%'>
+        <thead class='table-dark' style='text-align:'center;''>
+            <tr>
+            <br>
+                <th style='color: goldenrod;'>
+                Cliente
+                </th>
+                <th style='color: goldenrod;'>
+                Fecha
+                </th>
+                <th style='color: goldenrod;'>
+                Hora
+                </th>
+                <th style='color: goldenrod;'>
+                Estatus
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>";
 
-                    $conexion->seleccionar($consulta);
-                    $tabla = $conexion->seleccionar($consulta);
+        $conexion->seleccionar($consulta);
+        $tabla = $conexion->seleccionar($consulta);
 
-                    foreach ($tabla as $registro)
-                    {
-                        echo "<tr>";
-                        echo "<td> $registro->cliente</td> ";
-                        echo "<td> $registro->hora</td> ";
-                        echo "<td><a href='modFichaFisio.php?id=" . $registro->id_ficha . "'>Generar ficha médica</a></td>";
-                        echo "</tr>";
-                    }
-                    echo "</tbody>
-                    </table>";
-                    $conexion->desconectarBD();
-             }
-             else
+        foreach ($tabla as $registro)
+        {
+            echo "<tr>";
+            echo "<td> $registro->cliente</td> ";
+            echo "<td> $registro->fecha</td> ";
+            echo "<td> $registro->hora</td> ";
+            echo "<td>$registro->estado</td>";
+            if($registro->estado == 'confirmada')
             {
-               echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay citas pendientes!</h2>";
+                echo "<td><a href='../../scripts/cancelcita-fisio.php?idcita=" . $registro->id_cita . "' style='color:red;'>Cancelar</a></td>";
             }
-            ?>
-            </div>
-            </div>
+            else
+            {
+            }
+            echo "</tr>";
+        }
+        echo "</tbody>
+        </table>";
+        $conexion->desconectarBD();
+        }
+        else
+        {
+            echo "<h3 data-aos='fade-right' style='color: goldenrod'>No existen citas con esas características</h3>";
+        }
+        }
+        ?>
+        </div>     
 
-    </div>
+        </div>
+
+        </div>
+
     </section>
-   
-    </body>
+</body>
 </html>

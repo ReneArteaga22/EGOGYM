@@ -88,6 +88,7 @@ $(document).ready(function() {
 
 </head>
   
+
   <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
   <?php
     include '../../scripts/database.php';
@@ -117,9 +118,8 @@ $(document).ready(function() {
        
     ?>
 
-
-    <!-- MENU BAR -->
-    <nav class="navbar navbar-expand-lg fixed-top">
+     <!-- MENU BAR -->
+     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
             <a class="navbar-brand" href="index.html">EGO GYM</a>
@@ -174,41 +174,79 @@ $(document).ready(function() {
     </nav>
 
     <section class="kiara">
-    <div class="container" style="padding-top: 3%;">
+        <div class="container" style="padding-top: 3%;">
         <ul class="nav nav-tabs">
         <li><a href="../clientes/citas_hoy.php">Citas del día de hoy</a></li>
         <li><a href="../clientes/citas_prox.php" style="margin-left: 20px;">Citas próximas</a></li>
-    <li><a href="../clientes/citas_can.php" style="margin-left: 20px;">Citas canceladas</a></li>
-    <li><a href="../clientes/clases_ag.php" style="margin-left: 20px;">Clases agendadas</a></li>
-    
+        <li><a data-toggle="tab" href="citas_can" style="margin-left: 20px;">Citas canceladas</a></li>
+        <li><a href="../clientes/clases_ag.php" style="margin-left: 20px;">Clases agendadas</a></li>
         </ul>
-    </div>
-  <div class="container">
-        <div class="tab-content">
 
-        <div class="tab-pane active" id="citas_hoy">
+        <?php
+        $db= new database();
+        $db->conectarDB();
+         $email = $_SESSION["correo"];
+         $consulta = "SELECT persona.id_persona from persona where correo ='$email'";
+         $datos = $db -> seleccionar($consulta);
+     
+             foreach ($datos as $dato)
+             {
+               $id_per = $dato->id_persona;
+             }
+         ?>
+
+        <div class="tab-content container">
+       
+        <div class="tab-pane active" id="citas_can">
             
+            <form method="post" action="">
+            <div class="row" style="margin-top: 5px;">
+
+                <div class="col-lg-2">
+                    <label style="color: grey;">Servicio</label><br>
+                    <select style="border:none;" name="servicio">
+                    <option value="nutricion">Nutrición</option>
+                    <option value="fisioterapia">Fisioterapia</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-6">
+                <label style="color:grey">Rango</label>
+                <div class="input-group date">
+                <input type="text" id="datepicker2" required name="fecha_1" placeholder="Selecciona una fecha" 
+                style="border:none; background-color:lightgrey;color:grey">
+                <input type="text" id="datepicker3" required name="fecha_2" style="margin-left: 10px;border:none;background-color:lightgrey;color:grey" 
+                placeholder="Selecciona una fecha">
+                </div>
+                </div>
+                <input class="btn" type="submit" name="boton_past" value="Buscar" style="margin-top: 20px;">
+            </div>
+            
+            </form>
             
             <?php
-             $conexion = new database();
-             $conexion->conectarDB();
-             $consulta = "SELECT count(citas.id_cita) as cantidad, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente, 
-             e.servicio as servicio,e.empleado AS empleado, citas.hora as hora, citas.fecha, citas.estado,
-             citas.id_cita as cita
-             from citas INNER JOIN cliente ON cliente.id_cliente= citas.cliente
-             INNER JOIN persona ON persona.id_persona = cliente.id_cliente
-             INNER JOIN
-             (
-             SELECT id_empserv, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS empleado,
-             servicios.nombre as servicio 
-             FROM servicios_empleados 
-             INNER JOIN servicios ON servicios.codigo=servicios_empleados.servicio
-             INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
-             INNER JOIN persona ON empleado.id_empleado = persona.id_persona
-             ) AS e ON citas.serv_emp = e.id_empserv 
-             where citas.fecha = curdate() and citas.estado = 'confirmada' and citas.cliente = $id_per
+            if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['boton_past']))
+            {
+            extract($_POST);
+            $conexion = new database();
+            $conexion->conectarDB();    
+            $consulta = "SELECT count(citas.id_cita) as cantidad,concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente, 
+            e.servicio as servicio,e.empleado AS empleado, citas.hora as hora, citas.fecha, citas.estado,
+            citas.id_cita as cita
+            from citas INNER JOIN cliente ON cliente.id_cliente= citas.cliente
+            INNER JOIN persona ON persona.id_persona = cliente.id_cliente
+            INNER JOIN
+            (
+            SELECT id_empserv, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS empleado,
+            servicios.nombre as servicio 
+            FROM servicios_empleados 
+            INNER JOIN servicios ON servicios.codigo=servicios_empleados.servicio
+            INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
+            INNER JOIN persona ON empleado.id_empleado = persona.id_persona
+            ) AS e ON citas.serv_emp = e.id_empserv 
+            where citas.fecha > curdate() and citas.estado = 'cancelada' and citas.cliente = $id_per
             GROUP BY nombre, apellido_paterno, apellido_materno, servicio, empleado, hora, fecha, estado, cita
-             ORDER BY concat(citas.fecha,' ',citas.hora) DESC";
+            ORDER BY concat(citas.fecha,' ',citas.hora) DESC";
              
               $conexion->seleccionar($consulta);
               $tabla = $conexion->seleccionar($consulta);
@@ -242,6 +280,9 @@ $(document).ready(function() {
                             <th style='color: goldenrod;'>
                             Estatus
                             </th>
+                            <th>
+                            </th>
+                         
                         </tr>
                     </thead>
                     <tbody>";
@@ -256,7 +297,18 @@ $(document).ready(function() {
                         echo "<td> $registro->servicio</td> ";
                         echo "<td> $registro->fecha</td> ";
                         echo "<td> $registro->hora</td> ";
+                        $estado = $registro->estado;
                         echo "<td>$registro->estado</td>";
+                        $cita = $registro->cita;
+                        if ($estado == 'confirmada')
+                        {
+                            echo "<td><a href='../../scripts/cancelcita.php?idcita=" . $cita . "' style='color:red;'>Cancelar</a></td>";
+                        }
+                        else if($estado == 'cancelada')
+                        {
+                            echo "<td><a href='citas.php' style='color: goldenrod;'>Reagendar</a></td>";
+
+                        }
                         echo "</tr>";
                     }
                     echo "</tbody>
@@ -265,21 +317,14 @@ $(document).ready(function() {
              }
              else
             {
-               echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No tienes citas pendientes para hoy!</h2>";
+               echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay resultados!</h2>";
             }
+        }
             ?>
             </div>
-        
+            
         </div>
 
-            
-        
-    </div>
-
-
-  
-    </div>
-
     </section>
-</body>
-</html>
+  </body>
+  </html>
