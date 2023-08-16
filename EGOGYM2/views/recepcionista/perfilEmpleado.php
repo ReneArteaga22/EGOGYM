@@ -52,7 +52,7 @@
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../recepcionista/principal.php">EGO GYM</a>
+            <a class="navbar-brand" href="../recepcionista/index.php">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -62,7 +62,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="../recepcionista/principal.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="../recepcionista/index.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
 
                     <li class="nav-item dropdown">
@@ -267,6 +267,7 @@
                 <label style="position: relative; display: block;">
                     <select required name="tipo" id="planSelect" style="display: block; width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; margin-top: 20px;">
                         <option value="Seleccione una" selected disabled hidden></option>
+                        <option value="1">No seleccionado</option>
                         <option value="3">Nutriólogo</option>
                         <option value="4">Fisioterapeuta</option>
                         <option value="5">Entrenador</option>

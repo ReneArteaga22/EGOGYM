@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-     <title>EGOGYM</title>
+  <title>Nutriologo</title>
+  
 
      <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -17,17 +17,15 @@
       <script src="../../js/aos.js"></script>
       <script src="../../js/smoothscroll.js"></script>
       <script src="../../js/custom.js"></script>
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 
      <link rel="stylesheet" href="../../css/bootstrap.min.css">
      <link rel="stylesheet" href="../../css/font-awesome.min.css">
-     <link rel="stylesheet" href="../../css/font-awesome.min.css">
      <link rel="stylesheet" href="../../css/aos.css">
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
-     <style></style>
 
      <script>
 $(document).ready(function() {
@@ -45,10 +43,13 @@ $(document).ready(function() {
 });
 </script>
 
-
 </head>
-<body data-spy="scroll" data-target="#navbarNav" data-offset="50">
-<?php
+  
+
+<body>
+
+  <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
+  <?php
     include '../../scripts/database.php';
     $conexion = new Database();
     $conexion->conectarDB();
@@ -79,7 +80,7 @@ $(document).ready(function() {
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="index.html">EGO GYM</a>
+            <a class="navbar-brand" href="index.php#home">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -131,65 +132,59 @@ $(document).ready(function() {
     </nav>
 
 
-<div class="container">
-
-    <div class="card bg-light" style="margin-top: 99px;">
-        <div class="card-header bg-dark text-white">
-          Informacion Personal
-        </div>
-        
-
-
-        <?php
-        $conexion = new Database();
-        $conexion->conectarDB();
-
-        $email = $_SESSION["correo"];
-
-        $consulta = "select persona.foto as foto,concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
-        persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña, plan.nombre as plan,
-        concat(cliente.fecha_ini,'  ','de','  ',cliente.fecha_fin) as periodo from persona
-        left join cliente on persona.id_persona = cliente.id_cliente
-        left join plan on cliente.codigo_plan = plan.codigo
-        where persona.correo = '$email'";
-        $datos_per = $conexion ->seleccionar($consulta);
-        $imagenPorDefecto = "../../images/class/imagenxdefect.webp"; 
-
-        
-        foreach($datos_per as $registro)
-        {
-          echo "<div class='card-body row'>";
-          echo "<div class='col-lg-6 col-xs-12  col-sm-12 col-md-7 text-center'>";
-
-    // Operador ternario para determinar qué URL de imagen utilizar
-    
-    echo "<form action='../../scripts/editar/actualizar_clien.php' method='POST' enctype='multipart/form-data'>";
-    $urlImagenMostrar = $registro->foto ? $registro->foto : $imagenPorDefecto;
+  
+  <div class="container">
+    <div class="d-flex justify-content-center">
+      <h2 class="text-center"></h2>
+    </div>
    
-    echo "<img src='$urlImagenMostrar' class='rounded-circle' alt='...' style='width: 60%'>";
-    echo "<input class='form-control form-control-sm' id='foto' name='foto' type='file' >";
-    echo "</div>";
-           
-            echo "<div class='col-lg-6 col-12 col-sm-12 col-md-12'>";
-            echo "<p>Nombre: $registro->nombre </p>";
-            echo "<p>Correo: $registro->correo </p>";
-            echo "<p>Telefono:</p><input type='text' value='$registro->telefono' class='form-control w-50' name='telefono'>";
-            echo "<p>Fecha de nacimiento: $registro->fecha_nacimiento </p>";
-            echo "<p>Sexo: $registro->sexo </p>";
-            echo "<p>Contraseña:</p><input type='password' value='$registro->contraseña' class='form-control w-50' name='contra'>";
-            echo "<p>Plan: $registro->plan </p>";
-            echo "<p>Periodo: $registro->periodo </p>";
+  <br>
+  <br>
+  <br>
+  <br>
 
+  <div class="row">
+    <div class="col-12 col-xs-12 col-lg-6 card-text-center">
+      <h2 class="text-center">¿Suplementos Alimenticios?</h2>
+      <p style="font-size: 20px; text-align: justify;"> 
+        Por sus grandes beneficios en el desempeño físico y el seguimiento de un estilo de vida saludable, los suplementos 
+        para el gym se han convertido en un recurso alimenticio muy popular. Con grandes avances de la ciencia e investigaciones,
+         la evolución de estos productos ha sido considerable, pero detrás de ellos existe una historia que resulta interesante 
+         conocer para entender su efectividad.
 
-        }    
-        ?>
-        <a href="perfil.php"class="btn btn-secondary">Cancelar</a>
-        <button type="submit" class="btn btn-success">Guardar</button>
-      </div>
+         Si quieres saber un poco más sobre los suplementos para el gym, en esta publicación te contamos algunos datos que te 
+         ayudarán descubrir por qué son el mejor complemento a un entrenamiento o cualquier actividad deportiva.
+
+      </p>
+
+      <br>
+      
+          
+      <div class="col-12 col-lg-12 text-center">
+        <div class="row">
+          <div class="col-6 col-lg-5">
+        <a href="citas.php" class="btn bg-color btn-lg">Agenda una cita</a>
         </div>
-      </form>
-    </div>
-    </div>
+        <div class="col-6 col-lg-6">
+        <a href="index.php#serv" class="btn bg-color btn-lg">Regresar a Servicios</a>
+        </div>
+        </div>
+      </div>
+    
 
+    </div>
+       
+    <div class="col-12 col-lg-6 text-center">
+      <img src="../../images/class/CatalogoSuplementos.jpg" class="img-fluid d-none d-md-block">
+      <img src="../../images/class/suplementos-para-gym-600x257.png" class="img-fluid d-none d-md-block">
+    </div>
+  </div>
+
+  
+</div>
 </body>
 </html>
+
+  
+
+  

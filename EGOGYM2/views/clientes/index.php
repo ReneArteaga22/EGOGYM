@@ -49,7 +49,13 @@
         color: orange; /* Cambia el color a tu elección */
         }
 
+        
+
 </style>
+
+
+
+
 
 </head>
 <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
@@ -75,7 +81,7 @@
     }
     else 
     {
-        header("Location:../../First.php");
+        header("Location:../../index.php");
     }
        
     ?>
@@ -222,10 +228,10 @@
             <div class="col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="400">
               <div class="class-thumb zoomable">
                 <div class="service-wrapper">
-                  <a href="../noUser/nutriologo.html">
+                  <a href="../clientes/info-nutri.php">
                   <img src="../../images/class/nutri.jpg" class="img-fluid" alt="Class">
                   <div class="service-info">
-                    <a href="../noUser/nutriologo.html"><h3 class="mb-1">Nutricion</h3></a>
+                    <a href="../clientes/info-nutri.php"><h3 class="mb-1">Nutricion</h3></a>
                     <span><strong>Nutriólogo:</strong> - Cesar Ruiz</span>
                     <span class="class-price">$100</span>
                     <p class="mt-3">Los suplementos alimenticios se han convertido en un recurso muy popular. Con grandes avances e investigacion...</p>
@@ -239,10 +245,10 @@
             <div class="mt-5 mt-lg-0 mt-md-0 col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="500">
               <div class="class-thumb zoomable">
                 <div class="service-wrapper">
-                  <a href="../noUser/fisioterapia.html">
+                  <a href="../clientes/info-fisioterapia.php">
                   <img src="../../images/class/fisio.jpg" class="img-fluid" alt="Class">
                   <div class="service-info">
-                    <a href="../noUser/fisioterapia.html"><h3 class="mb-1">Fisioterapia</h3></a>
+                    <a href="../clientes//info-fisioterapia.php"><h3 class="mb-1">Fisioterapia</h3></a>
                     <span><strong>Fisioterapeuta:</strong> - Cesar Ruiz</span>
                     <span class="class-price">$100</span>
                     <p class="mt-3">Un fisioterapeuta deportivo no sólo cura sobre la lesión, sino que asesorar a los deportistas ... </p>
@@ -254,10 +260,10 @@
             <div class="mt-5 mt-lg-0 col-lg-4 col-md-6 col-12" data-aos="fade-up" data-aos-delay="600">
               <div class="class-thumb zoomable">
                 <div class="service-wrapper">
-                  <a href="../noUser/spinning.html">
+                  <a href="../clientes/info-spin.php">
                   <img src="../../images/class/spinm.jpg" class="img-fluid" alt="Class">
                   <div class="service-info">
-                    <a href="../noUser/spinning.html"><h3 class="mb-1">Spinning</h3></a>
+                    <a href="../clientes/info-spin.php"><h3 class="mb-1">Spinning</h3></a>
                     <span><strong>Entrenador:</strong> Marcos Camacho</span>
                     <span class="class-price">$100</span>
                     <p class="mt-3">El spinning es un ejercicio cardiovascular y aeróbico que se lleva a cabo utilizando una bicicleta estática ...</p>

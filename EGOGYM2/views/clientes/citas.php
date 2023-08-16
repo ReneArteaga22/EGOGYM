@@ -31,7 +31,7 @@
       showOtherMonths: true,
       selectOtherMonths: true,
       dateFormat: 'yy-mm-dd',
-      minDate: new Date(),
+      minDate: '+1D',
       maxDate: '+9D',
       beforeShowDay: $.datepicker.noWeekends,
       // Evento onchange para actualizar el selector de hora cuando se cambia la fecha
@@ -55,8 +55,8 @@
       startHour = 8; // Hora de inicio para el selector 2
       endHour = 18;   // Hora de fin para el selector 2
     } else if (id === 'timeSelect3') {
-      startHour = 7; // Hora de inicio para el selector 3
-      endHour = 10;   // Hora de fin para el selector 3
+      startHour = 19; // Hora de inicio para el selector 3
+      endHour = 22;   // Hora de fin para el selector 3
     } 
 
     for (let hour = startHour; hour <= endHour; hour++) {
@@ -89,6 +89,7 @@
 </script>
 
 
+
   
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
@@ -117,7 +118,7 @@
     }
     else 
     {
-        header("Location:../../First.php");
+        header("Location: ../../index.php");
     }
        
     ?>
@@ -135,15 +136,15 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="Primera.php#home" class="nav-link smoothScroll">Home</a>
+                        <a href="index.php#home" class="nav-link smoothScroll">Home</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="Primera.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
+                        <a href="index.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="Primera.php#serv" class="nav-link smoothScroll">Servicios</a>
+                        <a href="index.php#serv" class="nav-link smoothScroll">Servicios</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -177,8 +178,8 @@
     </nav>
 
 
-
-    <div class="container" style="padding-top: 10%;">
+    <section class="kiara">
+    <div class="container" style="padding-top: 3%;">
         <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#nutri">Nutricion</a></li>
     <li><a data-toggle="tab" href="#fisio" style="margin-left: 20px;">Fisioterapia</a></li>
@@ -187,7 +188,7 @@
     </div>
    <div class="container" >
     <div class="tab-content">
-        <div id="nutri" class="tab-pane fade">
+        <div id="nutri" class="tab-pane active">
         <br>
         <div class="container">
             <form action="../../scripts/guardaCitasUsu.php" method="post" style="background-color:black; opacity:0.8; border-radius:5px; width:80%; padding:5%">
@@ -262,7 +263,6 @@
                   <legend class="form-label" style="color: goldenrod;">Agendar Cita</legend>
                   <hr class="dropdown-divider" style="height: 2px; background-color: slategray;">
                   <div class="col-12 col-lg-6">
-                  <label style='color: white;'>Cliente</label><br>
                   <?php
                     $db=new database();
                     $db->conectarDB();
@@ -432,5 +432,6 @@
 
         </div>
     </div>
+      </section>
 </body>
 </html> 

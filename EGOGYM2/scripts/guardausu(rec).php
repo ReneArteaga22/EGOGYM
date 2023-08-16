@@ -23,35 +23,25 @@
      <link rel="stylesheet" href="../css/egogym.css">
     </head>
     <body>
-        <?php
-        include 'database.php';
-        $db= new database();
-        $db->conectarDB();
-         session_start();
-         $email = $_SESSION["correo"];
-         $consulta = "SELECT id_persona from persona
-             where correo ='$email'";
-         $datos = $db -> seleccionar($consulta);
-     
-             foreach ($datos as $dato)
-             {
-               $tipo = $dato->id_persona;
-             }
-     
-            
-         ?>
     <div class="container">
-    <?php
-        $db= new database();
-        $db->conectarDB();
+        <?php
+         include 'database.php';
+         $db= new database();
+         $db->conectarDB();
+ 
+         extract($_POST);
+         $contra = "1234";
+         $hash = password_hash($contra, PASSWORD_DEFAULT);
 
-        extract($_POST);
-        $cadena = "call restriccion_citas_3($servicio, $tipo,'$fecha_cita','$hora')";
-        $db->ejecutarSQL($cadena);
-        $db->desconectarBD();
-        header("refresh:3; ../views/clientes/citas.php");
-   
-
+         $cadena = "INSERT INTO persona(nombre, apellido_paterno, apellido_materno, correo, sexo,contraseña, telefono, fecha_nacimiento, tipo_usuario,foto)
+         values('$nombre','$apellido_paterno','$apellido_materno','$correo','$sexo', '$hash', null, '$fecha_nacimiento','$tipo_usuario',default)";
+ 
+         $db->ejecutarSQL($cadena);
+         $db->desconectarBD();
+         echo "<div class='alert alert-success'>
+         Usuario registrado exitosamente</div>";
+         header("refresh:3; ../views/recepcionista/principal.php");
+ 
         ?>
     </div>
     </body>

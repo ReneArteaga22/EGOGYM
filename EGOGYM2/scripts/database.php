@@ -101,19 +101,19 @@ class Database
     
                     if($fila['tipo_empleado'] === 'recepcionista')
                     {
-                        header("Location: ../views/recepcionista/principal.php");
+                        header("Location: ../views/recepcionista/index.php");
                     }
                     else if ($fila['tipo_empleado'] === 'fisio')
                     {
-                        header("Location: ../views/fisioterapeuta/principal.php");
+                        header("Location: ../views/fisioterapeuta/index.php");
                     }
                     else if ($fila['tipo_empleado'] === 'nutri')
                     {
-                        header("Location: ../views/nutriologo/principal.php ");
+                        header("Location: ../views/nutriologo/index.php ");
                     }
                     else if ($fila['tipo_empleado'] === 'entrenador')
                     {
-                        header("Location: ../views/entrenador/inicio.php");
+                        header("Location: ../views/entrenador/index.php");
                     }
                     else
                     {
@@ -142,7 +142,7 @@ class Database
 
             $_SESSION["correo"] = $email;
 
-            header("refresh:0 ../views/clientes/Primera.php");
+            header("refresh:0 ../views/clientes/index.php");
         } else {
             echo "<div class='alert alert-danger'>";
             echo "<h2 align='center'>Usuario o contraseña incorrecto ...</h2>";

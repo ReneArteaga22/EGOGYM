@@ -17,6 +17,8 @@
       <script src="../../js/aos.js"></script>
       <script src="../../js/smoothscroll.js"></script>
       <script src="../../js/custom.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
      <link rel="stylesheet" href="../../css/bootstrap.min.css">
      <link rel="stylesheet" href="../../css/font-awesome.min.css">
@@ -24,6 +26,22 @@
 
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
+
+     <script>
+$(document).ready(function() {
+
+  $('.dropdown-menu a.dropdown-item').click(function(event) {
+ 
+    event.preventDefault();
+
+
+    var href = $(this).attr('href');
+
+    
+    window.location.href = href;
+  });
+});
+</script>
  
 </head>
 
@@ -103,7 +121,7 @@
 } 
 
 </style>
-<body  data-spy="scroll" data-target="#navbarNav" data-offset="50">
+<body  data-spy="scroll" data-target="#navbarNav" data-offset="50" style="background-color:gainsboro">
 <?php
     include '../../scripts/database.php';
     $conexion = new Database();
@@ -126,7 +144,7 @@
     }
     else 
     {
-        header("Location:../../First.php");
+        header("Location:../../index.php");
     }
        
     ?>
@@ -145,15 +163,15 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="Primera.php#home" class="nav-link smoothScroll">Home</a>
+                        <a href="index.php#home" class="nav-link smoothScroll">Home</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="Primera.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
+                        <a href="index.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="Primera.php#serv" class="nav-link smoothScroll">Servicios</a>
+                        <a href="index.php#serv" class="nav-link smoothScroll">Servicios</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -202,7 +220,26 @@ try {
 
         foreach ($resultado as $row) {
           echo '<div class="card">';
-          echo '<img src="images/fp.jpg" style="width: 90%; align-self: center; margin: 10px;" class="card-img-top" alt="...">';
+        
+
+
+        $consulta = "select persona.foto as foto from persona
+        left join empleado on persona.id_persona = empleado.id_empleado
+        where persona.id_persona= '$row->id_persona'";
+        $datos_per = $conexion ->seleccionar($consulta);
+        $imagenPorDefecto = "../../images/class/imagenxdefect.webp"; 
+
+        
+        foreach($datos_per as $registro)
+        {
+
+    // Operador ternario para determinar qué URL de imagen utilizar
+    
+    $urlImagenMostrar = $registro->foto ? $registro->foto : $imagenPorDefecto;
+   
+    echo "<img src='$urlImagenMostrar' alt='user' style='width: 90%; align-self: center; margin: 10px;' class='card-img-top' alt='...''>";
+        }
+        
           echo '<div class="card-body">';
           echo '<h5 class="card-title" style="align-content: center;">'. $row->nombre . " " . $row->apellido_paterno .'</h5>';
 
