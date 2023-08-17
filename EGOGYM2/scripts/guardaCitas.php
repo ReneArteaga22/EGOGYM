@@ -27,8 +27,8 @@
     <div class="container">
     <?php
         include 'database.php';
-        $db= new database();
-        $db->conectarDB();
+        $conexion= new database();
+        $conexion->conectarDB();
 
 
         extract($_POST);
@@ -38,10 +38,10 @@
         cliente.id_cliente=persona.id_persona where 
         concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) like '%$cliente%'
         AND persona.id_persona IN(select cliente.id_cliente from cliente )";
-        $db->seleccionar($consulta);
-        $tabla = $db->seleccionar($consulta);
+        $conexion->seleccionar($consulta);
+        $tabla = $conexion->seleccionar($consulta);
         
-        $tabla = $db->seleccionar($consulta);
+        $tabla = $conexion->seleccionar($consulta);
         foreach($tabla as $registro)
         {
             $cliente_id = $registro->cliente_id;
@@ -51,11 +51,14 @@
 
         $cadena = "call restriccion_citas_3($servicio, $cliente_id,'$fecha_cita','$hora')";
 
-        $resultado = $db->ejecutarSQL($cadena);
-        echo "$resultado";
+        if ($conexion->ejecutarcitas($cadena)) {
+            echo "<div class='alert alert-success'>Cliente Registrado</div>";
+        header("refresh:2 ../index.php");
+        }
+      
 
-        $db->desconectarBD();
-        header("refresh:10; ../views/recepcionista/citas.php");
+        $conexion->desconectarBD();
+      
         
         
         ?>
