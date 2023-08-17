@@ -29,23 +29,6 @@
      <link rel="stylesheet" href="../../css/egogym.css">
      <style></style>
 
-     <script>
-$(document).ready(function() {
-
-  $('.dropdown-menu a.dropdown-item').click(function(event) {
- 
-    event.preventDefault();
-
-
-    var href = $(this).attr('href');
-
-    
-    window.location.href = href;
-  });
-});
-</script>
-
-
 </head>
 <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
 <?php

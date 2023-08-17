@@ -414,28 +414,23 @@
                     <div class="mx-auto mt-4 mt-lg-0 mt-md-0 col-lg-5 col-md-6 col-12">
                       <h2 class="mb-4" data-aos="fade-up" data-aos-delay="600">Tu opinion <span>nos interesa</span></h2>
                       
-                <ul class="social-icon ml-lg-3">
+                <ul class="social-icon ml-lg-3" data-aos="fade-right">
                     <li><a href="https://www.facebook.com/egogymclub" class="fa fa-facebook" style="color: goldenrod;"></a>Facebook EGOGYM</li>
                     <li><a href="#" class="fa fa-twitter" style="color: goldenrod;"></a>Twitter EGOGYM</li>
-                    <li><a href="#" class="fa fa-instagram" style="color: goldenrod;"></a>Siguenos en instagram</li>
+                    <li><a href="https://www.instagram.com/ego_gym_trc/" class="fa fa-instagram" style="color: goldenrod;"></a>Siguenos en instagram</li>
                 </ul>
 
                 <br>
                 
-                <img src="images/class/Sugerencias y quejas.jpg" class="img-fluid" alt="Class">
+                <img src="images/class/Sugerencias y quejas.jpg" class="img-fluid" alt="Class" data-aos="fade-right" data-aos-delay="900">
                     </div>
 
                     <div class="mx-auto mt-4 mt-lg-0 mt-md-0 col-lg-5 col-md-6 col-12">
                         <h2 class="mb-4" data-aos="fade-up" data-aos-delay="600">Donde nos <span>encontramos</span></h2>
 
                         <p data-aos="fade-up" data-aos-delay="800"><i class="fa fa-map-marker mr-1" style="color: goldenrod;"></i> Calz Salvador Creel 56, Las Margaritas, 27130 Torreón, Coah.</p>
-<!-- How to change your own map point
-	1. Go to Google Maps
-	2. Click on your location point
-	3. Click "Share" and choose "Embed map" tab
-	4. Copy only URL and paste it within the src="" field below
--->
-                        <div class="google-map" data-aos="fade-up" data-aos-delay="900">
+
+                        <div class="google-map" data-aos="fade-left" data-aos-delay="900">
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d636.2591289677584!2d-103.44351214827108!3d25.56417483599099!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x868fdb22cc71d329%3A0x69bf515e20ae8a00!2sEgo%20Gym%20club!5e0!3m2!1ses!2smx!4v1689127849312!5m2!1ses!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                     </div>
@@ -446,20 +441,9 @@
 
 
      <footer class="site-footer" style="background-color: #0c0c0c;">
-      <div class="container">
-          <div class="row">
+     
               <div class="col-12 text-center">
-                  <!-- Enlace del logotipo que te llevará al inicio de la página -->
-                  <a href="index.html" class="logo-link" style="display: flex; justify-content: center;">
-                      <div style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden;">
-                          <img src="images/class/logo4.jpg" alt="Logo EGOGYM" style="width: 100%; height: 100%; object-fit: cover;">
-                      </div>
-                  </a>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-12 text-center">
-                  <!-- Texto de derechos reservados -->
+                  
                   <p class="rights-text" style="color: white;">Todos los derechos reservados EGOGYM 2023</p>
               </div>
           </div>

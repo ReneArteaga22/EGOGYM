@@ -53,11 +53,40 @@ class Database
     {
         try
         {
-            $this->PDOLocal->query($cadena);
+            $result = $this->PDOLocal->query($cadena);
+            if ($result !== false) {
+                return true; // Consulta ejecutada con éxito
+            } else {
+                return false; // Error en la ejecución de la consulta
+            }
         }
         catch(PDOException $e)
         {
             echo $e->getMessage();
+            return false; 
+        }
+    }
+
+   
+
+    public function ejecutar($cadena)
+    {
+        try 
+        {
+            $this->conectarDB();
+            $this->PDOLocal->exec($cadena);
+            $this->desconectarBD();
+            echo "<script language='javascript'>";
+            echo "alert('Registro exitoso');";
+            echo "window.location.href='../index.php';";
+            echo "</script>";
+        } 
+        catch (PDOException $e) 
+        {
+            echo "<script language='javascript'>";
+            echo "alert('Email ya existente, ingrese otro email');";
+            echo "window.location.href='../inicio_sesion.php';";
+            echo "</script>";
         }
     }
 
@@ -107,11 +136,11 @@ class Database
     
                     if($fila['tipo_empleado'] === 'recepcionista')
                     {
-                        header("Location: ../views/recepcionista/indexrcp.php");
+                        header("Location: ../views/recepcionista/");
                     }
                     else if ($fila['tipo_empleado'] === 'fisio')
                     {
-                        header("Location: ../views/fisioterapeuta/principal.php");
+                        header("Location: ../views/fisioterapeuta/");
                     }
                     else if ($fila['tipo_empleado'] === 'nutri')
                     {

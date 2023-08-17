@@ -86,7 +86,7 @@ include '../../scripts/database.php';
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="../recepcionista/index.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="../recepcionista/indexrcp.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
 
                     <li class="nav-item dropdown">
@@ -123,7 +123,7 @@ include '../../scripts/database.php';
         </div>
     </nav>
 
-    <section class="kiara">
+    <section >
     <div class="container">
         <div class="main-body">
             
@@ -152,8 +152,7 @@ include '../../scripts/database.php';
         foreach($datos_per as $registro)
         {
 
-    // Operador ternario para determinar qué URL de imagen utilizar
-    
+    // Operador ternario 
     $urlImagenMostrar = $registro->foto ? $registro->foto : $imagenPorDefecto;
    
     echo "<img src='$urlImagenMostrar' class='rounded-circle' alt='user' style='width: 250px'>";
@@ -228,7 +227,7 @@ include '../../scripts/database.php';
                     }
                     if (isset($_SESSION['mensaje'])) {
                         echo '<div class="alert alert-success">' . $_SESSION['mensaje'] . '</div>';
-                        // Eliminar el mensaje de la sesión para que no se muestre en futuras visitas
+                        
                         unset($_SESSION['mensaje']);
                     }
                     
@@ -240,7 +239,7 @@ include '../../scripts/database.php';
                     
                     <div class="row">
                         <div class="col-sm-12 btn-group-sm">
-                          <a class="btn btn-sm custom-btn bg-color " target="__blank" href="#" data-toggle="modal" data-target="#plan">Actualizar plan</a>
+                          <a class="btn btn-sm custom-btn bg-color " target="__blank" href="#" data-toggle="modal" data-target="#plan_up">Actualizar plan</a>
                         </div>
                       </div>
 

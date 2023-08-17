@@ -111,19 +111,9 @@ $(document).ready(function() {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        <a href="../fisioterapeuta/principal.php" class="nav-link smoothScroll">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="../fisioterapeuta/citas_fisio.php" class="nav-link smoothScroll">Citas</a>
-                    </li>
-                </ul>
-=======
-                        <a href="principal.php" class="nav-link smoothScroll">Inicio</a>
-=======
+
                         <a href="index.php" class="nav-link smoothScroll">Inicio</a>
->>>>>>> dc4314ec9304396a6cf6fc63e07c02f80e282119
+
                     </li>
                     <li class="nav-item">
                         <a href="citasfisio.php" class="nav-link smoothScroll">Citas</a>
@@ -139,7 +129,7 @@ $(document).ready(function() {
                         <li><a class="dropdown-item" href="../fisioterapeuta/perfil_fisio.php">Perfil</a></li>
                           <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
->>>>>>> 1c2f28c2a52b2acf6ef8a159cf4fab6f80ad4eb3
+
             </div>
         </div>
     </nav>

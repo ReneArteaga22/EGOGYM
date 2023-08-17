@@ -9,25 +9,25 @@
 <body>
     <div class="container">
     <?php
+    session_start();
 
 include '../scripts/database.php';
 $conexion = new Database();
 $conexion->conectarDB();
 
-// Obtener el ID del cliente y el código del nuevo plan desde el formulario
+
 $empleadoId = $_POST['empleadoId'];
 $nuevoTipo = $_POST['tipo'];
 
-// Consulta para actualizar el código del plan en la tabla cliente
+
 $cadena = "UPDATE empleado SET empleado.tipo_empleado=$nuevoTipo WHERE id_empleado = $empleadoId";
 $parametros = array(':nuevoTipo' => $nuevoTipo, ':empleadoId' => $empleadoId);
 
 $conexion->ejecutarSQL($cadena, $parametros);
 $conexion->desconectarBD();
 
-// Redirigir al usuario de vuelta a la página del perfil del cliente
-echo"<div class='alert alert-success'>Cambios guardados</>";
-header("refresh:3 ../views/recepcionista/perfilEmpleado.php?id=".$empleadoId."");
+$_SESSION['mensaj'] = 'Se cambió el tipo de empleado';
+header("Location:../views/recepcionista/perfilEmpleado.php?id=".$empleadoId."");
 
 ?>
     </div>

@@ -128,7 +128,7 @@
         foreach($datos_per as $registro)
         {
 
-    // Operador ternario para determinar qué URL de imagen utilizar
+    // Operador ternario¿s
     
     $urlImagenMostrar = $registro->foto ? $registro->foto : $imagenPorDefecto;
    
@@ -169,9 +169,17 @@
                                     echo"<span class='text-secondary'>". $persona[0]->tipo_empleado ." </span>";
                                     echo"</li>";
                     }
+                    if (isset($_SESSION['mensaj'])) {
+                      echo '<div class="alert alert-success">' . $_SESSION['mensaj'] . '</div>';
+                      
+                      unset($_SESSION['mensaje']); // Esto eliminará el mensaje para que no se muestre nuevamente después de la actualización
+                  }
+                  
+                  
 
-                    ?>
-                    
+                  ?>
+
+              
                     <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                     

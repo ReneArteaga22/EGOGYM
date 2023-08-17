@@ -67,6 +67,8 @@ $(document).ready(function() {
     }
        
     ?>
+
+
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
@@ -117,8 +119,8 @@ $(document).ready(function() {
         </div>
     </nav>
 
-  
-    <div class="container" style="padding-top: 10%;">
+    <section class="kiara d-flex flex-column justify-content-center align-items-center" id="home">
+    <div class="container" ">
         <h1 data-aos="fade-up" style="text-align: center;">EGOGYM </h1>
         <hr class="dropdown divider" style="height: 2px;">
 
@@ -196,6 +198,7 @@ $(document).ready(function() {
          
         ?>
     </div>
+    </section>
     <?php
  
  $conexion = new Database();
@@ -240,16 +243,15 @@ try {
  $conexion->desconectarBD();
  ?>
  
- <div class="container" style="align-items: center;">
-    <h3 data-aos="fade-right">Gráfica de Citas por Servicio</h3>
-    
-    <canvas data-aos="fade-right" id="graficaCitas" width="400" height="200"></canvas>
-</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h3 data-aos="fade-right">Gráfica de Citas por Servicio</h3>
+            <canvas data-aos="fade-right" id="graficaCitas" width="400" height="200"></canvas>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    
-    var citasNutricion = <?php echo json_encode($citasNutricion); ?>;
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+               var citasNutricion = <?php echo json_encode($citasNutricion); ?>;
     var citasFisioterapia = <?php echo json_encode($citasFisioterapia); ?>;
     var nombresMeses = <?php echo json_encode($nombresMeses); ?>;
 
@@ -276,17 +278,66 @@ try {
             }]
         },
         options: {
-            responsive: false, // Desactivar la respuesta para ajustar el tamaño del gráfico
+            responsive: false, 
             scales: {
                 y: {
-                    beginAtZero: true, // Empezar en el valor 0 en el eje Y
+                    beginAtZero: true, 
                     ticks: {
-                        stepSize: 1 // Mostrar solo valores enteros en el eje Y
+                        stepSize: 1 
                     }
                 }
             }
         }
     });
-</script>
+            </script>
+        </div>
+        <div class="col-md-6">
+            <h3 data-aos="fade-left">Resumen de Citas del mes</h3>
+            <?php
+           $conexion = new Database();
+           $conexion->conectarDB();
+       
+          
+           $consultaTotalCitas = "SELECT COUNT(*) AS total FROM citas
+           INNER JOIN servicios_empleados ON citas.serv_emp = servicios_empleados.id_empserv
+           INNER JOIN servicios ON servicios_empleados.servicio = servicios.codigo
+           WHERE MONTH(fecha) = MONTH(CURDATE()) AND YEAR(fecha) = YEAR(CURDATE())";
+           $consultaCitasConfirmadas = "SELECT COUNT(*) AS confirmadas FROM citas
+           INNER JOIN servicios_empleados ON citas.serv_emp = servicios_empleados.id_empserv
+           INNER JOIN servicios ON servicios_empleados.servicio = servicios.codigo
+           WHERE MONTH(fecha) = MONTH(CURDATE()) AND YEAR(fecha) = YEAR(CURDATE()) and estado = 'confirmada' ";
+           $consultaCitasCanceladas = "SELECT COUNT(*) AS canceladas FROM citas WHERE estado = 'cancelada'";
+           $consultaCitasCompletadas = "SELECT COUNT(*) AS completadas FROM citas WHERE estado = 'completada'";
+           $consultaCitasPorServicio = "SELECT servicios.nombre AS servicio, COUNT(*) AS cantidad
+           FROM citas
+           INNER JOIN servicios_empleados ON citas.serv_emp = servicios_empleados.id_empserv
+           INNER JOIN servicios ON servicios_empleados.servicio = servicios.codigo
+           WHERE MONTH(fecha) = MONTH(CURDATE()) AND YEAR(fecha) = YEAR(CURDATE())
+           GROUP BY servicio";
+       
+           $totalCitas = $conexion->seleccionar($consultaTotalCitas)[0]->total;
+           $citasConfirmadas = $conexion->seleccionar($consultaCitasConfirmadas)[0]->confirmadas;
+           $citasCanceladas = $conexion->seleccionar($consultaCitasCanceladas)[0]->canceladas;
+           $citasCompletadas = $conexion->seleccionar($consultaCitasCompletadas)[0]->completadas;
+           $citasPorServicio = $conexion->seleccionar($consultaCitasPorServicio);
+            ?>
+            <div class="card" data-aos="fade-left">
+                <div class="card-body">
+                    <p>Total de Citas: <?php echo $totalCitas; ?></p>
+                    <p>Citas Confirmadas: <?php echo $citasConfirmadas; ?></p>
+                    <p>Citas Canceladas: <?php echo $citasCanceladas; ?></p>
+                    <p>Citas Completadas: <?php echo $citasCompletadas; ?></p>
+                    <h5>Citas por Servicio:</h5>
+                    <ul>
+                        <?php foreach ($citasPorServicio as $cita) : ?>
+                            <li><?php echo $cita->servicio; ?>: <?php echo $cita->cantidad; ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
     </body>
 </html>

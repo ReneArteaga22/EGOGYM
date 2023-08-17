@@ -187,7 +187,7 @@ $(document).ready(function() {
           echo "<div class='card-body row'>";
           echo "<div class='col-lg-6 col-xs-12  col-sm-12 col-md-7 text-center'>";
 
-    // Operador ternario para determinar qué URL de imagen utilizar
+    // Operador ternario 
     
     $urlImagenMostrar = $registro->foto ? $registro->foto : $imagenPorDefecto;
    
