@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+    <head>
     <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=Edge">
      <meta name="description" content="">
@@ -25,8 +25,8 @@
      <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
      <link href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css" rel="stylesheet">
 
-      <!--Calendario-->
-      <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+     <!--Calendario-->
+     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     
@@ -54,23 +54,21 @@
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
 
+    <script>
+        $(document).ready(function() {
+
+        $('.dropdown-menu a.dropdown-item').click(function(event) {
+        
+            event.preventDefault();
 
 
-     <script>
-$(document).ready(function() {
+            var href = $(this).attr('href');
 
-  $('.dropdown-menu a.dropdown-item').click(function(event) {
- 
-    event.preventDefault();
-
-
-    var href = $(this).attr('href');
-
-    
-    window.location.href = href;
-  });
-});
-</script>
+            
+            window.location.href = href;
+        });
+        });
+    </script>
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
     <?php
@@ -100,9 +98,7 @@ $(document).ready(function() {
     }
        
     ?>
-
-
-<nav class="navbar navbar-expand-lg fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
             <a class="navbar-brand" href="../nutriologo/index.php">EGO GYM</a>
@@ -138,16 +134,12 @@ $(document).ready(function() {
         </div>
     </nav>
 
-
-	<section class="kiara">
-    <!--Crea pills para todas las citas, citas canceladas, confirmadas, completadas, en las tres
-     filtrar citas por fecha, entrenador, servicio-->
-   <div class="container" style="padding-top: 3%;"> 
+    <section class="kiara">
+    <div class="container" style="padding-top: 3%;">
         <h3 data-aos="fade-right">Citas agendadas</h3>
-
         <ul class="nav nav-tabs">
             <li class="active"><a href="../nutriologo/citas_hoy.php">Citas del día de hoy</a></li>
-            <li class="active"><a href="../nutriologo/citas_prox.php" style="margin-left: 20px;">Citas próximas</a></li>
+            <li class="active"><a data-toggle="tab" href="#citas_pr" style="margin-left: 20px;">Citas próximas</a></li>
             <li><a href="../nutriologo/citas_pasadas.php" style="margin-left: 20px;">Citas pasadas</a></li>
         </ul>
         <?php
@@ -168,29 +160,53 @@ $(document).ready(function() {
             
          ?>
 
-        <div class="tab-content">
-            <div class="tab-pane active" id="citas_hoy">
+         <div class="tab-content container">
+        
+         <div class="tab-pane active" id="citas_pr">
+            <form method="post" action="">
+            <div class="row" style="margin-top: 5px;">
+
+                <div class="col-lg-2">
+                <label style="color:grey">Fecha</label>
+                <div class="input-group date">
+                <input type="text" id="datepicker" required name="fecha_cita">
+                </div>
+                </div>
+
+                <div class="col-lg-2" style="margin-left: 30px;">
+                    <label style="color: grey;">Estado</label><br>
+                    <select style="border:none;" name="estado">
+                    <option value="1">Confirmada</option>
+                    <option value="2">Cancelada</option>
+                    </select>
+                </div>
+                <input class="btn" type="submit" name="boton_prox" value="Buscar" style="margin-top: 20px; margin-left:30px">
+            </div>
+            
+            </form>
             <?php
+            if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['boton_prox']))
+            {
+            extract($_POST);
              $conexion = new database();
              $conexion->conectarDB();
      
              $consulta = "SELECT count(citas.id_cita) as cantidad,concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente, 
-             e.servicio as servicio,e.empleado AS empleado, citas.hora as hora, citas.fecha as fecha, citas.estado as estado, citas.id_cita as num,
-             ficha_nutri.id_ficha from citas INNER JOIN cliente ON cliente.id_cliente= citas.cliente
+             e.servicio as servicio,e.empleado AS empleado, citas.hora as hora,citas.fecha, citas.estado, citas.id_cita
+             from citas INNER JOIN cliente ON cliente.id_cliente= citas.cliente
              INNER JOIN persona ON persona.id_persona = cliente.id_cliente
-             INNER JOIN ficha_nutri on ficha_nutri.cita=citas.id_cita
              INNER JOIN
              (
              SELECT id_empserv, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS empleado,
-             servicios.nombre as servicio 
+             servicios.nombre as servicio
              FROM servicios_empleados 
              INNER JOIN servicios ON servicios.codigo=servicios_empleados.servicio
              INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
              INNER JOIN persona ON empleado.id_empleado = persona.id_persona
              ) AS e ON citas.serv_emp = e.id_empserv 
-             where e.servicio='nutricion' AND citas.fecha = curdate() AND citas.estado='confirmada'
+             where citas.fecha = '$fecha_cita' AND e.servicio='nutricion'  AND citas.estado=$estado
              AND citas.serv_emp=$ID
-             GROUP BY nombre,apellido_paterno,apellido_materno, servicio,empleado,hora,fecha,estado,num
+             GROUP BY nombre,apellido_paterno,apellido_materno, servicio,empleado,hora,fecha,estado,id_cita
              ";
               $conexion->seleccionar($consulta);
               $tabla = $conexion->seleccionar($consulta);
@@ -198,9 +214,10 @@ $(document).ready(function() {
               {
                   $registro->cantidad;
      
-                  $cant = $registro;
+                  $cant_2 = $registro;
               }
-            if(isset($cant) != '0')
+              
+            if(isset($cant_2) != '0')
              {
                     echo 
                     "
@@ -212,26 +229,31 @@ $(document).ready(function() {
                             Cliente
                             </th>
                             <th style='color: goldenrod;'>
+                            Fecha
+                            </th>
+                            <th style='color: goldenrod;'>
                             Hora
                             </th>
                             <th style='color: goldenrod;'>
-                            Ficha medica
+                            Estatus
                             </th>
-			                <th>
-		                    </th>
+			    <th>
+			    </th>
                         </tr>
                     </thead>
                     <tbody>";
 
                     $conexion->seleccionar($consulta);
                     $tabla = $conexion->seleccionar($consulta);
+
                     foreach ($tabla as $registro)
                     {
                         echo "<tr>";
                         echo "<td> $registro->cliente</td> ";
+                        echo "<td> $registro->fecha</td> ";
                         echo "<td> $registro->hora</td> ";
-                        echo "<td><a href='modFicha.php?id=" . $registro->id_ficha . "'>Generar ficha médica</a></td>";
-			            echo "<td><a href='../../scripts/noasistio-nutri.php?idcita=" . $registro->num . "' style='color:red;'>No asistio</a></td>";
+                        echo "<td>$registro->estado</td>";
+			            echo "<td><a href='../../scripts/cancelcita-nutri.php?idcita=" . $registro->id_cita . "' style='color:red;'>Cancelar</a></td>";
                         echo "</tr>";
                     }
                     echo "</tbody>
@@ -240,15 +262,17 @@ $(document).ready(function() {
              }
              else
             {
-               echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay citas pendientes!</h2>";
+               echo "<h5 data-aos='fade-right' style='color: goldenrod'>¡No existen citas agendadas para ese día!</h5>";
             }
+         }
             ?>
-            </div>
-
-
         </div>
-   </div>
-	</section>
-   
+
+         </div>
+
+    </div>
+    </section>
+
     </body>
+
 </html>

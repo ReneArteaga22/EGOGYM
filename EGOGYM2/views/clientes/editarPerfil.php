@@ -38,13 +38,15 @@
 
     session_start();
     $email = $_SESSION["correo"];
-    $consulta = "SELECT tipo_usuario from persona
+    $consulta = "SELECT tipo_usuario, nombre, id_persona from persona
         where correo ='$email'";
     $datos = $conexion -> seleccionar($consulta);
 
         foreach ($datos as $dato)
         {
           $tipo = $dato->tipo_usuario;
+          $name = $dato->nombre;
+          $id_per = $dato->id_persona;
         }
 
     if(isset($email) and $tipo == 'cliente' )
@@ -62,7 +64,7 @@
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="index.html">EGO GYM</a>
+            <a class="navbar-brand" href="Primera.php#home">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -72,15 +74,15 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="index.php#home" class="nav-link smoothScroll">Home</a>
+                        <a href="#home" class="nav-link smoothScroll">Home</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="index.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
+                        <a href="#about" class="nav-link smoothScroll">Sobre Nosotros</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="index.php#serv" class="nav-link smoothScroll">Servicios</a>
+                        <a href="#serv" class="nav-link smoothScroll">Servicios</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -100,7 +102,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false" >
-                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
+                         <?php echo "Hola".'  '."$name"; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                           <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
@@ -112,6 +114,7 @@
 
         </div>
     </nav>
+
 
 
 <div class="container">
@@ -131,7 +134,7 @@
 
         $consulta = "select persona.foto as foto,concat(persona.nombre,'  ', persona.apellido_paterno,'  ', persona.apellido_materno) as nombre,
         persona.correo, persona.telefono, persona.fecha_nacimiento, persona.sexo, persona.contraseña, plan.nombre as plan,
-        concat(cliente.fecha_ini,'  ','de','  ',cliente.fecha_fin) as periodo from persona
+        concat(cliente.fecha_ini,'  ','de','  ',cliente.fecha_fin) as periodo, persona.foto from persona
         left join cliente on persona.id_persona = cliente.id_cliente
         left join plan on cliente.codigo_plan = plan.codigo
         where persona.correo = '$email'";
@@ -150,7 +153,7 @@
     $urlImagenMostrar = $registro->foto ? $registro->foto : $imagenPorDefecto;
    
     echo "<img src='$urlImagenMostrar' class='rounded-circle' alt='...' style='width: 60%'>";
-    echo "<input class='form-control form-control-sm' id='foto' name='foto' type='file' >";
+    echo "<input class='form-control form-control-sm' id='foto' name='foto' type='file' value='$registro->foto' >";
     echo "</div>";
            
             echo "<div class='col-lg-6 col-12 col-sm-12 col-md-12'>";

@@ -47,10 +47,17 @@
             $cliente_id = $registro->cliente_id;
         }
 
+        
+
         $cadena = "call restriccion_citas_3($servicio, $cliente_id,'$fecha_cita','$hora')";
-        $db->ejecutarSQL($cadena);
+
+        $resultado = $db->ejecutarSQL($cadena);
+        echo "$resultado";
+
         $db->desconectarBD();
-        header("refresh:3; ../views/recepcionista/citas.php");
+        header("refresh:10; ../views/recepcionista/citas.php");
+        
+        
         ?>
     </div>
 </body>

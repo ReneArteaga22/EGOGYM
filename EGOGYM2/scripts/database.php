@@ -53,16 +53,22 @@ class Database
     {
         try
         {
+<<<<<<< HEAD
             $result = $this->PDOLocal->query($cadena);
             if ($result !== false) {
                 return true; // Consulta ejecutada con éxito
             } else {
                 return false; // Error en la ejecución de la consulta
             }
+=======
+            $this->PDOLocal->query($cadena);
+            return true;
+>>>>>>> 97b5250a405dd98f75555d07242f1e9fcbf8bca1
         }
         catch(PDOException $e)
         {
             echo $e->getMessage();
+<<<<<<< HEAD
             return false; 
         }
     }
@@ -87,6 +93,9 @@ class Database
             echo "alert('Email ya existente, ingrese otro email');";
             echo "window.location.href='../inicio_sesion.php';";
             echo "</script>";
+=======
+            return false;
+>>>>>>> 97b5250a405dd98f75555d07242f1e9fcbf8bca1
         }
     }
 

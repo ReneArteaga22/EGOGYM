@@ -14,8 +14,6 @@
       <script src="../../js/aos.js"></script>
       <script src="../../js/smoothscroll.js"></script>
       <script src="../../js/custom.js"></script>
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 
      <link rel="stylesheet" href="../../css/bootstrap.min.css">
      <link rel="stylesheet" href="../../css/font-awesome.min.css">
@@ -23,22 +21,6 @@
 
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
-
-     <script>
-$(document).ready(function() {
-
-  $('.dropdown-menu a.dropdown-item').click(function(event) {
- 
-    event.preventDefault();
-
-
-    var href = $(this).attr('href');
-
-    
-    window.location.href = href;
-  });
-});
-</script>
     </head>
     <body>
     <?php
@@ -48,13 +30,14 @@ $(document).ready(function() {
 
     session_start();
     $email = $_SESSION["correo"];
-    $consulta = "SELECT tipo_empleado from persona inner join empleado on persona.id_persona = empleado.id_empleado
+    $consulta = "SELECT tipo_empleado, nombre from persona inner join empleado on persona.id_persona = empleado.id_empleado
         where correo ='$email'";
     $datos = $conexion -> seleccionar($consulta);
 
         foreach ($datos as $dato)
         {
           $tipo = $dato->tipo_empleado;
+          $name = $dato->nombre;
         }
 
     if(isset($email) and $tipo == 'nutri' )
@@ -63,11 +46,12 @@ $(document).ready(function() {
     }
     else 
     {
-        header("Location:../../index.php");
+        header("Location:../../First.php");
     }
        
     ?>
-     <nav class="navbar navbar-expand-lg fixed-top">
+
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
             <a class="navbar-brand" href="../nutriologo/index.php">EGO GYM</a>
@@ -87,11 +71,12 @@ $(document).ready(function() {
                     </li>
                 </ul>
 
+                
                 <ul class="navbar-nav ml-lg-2">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false" >
-                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
+                          <?php echo "Hola".'  '."$name"; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="../nutriologo/perfil_nutri.php">Perfil</a></li>
@@ -104,6 +89,7 @@ $(document).ready(function() {
     </nav>
 
     <section class="kiara">
+
     <div class="container" style="padding-top: 3%;">
 
     
@@ -111,6 +97,7 @@ $(document).ready(function() {
       $conexion = new Database();
       $conexion->conectarDB();
 
+      $idFicha = $_GET['id'];
       $consulta="SELECT concat(nombre,' ',apellido_paterno,' ',apellido_materno) as nombre, citas.fecha, 
       FLOOR(DATEDIFF(CURDATE(), fecha_nacimiento) / 365) AS edad FROM persona INNER JOIN cliente on cliente.id_cliente=persona.id_persona
       INNER JOIN citas on citas.cliente=cliente.id_cliente INNER JOIN ficha_nutri 

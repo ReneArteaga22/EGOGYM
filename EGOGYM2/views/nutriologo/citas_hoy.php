@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+    <head>
     <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=Edge">
      <meta name="description" content="">
@@ -25,52 +25,24 @@
      <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
      <link href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css" rel="stylesheet">
 
-      <!--Calendario-->
-      <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    
-    <script type="text/javascript">
-         $(function(){
-    var today = new Date();
-      var dd = String(today.getDate()).padStart(2, '0');
-      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-      var yyyy = today.getFullYear();
-
-      today = yyyy + '/' + mm + '/' + dd;
-  })
-  $( function() {
-    $( "#datepicker" ).datepicker({
-      showOtherMonths: true,
-      selectOtherMonths: true,
-      dateFormat: 'yy-mm-dd',
-      minDate: '+1D',
-      maxDate: '+9D',
-      beforeShowDay: $.datepicker.noWeekends
-    });} 
-    );
-    </script>
-
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
 
+    <script>
+        $(document).ready(function() {
+
+        $('.dropdown-menu a.dropdown-item').click(function(event) {
+        
+            event.preventDefault();
 
 
-     <script>
-$(document).ready(function() {
+            var href = $(this).attr('href');
 
-  $('.dropdown-menu a.dropdown-item').click(function(event) {
- 
-    event.preventDefault();
-
-
-    var href = $(this).attr('href');
-
-    
-    window.location.href = href;
-  });
-});
-</script>
+            
+            window.location.href = href;
+        });
+        });
+    </script>
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
     <?php
@@ -100,9 +72,7 @@ $(document).ready(function() {
     }
        
     ?>
-
-
-<nav class="navbar navbar-expand-lg fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
             <a class="navbar-brand" href="../nutriologo/index.php">EGO GYM</a>
@@ -138,15 +108,11 @@ $(document).ready(function() {
         </div>
     </nav>
 
-
-	<section class="kiara">
-    <!--Crea pills para todas las citas, citas canceladas, confirmadas, completadas, en las tres
-     filtrar citas por fecha, entrenador, servicio-->
-   <div class="container" style="padding-top: 3%;"> 
+    <section class="kiara">
+    <div class="container" style="padding-top: 3%;">
         <h3 data-aos="fade-right">Citas agendadas</h3>
-
         <ul class="nav nav-tabs">
-            <li class="active"><a href="../nutriologo/citas_hoy.php">Citas del día de hoy</a></li>
+            <li class="active"><a data-toggle="tab" href="#citas_hoy">Citas del día de hoy</a></li>
             <li class="active"><a href="../nutriologo/citas_prox.php" style="margin-left: 20px;">Citas próximas</a></li>
             <li><a href="../nutriologo/citas_pasadas.php" style="margin-left: 20px;">Citas pasadas</a></li>
         </ul>
@@ -168,8 +134,8 @@ $(document).ready(function() {
             
          ?>
 
-        <div class="tab-content">
-            <div class="tab-pane active" id="citas_hoy">
+         <div class="tab-content container">
+         <div class="tab-pane active" id="citas_hoy">
             <?php
              $conexion = new database();
              $conexion->conectarDB();
@@ -245,10 +211,11 @@ $(document).ready(function() {
             ?>
             </div>
 
+         </div>
 
-        </div>
-   </div>
-	</section>
-   
+    </div>
+    </section>
+
     </body>
+
 </html>

@@ -14,11 +14,9 @@
       <script src="../../js/aos.js"></script>
       <script src="../../js/smoothscroll.js"></script>
       <script src="../../js/custom.js"></script>
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 
      <link rel="stylesheet" href="../../css/bootstrap.min.css">
-     <link rel="stylesheet" href="../../css/font-awesome.min.css">
+     <link rel="stylesheet" href="../..7css/font-awesome.min.css">
      <link rel="stylesheet" href="../../css/aos.css">
 
      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
@@ -28,13 +26,12 @@
      <!-- MAIN CSS -->
      <link rel="stylesheet" href="../../css/egogym.css">
 
-<!--Calendario-->
-<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+     <!--Calendario-->
+     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    
-    <script type="text/javascript">
+
+     <script type="text/javascript">
          $(function(){
     var today = new Date();
       var dd = String(today.getDate()).padStart(2, '0');
@@ -54,24 +51,6 @@
     });} 
     );
     </script>
-
-
-
-     <script>
-$(document).ready(function() {
-
-  $('.dropdown-menu a.dropdown-item').click(function(event) {
- 
-    event.preventDefault();
-
-
-    var href = $(this).attr('href');
-
-    
-    window.location.href = href;
-  });
-});
-</script>
     </head>
     <body data-spy="scroll" data-target="#navbarNav" data-offset="50">
     <?php
@@ -81,13 +60,14 @@ $(document).ready(function() {
 
     session_start();
     $email = $_SESSION["correo"];
-    $consulta = "SELECT tipo_empleado from persona inner join empleado on persona.id_persona = empleado.id_empleado
+    $consulta = "SELECT tipo_empleado, nombre from persona inner join empleado on persona.id_persona = empleado.id_empleado
         where correo ='$email'";
     $datos = $conexion -> seleccionar($consulta);
 
         foreach ($datos as $dato)
         {
           $tipo = $dato->tipo_empleado;
+          $name = $dato->nombre;
         }
 
     if(isset($email) and $tipo == 'entrenador' )
@@ -100,10 +80,10 @@ $(document).ready(function() {
     }
        
     ?>
-  <nav class="navbar navbar-expand-lg fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../nutriologo//index.php">EGO GYM</a>
+            <a class="navbar-brand" href="">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -113,17 +93,17 @@ $(document).ready(function() {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                        <a href="index.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="citas.php" class="nav-link smoothScroll">Clases</a>
+                        <a href="" class="nav-link smoothScroll">Clases</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-lg-2">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false" >
-                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
+                          <?php echo "Hola".'  '."$name"; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="../entrenador/perfil_entre.php">Perfil</a></li>
@@ -134,23 +114,42 @@ $(document).ready(function() {
     </nav>
 
 
+    <section class="kiara">
     <!--Crea pills para todas las citas, citas canceladas, confirmadas, completadas, en las tres
      filtrar citas por fecha, entrenador, servicio-->
-     <div class="container" style="padding-top: 15%;"> 
+    <div class="container" style="padding-top: 3%;"> 
         <h3 data-aos="fade-right">Clases agendadas</h3>
 
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#clases_hoy">Clases del día de hoy</a></li>
-            <li><a data-toggle="tab" href="#clases" style="margin-left: 20px;">Clases pasadas</a></li>
+            <li><a href="../entrenador/clases_pasadas.php" style="margin-left: 20px;">Clases pasadas</a></li>
         </ul>
+        <?php
+        $db= new database();
+        $db->conectarDB();
+         $email = $_SESSION["correo"];
+         $consulta = "SELECT servicios_empleados.id_empserv from servicios_empleados
+         inner join empleado on empleado.id_empleado= servicios_empleados.empleado
+         inner join persona on persona.id_persona=empleado.id_empleado
+         where correo ='$email'";
+         $datos = $db -> seleccionar($consulta);
+     
+             foreach ($datos as $dato)
+             {
+               $ID = $dato->id_empserv;
+             }
+     
+            
+         ?>
+
+
 
         <div class="tab-content">
             <div class="tab-pane active" id="clases_hoy">
             <?php
             $conexion = new database();
             $conexion->conectarDB();
-            $consulta = "SELECT COUNT(citas_spinning.id_cita) as 'Asistentes', citas_spinning.hora, 
-            citas_spinning.fecha
+            $consulta = "SELECT COUNT(citas_spinning.id_cita) as 'Asistentes', citas_spinning.hora
             from citas_spinning
             inner join servicios_empleados on
             servicios_empleados.id_empserv= citas_spinning.entrenador
@@ -159,29 +158,21 @@ $(document).ready(function() {
             inner join persona on 
             persona.id_persona=empleado.id_empleado
             where citas_spinning.fecha = curdate()
+            and citas_spinning.entrenador= $ID
+            AND citas_spinning.estado='confirmada'
              group by citas_spinning.hora";
 
             $conexion->seleccionar($consulta);
             $tabla = $conexion->seleccionar($consulta);
 
-            foreach ($tabla as $registro) {
+            foreach ($tabla as $registro)
+            {
+                $registro->Asistentes;
                 $cant = $registro;
             }
 
             if (isset($cant) != '0') {
-                $consulta = "SELECT COUNT(citas_spinning.id_cita) as 'Asistentes', citas_spinning.hora
-                from citas_spinning
-                inner join servicios_empleados on
-                servicios_empleados.id_empserv= citas_spinning.entrenador
-                inner join empleado on
-                empleado.id_empleado=servicios_empleados.empleado
-                inner join persona on 
-                persona.id_persona=empleado.id_empleado
-                where citas_spinning.fecha = curdate()
-                 group by citas_spinning.hora";
-                $conexion->seleccionar($consulta);
-                $tabla = $conexion->seleccionar($consulta);
-                
+            
                 echo "<table class='table' style='border-radius: 5px;width:60%'>";
                     echo "<thead class='table-dark' style='text-align:'center;''>";
                     echo "<tr><br>
@@ -200,7 +191,9 @@ $(document).ready(function() {
                 }
 
                 echo "</tbody></table>";
-            } else {
+            } 
+            else 
+            {
                 echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay clases agendadas el día de hoy!</h2>";
             }
             ?>
@@ -268,19 +261,14 @@ $(document).ready(function() {
 
                     echo "</tbody></table>";
                 } else {
-                    echo "<h2 data-aos='fade-right' style='color: goldenrod'>No hubo citas agendadas ese día</h2>";
+                    echo "<h3 data-aos='fade-right' style='color: goldenrod'>No hubo clases agendadas ese día</h3>";
                 }
             }
                 ?>
             </div>
-
-        
         </div>
- 
- 
-    </body>
-</html>
 
-   
+    </div>
+    </section>
     </body>
 </html>
