@@ -64,10 +64,7 @@ else
 }
 $conexion->desconectarBD();
 
-<<<<<<< HEAD
 $_SESSION['mensaje'] = 'Plan actualizado';
-=======
->>>>>>> 97b5250a405dd98f75555d07242f1e9fcbf8bca1
 
 
 

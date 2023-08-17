@@ -110,10 +110,155 @@ $(document).ready(function() {
         <h1 style="text-align: center;" data-aos="fade-right">¡Hola!</h1>
         <!--Tablas de citas registradas para el día actual-->
     </div>
-    <
+    
     </div>
     <br>
     <br>
     </section>
+    <?php
+ 
+ $conexion = new Database();
+$conexion->conectarDB();
+// Obtener el primer día del mes actual
+$primerDiaMesActual = date('Y-m-01');
+
+$consulta = "SELECT MONTH(citas.fecha) as mes,
+                   SUM(CASE WHEN servicios.nombre = 'nutricion' THEN 1 ELSE 0 END) as citas_nutricion
+                   
+            FROM citas
+            INNER JOIN servicios_empleados ON citas.serv_emp = servicios_empleados.id_empserv
+            INNER JOIN servicios ON servicios_empleados.servicio = servicios.codigo
+            WHERE citas.fecha >= DATE_SUB(:primerDiaMesActual, INTERVAL 2 MONTH) AND
+                  citas.fecha <= LAST_DAY(:primerDiaMesActual) 
+            GROUP BY mes
+            ORDER BY mes";
+
+try {
+    $stmt = $conexion->obtenerConexion()->prepare($consulta);
+    $stmt->bindParam(':primerDiaMesActual', $primerDiaMesActual);
+    $stmt->execute();
+
+    $citasNutricion = array_fill(0, 3, 0); // Para los últimos 3 meses
+   
+    $nombresMeses = array();
+
+    while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $mes = $fila['mes'];
+        $citasNutricion[(date('n') - $mes + 2) % 3] = $fila['citas_nutricion'];
+        
+        $nombresMeses[] = $conexion->obtenerNombreMes($mes);
+    }
+} catch (PDOException $e) {
+    echo $e->getMessage();
+}
+ 
+ $conexion->desconectarBD();
+ ?>
+ 
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h3 data-aos="fade-right">Gráfica de Citas por Servicio</h3>
+            <canvas data-aos="fade-right" id="graficaCitas" width="400" height="400"></canvas>
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+               var citasNutricion = <?php echo json_encode($citasNutricion); ?>;
+
+    var nombresMeses = <?php echo json_encode($nombresMeses); ?>;
+
+   
+    var ctx = document.getElementById('graficaCitas').getContext('2d');
+
+   
+    var grafica = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: nombresMeses,
+            datasets: [{
+                label: 'Citas de Nutrición',
+                data: citasNutricion,
+                backgroundColor: 'rgb(218, 165, 32,0.5)',
+                borderColor: 'rgb(218, 165, 32,1)',
+                borderWidth: 1
+            }, ]
+        },
+        options: {
+            responsive: false, 
+            scales: {
+                y: {
+                    beginAtZero: true, 
+                    ticks: {
+                        stepSize: 2
+                        ,fontSize: 10
+                    }
+                }
+            }
+        }
+    });
+            </script>
+        </div>
+        <div class="col-md-6">
+            <h3 data-aos="fade-left">Resumen de Citas del mes</h3>
+            <?php
+           $conexion = new Database();
+           $conexion->conectarDB();
+       
+           $consultaTotalCitas = "SELECT COUNT(*) AS total FROM citas
+           INNER JOIN servicios_empleados ON citas.serv_emp = servicios_empleados.id_empserv
+           INNER JOIN servicios ON servicios_empleados.servicio = servicios.codigo
+           WHERE MONTH(fecha) = MONTH(CURDATE()) AND YEAR(fecha) = YEAR(CURDATE())
+           AND servicios.codigo = 3"; 
+
+$consultaCitasConfirmadas = "SELECT COUNT(*) AS confirmadas FROM citas
+                 INNER JOIN servicios_empleados ON citas.serv_emp = servicios_empleados.id_empserv
+                 INNER JOIN servicios ON servicios_empleados.servicio = servicios.codigo
+                 WHERE MONTH(fecha) = MONTH(CURDATE()) AND YEAR(fecha) = YEAR(CURDATE())
+                 AND estado = 'confirmada' AND servicios.codigo = 3";
+
+$consultaCitasCanceladas = "SELECT COUNT(*) AS canceladas FROM citas
+                             INNER JOIN servicios_empleados ON citas.serv_emp = servicios_empleados.id_empserv
+                 INNER JOIN servicios ON servicios_empleados.servicio = servicios.codigo
+                 WHERE MONTH(fecha) = MONTH(CURDATE()) AND YEAR(fecha) = YEAR(CURDATE())
+                 AND estado = 'confirmada' AND servicios.codigo = 3";
+
+$consultaCitasCompletadas = "SELECT COUNT(*) AS completadas FROM citas
+                             INNER JOIN servicios_empleados ON citas.serv_emp = servicios_empleados.id_empserv
+                 INNER JOIN servicios ON servicios_empleados.servicio = servicios.codigo
+                 WHERE MONTH(fecha) = MONTH(CURDATE()) AND YEAR(fecha) = YEAR(CURDATE())
+                 AND estado = 'confirmada' AND servicios.codigo = 3";
+
+$consultaCitasPorServicio = "SELECT servicios.nombre AS servicio, COUNT(*) AS cantidad
+                 FROM citas
+                 INNER JOIN servicios_empleados ON citas.serv_emp = servicios_empleados.id_empserv
+                 INNER JOIN servicios ON servicios_empleados.servicio = servicios.codigo
+                 WHERE MONTH(fecha) = MONTH(CURDATE()) AND YEAR(fecha) = YEAR(CURDATE()) 
+                 AND servicios.codigo = 3
+                 GROUP BY servicio";
+
+       
+           $totalCitas = $conexion->seleccionar($consultaTotalCitas)[0]->total;
+           $citasConfirmadas = $conexion->seleccionar($consultaCitasConfirmadas)[0]->confirmadas;
+           $citasCanceladas = $conexion->seleccionar($consultaCitasCanceladas)[0]->canceladas;
+           $citasCompletadas = $conexion->seleccionar($consultaCitasCompletadas)[0]->completadas;
+           $citasPorServicio = $conexion->seleccionar($consultaCitasPorServicio);
+            ?>
+            <div class="card" data-aos="fade-left">
+                <div class="card-body">
+                    <p>Total de Citas: <?php echo $totalCitas; ?></p>
+                    <p>Citas Confirmadas: <?php echo $citasConfirmadas; ?></p>
+                    <p>Citas Canceladas: <?php echo $citasCanceladas; ?></p>
+                    <p>Citas Completadas: <?php echo $citasCompletadas; ?></p>
+                    <h5>Citas por Servicio:</h5>
+                    <ul>
+                        <?php foreach ($citasPorServicio as $cita) : ?>
+                            <li><?php echo $cita->servicio; ?>: <?php echo $cita->cantidad; ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     </body>
 </html>

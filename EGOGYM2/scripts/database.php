@@ -4,7 +4,7 @@ class Database
     private $PDOLocal;
     private $user = "root";
     private $password = "ranagasu22";
-    private $server = "mysql:host=localhost; dbname=egogym2";
+    private $server = "mysql:host=localhost; dbname=egogym_prueba";
 
     function conectarDB()
     {
@@ -53,23 +53,13 @@ class Database
     {
         try
         {
-<<<<<<< HEAD
-            $result = $this->PDOLocal->query($cadena);
-            if ($result !== false) {
-                return true; // Consulta ejecutada con éxito
-            } else {
-                return false; // Error en la ejecución de la consulta
-            }
-=======
             $this->PDOLocal->query($cadena);
             return true;
->>>>>>> 97b5250a405dd98f75555d07242f1e9fcbf8bca1
         }
         catch(PDOException $e)
         {
             echo $e->getMessage();
-<<<<<<< HEAD
-            return false; 
+            return false;
         }
     }
 
@@ -91,11 +81,8 @@ class Database
         {
             echo "<script language='javascript'>";
             echo "alert('Email ya existente, ingrese otro email');";
-            echo "window.location.href='../inicio_sesion.php';";
+            echo "window.location.href='../index.php';";
             echo "</script>";
-=======
-            return false;
->>>>>>> 97b5250a405dd98f75555d07242f1e9fcbf8bca1
         }
     }
 

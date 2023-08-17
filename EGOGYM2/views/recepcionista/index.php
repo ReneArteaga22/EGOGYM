@@ -205,19 +205,17 @@ $(document).ready(function() {
  
  $conexion = new Database();
 $conexion->conectarDB();
-
 // Obtener el primer día del mes actual
 $primerDiaMesActual = date('Y-m-01');
 
-// Consulta para obtener la cantidad de citas por servicio de nutrición y fisioterapia en los últimos 5 meses
 $consulta = "SELECT MONTH(citas.fecha) as mes,
                    SUM(CASE WHEN servicios.nombre = 'nutricion' THEN 1 ELSE 0 END) as citas_nutricion,
                    SUM(CASE WHEN servicios.nombre = 'fisioterapia' THEN 1 ELSE 0 END) as citas_fisioterapia
             FROM citas
             INNER JOIN servicios_empleados ON citas.serv_emp = servicios_empleados.id_empserv
             INNER JOIN servicios ON servicios_empleados.servicio = servicios.codigo
-            WHERE citas.fecha >= DATE_SUB(:primerDiaMesActual, INTERVAL 3 MONTH) AND
-                  citas.fecha <= LAST_DAY(:primerDiaMesActual) + INTERVAL 1 MONTH
+            WHERE citas.fecha >= DATE_SUB(:primerDiaMesActual, INTERVAL 2 MONTH) AND
+                  citas.fecha <= LAST_DAY(:primerDiaMesActual) 
             GROUP BY mes
             ORDER BY mes";
 
@@ -226,21 +224,19 @@ try {
     $stmt->bindParam(':primerDiaMesActual', $primerDiaMesActual);
     $stmt->execute();
 
-    $citasNutricion = array_fill(0, 5, 0);
-    $citasFisioterapia = array_fill(0, 5, 0);
+    $citasNutricion = array_fill(0, 3, 0); // Para los últimos 3 meses
+    $citasFisioterapia = array_fill(0, 3, 0); // Para los últimos 3 meses
     $nombresMeses = array();
 
     while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $mes = $fila['mes'];
-        $citasNutricion[(date('n') - $mes + 5) % 5] = $fila['citas_nutricion'];
-        $citasFisioterapia[(date('n') - $mes + 5) % 5] = $fila['citas_fisioterapia'];
+        $citasNutricion[(date('n') - $mes + 2) % 3] = $fila['citas_nutricion'];
+        $citasFisioterapia[(date('n') - $mes + 2) % 3] = $fila['citas_fisioterapia'];
         $nombresMeses[] = $conexion->obtenerNombreMes($mes);
     }
-
 } catch (PDOException $e) {
     echo $e->getMessage();
 }
-
  
  $conexion->desconectarBD();
  ?>
@@ -249,7 +245,7 @@ try {
     <div class="row">
         <div class="col-md-6">
             <h3 data-aos="fade-right">Gráfica de Citas por Servicio</h3>
-            <canvas data-aos="fade-right" id="graficaCitas" width="400" height="200"></canvas>
+            <canvas data-aos="fade-right" id="graficaCitas" width="400" height="300"></canvas>
 
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             <script>
@@ -285,7 +281,8 @@ try {
                 y: {
                     beginAtZero: true, 
                     ticks: {
-                        stepSize: 1 
+                        stepSize: 1 ,
+                        fontSize: 10
                     }
                 }
             }

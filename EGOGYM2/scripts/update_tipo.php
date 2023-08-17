@@ -65,13 +65,8 @@ else
 }
 $conexion->desconectarBD();
 
-<<<<<<< HEAD
 $_SESSION['mensaj'] = 'Se cambió el tipo de empleado';
 header("Location:../views/recepcionista/perfilEmpleado.php?id=".$empleadoId."");
-=======
-// Redirigir al usuario de vuelta a la página del perfil del cliente
-
->>>>>>> 97b5250a405dd98f75555d07242f1e9fcbf8bca1
 
 ?>
 

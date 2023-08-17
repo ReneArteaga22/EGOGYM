@@ -33,17 +33,6 @@ isset($_SESSION["correo"]);
 $email = $_SESSION["correo"];
 
 
-<<<<<<< HEAD
-    // Actualiza la URL de la foto en la base de datos
-    $consultaFoto = "UPDATE persona SET foto = '$rutaDestino' WHERE correo = '$email'";
-    $conexion->ejecutarSQL($consultaFoto);
-}
-$hash = password_hash($contra,PASSWORD_DEFAULT);
-=======
->>>>>>> 97b5250a405dd98f75555d07242f1e9fcbf8bca1
-
-
-
 
 $consulta= "select contraseña, foto, telefono from persona where correo = '$email'";
 $datos = $conexion->seleccionar($consulta);
