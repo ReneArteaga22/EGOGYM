@@ -182,7 +182,7 @@ $(document).ready(function() {
              ) AS e ON citas.serv_emp = e.id_empserv 
              where citas.fecha = curdate() AND e.servicio='fisioterapia'
              AND citas.serv_emp=$ID and citas.estado = 'confirmada'
-             GROUP BY nombre,apellido_paterno,apellido_materno, servicio,empleado,hora,fecha,estado,num
+             GROUP BY nombre,apellido_paterno,apellido_materno, servicio,empleado,hora,fecha,estado,num, ficha_fisio.id_ficha
              ";
               $conexion->seleccionar($consulta);
               $tabla = $conexion->seleccionar($consulta);

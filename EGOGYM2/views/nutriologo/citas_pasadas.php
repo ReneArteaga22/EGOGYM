@@ -136,7 +136,7 @@
                         <a href="../nutriologo/index.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="../nutriologo/citas_nutri.php" class="nav-link smoothScroll">Citas</a>
+                    <a href="citas_hoy.php" class="nav-link smoothScroll">Citas</a>
                     </li>
                 </ul>
 

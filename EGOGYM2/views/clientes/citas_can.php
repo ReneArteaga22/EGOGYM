@@ -133,22 +133,22 @@ $(document).ready(function() {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="#home" class="nav-link smoothScroll">Home</a>
+                        <a href="index.php#home" class="nav-link smoothScroll">Home</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="#about" class="nav-link smoothScroll">Sobre Nosotros</a>
+                        <a href="index.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="#serv" class="nav-link smoothScroll">Servicios</a>
+                        <a href="index.php#serv" class="nav-link smoothScroll">Servicios</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false" > Citas</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                           <li><a class="dropdown-item" href="citas.php">Agendar Cita</a></li>
-                          <li><a class="dropdown-item" href="vercitas.php">Ver Citas</a></li>
+                          <li><a class="dropdown-item" href="citas_hoy.php">Ver Citas</a></li>
                         </ul>
                       </li>
                     <li class="nav-item">

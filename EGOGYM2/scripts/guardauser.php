@@ -31,7 +31,7 @@
       
         $pass= false;
         $cadena= "INSERT INTO persona(nombre, apellido_paterno, apellido_materno,correo, sexo, contraseña, telefono, fecha_nacimiento, tipo_usuario, foto)
-         values('$nombre','$ap_paterno','$ap_materno','$correo','$sexo', '$hash', null, '$fecha_nacimiento','cliente','../../images/class/imagenxdefect.webp')";
+         values('$nombre','$ap_paterno','$ap_materno','$correo','$sexo', '$hash', null, '$fecha_nacimiento','cliente', default)";
          if($conexion->ejecutarSQL($cadena))
          {
             $pass = true;

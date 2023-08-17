@@ -45,7 +45,7 @@
       showOtherMonths: true,
       selectOtherMonths: true,
       dateFormat: 'yy-mm-dd',
-      minDate: '+1D',
+      minDate: new date(),
       maxDate: '+9D',
       beforeShowDay: $.datepicker.noWeekends
     });} 
@@ -103,7 +103,7 @@
                           aria-haspopup="true" aria-expanded="false" > Citas</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                           <li><a class="dropdown-item" href="citas.php">Agendar Cita</a></li>
-                          <li><a class="dropdown-item" href="vercitas.php">Ver Citas</a></li>
+                          <li><a class="dropdown-item" href="citas_prox.php">Ver Citas</a></li>
                         </ul>
                       </li>
 
@@ -200,7 +200,8 @@
                        INNER JOIN persona ON empleado.id_empleado = persona.id_persona
                        ) AS e ON citas.serv_emp = e.id_empserv
                        where citas.fecha = '$fecha_cita' AND e.servicio='$servicio'
-                       group by persona.nombre, persona.apellido_paterno, persona.apellido_materno
+                       group by persona.nombre, persona.apellido_paterno, persona.apellido_materno, e.empleado, citas.hora, citas.estado,
+                        citas.id_cita
                        ORDER BY concat(citas.fecha,' ',citas.hora) DESC";
                        $conexion->seleccionar($consulta);
                        $tabla = $conexion->seleccionar($consulta);

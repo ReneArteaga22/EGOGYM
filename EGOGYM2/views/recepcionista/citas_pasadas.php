@@ -124,7 +124,7 @@
                           aria-haspopup="true" aria-expanded="false" > Citas</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                           <li><a class="dropdown-item" href="citas.php">Agendar Cita</a></li>
-                          <li><a class="dropdown-item" href="vercitas.php">Ver Citas</a></li>
+                          <li><a class="dropdown-item" href="citas_prox.php">Ver Citas</a></li>
                         </ul>
                       </li>
 
