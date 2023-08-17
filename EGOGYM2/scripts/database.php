@@ -72,7 +72,7 @@ class Database
             $this->desconectarBD();
             echo "<script language='javascript'>";
             echo "alert('Agendado exitoso');";
-            echo "window.location.href='../index.php';";
+            echo "window.location.href='../views/recepcionista/citas.php';";
             echo "</script>";
         }
         catch(PDOException $e)
@@ -83,6 +83,36 @@ class Database
                     echo "<script language='javascript'>";
                     echo "alert('Horario no disponible o ya tienes una cita agendada el dia hoy');";
                     echo "window.location.href='../views/recepcionista/citas.php';";
+                    echo "</script>";
+                    break;
+                
+                default:
+                    echo "Error en la consulta: " . $e->getMessage();
+            }
+            return false;
+        }
+        
+    }
+    public function ejecutarcitascl($cadena)
+{
+        try
+        {
+            $this->conectarDB();
+            $this->PDOLocal->exec($cadena);
+            $this->desconectarBD();
+            echo "<script language='javascript'>";
+            echo "alert('Agendado exitoso');";
+            echo "window.location.href='../views/clientes/citas.php';";
+            echo "</script>";
+        }
+        catch(PDOException $e)
+        {
+            $errorCode = $e->getCode();
+            switch ($errorCode) {
+                case 45000:
+                    echo "<script language='javascript'>";
+                    echo "alert('Horario no disponible o ya tienes una cita agendada el dia hoy');";
+                    echo "window.location.href='../views/clientes/citas.php';";
                     echo "</script>";
                     break;
                 

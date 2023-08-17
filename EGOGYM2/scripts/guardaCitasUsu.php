@@ -35,7 +35,7 @@
      
              foreach ($datos as $dato)
              {
-               $tipo = $dato->id_persona;
+               $cliente_id = $dato->id_persona;
              }
      
             
@@ -46,11 +46,12 @@
         $db->conectarDB();
 
         extract($_POST);
-        $cadena = "call restriccion_citas_3($servicio, $tipo,'$fecha_cita','$hora')";
-        $db->ejecutarSQL($cadena);
-        $db->desconectarBD();
-        header("refresh:3; ../views/clientes/citas.php");
-   
+        $cadena = "call restriccion_citas_3($servicio, $cliente_id,'$fecha_cita','$hora')";
+
+        if ($db->ejecutarcitascl($cadena)) {
+            echo "<div class='alert alert-success'>Cliente Registrado</div>";
+        header("refresh:2 ../index.php");
+        }
 
         ?>
     </div>

@@ -102,7 +102,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="index.php" class="nav-link link-smooth smoothScroll">Home</a>
+                        <a href="#index" class="nav-link link-smooth smoothScroll">Home</a>
                     </li>
 
                    
