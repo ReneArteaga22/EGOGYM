@@ -97,15 +97,15 @@ $(document).ready(function() {
 
     session_start();
     $email = $_SESSION["correo"];
-    $consulta = "SELECT tipo_usuario, nombre, id_persona from persona
+    $consulta = "SELECT tipo_usuario, id_persona, nombre from persona
         where correo ='$email'";
     $datos = $conexion -> seleccionar($consulta);
 
         foreach ($datos as $dato)
         {
           $tipo = $dato->tipo_usuario;
-          $name = $dato->nombre;
           $id_per = $dato->id_persona;
+          $name = $dato->nombre;
         }
 
     if(isset($email) and $tipo == 'cliente' )
@@ -119,11 +119,11 @@ $(document).ready(function() {
        
     ?>
 
-    <!-- MENU BAR -->
-    <nav class="navbar navbar-expand-lg fixed-top">
+     <!-- MENU BAR -->
+     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="Primera.php#home">EGO GYM</a>
+            <a class="navbar-brand" href="index.html">EGO GYM</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -133,15 +133,15 @@ $(document).ready(function() {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="#home" class="nav-link smoothScroll">Home</a>
+                        <a href="index.php#home" class="nav-link smoothScroll">Home</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="#about" class="nav-link smoothScroll">Sobre Nosotros</a>
+                        <a href="index.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="#serv" class="nav-link smoothScroll">Servicios</a>
+                        <a href="index.php#serv" class="nav-link smoothScroll">Servicios</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -161,7 +161,7 @@ $(document).ready(function() {
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false" >
-                         <?php echo "Hola".'  '."$name"; ?>
+                          <?php echo "Hola".'  '."$name"; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                           <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
@@ -174,14 +174,13 @@ $(document).ready(function() {
         </div>
     </nav>
 
-
     <section class="kiara">
         <div class="container" style="padding-top: 3%;">
         <ul class="nav nav-tabs">
-        <li><a data-toggle="tab" href="#citas_hoy">Citas del día de hoy</a></li>
+        <li><a href="../clientes/citas_hoy.php">Citas del día de hoy</a></li>
         <li><a href="../clientes/citas_prox.php" style="margin-left: 20px;">Citas próximas</a></li>
         <li><a href="../clientes/citas_can.php" style="margin-left: 20px;">Citas canceladas</a></li>
-        <li><a href="../clientes/clases_ag.php" style="margin-left: 20px;">Clases agendadas</a></li>
+        <li><a data-toggle="tab" href="#clases" style="margin-left: 20px;">Clases agendadas</a></li>
         </ul>
 
         <?php
@@ -198,91 +197,70 @@ $(document).ready(function() {
          ?>
 
         <div class="tab-content container">
-        <div class="tab-pane active" id="citas_hoy">
-            
-            
-            <?php
-             $conexion = new database();
-             $conexion->conectarDB();
-             $consulta = "SELECT count(citas.id_cita) as cantidad, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS cliente, 
-             e.servicio as servicio,e.empleado AS empleado, citas.hora as hora, citas.fecha, citas.estado,
-             citas.id_cita as cita
-             from citas INNER JOIN cliente ON cliente.id_cliente= citas.cliente
-             INNER JOIN persona ON persona.id_persona = cliente.id_cliente
-             INNER JOIN
-             (
-             SELECT id_empserv, concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS empleado,
-             servicios.nombre as servicio 
-             FROM servicios_empleados 
-             INNER JOIN servicios ON servicios.codigo=servicios_empleados.servicio
-             INNER JOIN empleado ON servicios_empleados.empleado=empleado.id_empleado
-             INNER JOIN persona ON empleado.id_empleado = persona.id_persona
-             ) AS e ON citas.serv_emp = e.id_empserv 
-             where citas.fecha = curdate() and citas.estado = 'confirmada' and citas.cliente = $id_per
-            GROUP BY nombre, apellido_paterno, apellido_materno, servicio, empleado, hora, fecha, estado, cita
-             ORDER BY concat(citas.fecha,' ',citas.hora) DESC";
-             
-              $conexion->seleccionar($consulta);
-              $tabla = $conexion->seleccionar($consulta);
-              foreach($tabla as $registro)
-              {
-                  $registro->cantidad;
-     
-                  $cant_2 = $registro;
-              }
-              
-            if(isset($cant_2) != '0')
-             {
-                    echo 
-                    "
-                    <table class='table' style='border-radius: 5px;width:90%'>
-                    <thead class='table-dark' style='text-align:'center;''>
-                        <tr>
-                        <br>
-                            <th style='color: goldenrod;'>
-                            Empleado
-                            </th>
-                            <th style='color: goldenrod;'>
-                            Servicio
-                            </th>
-                            <th style='color: goldenrod;'>
-                            Fecha
-                            </th>
-                            <th style='color: goldenrod;'>
-                            Hora
-                            </th>
-                            <th style='color: goldenrod;'>
-                            Estatus
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>";
+       
+        <div id="clases" class="tab-pane active">
+        <h3 >Clases agendadas para hoy</h3>
+                    <?php
+                        $conexion = new database();
+                        $conexion->conectarDB();
 
-                    $conexion->seleccionar($consulta);
-                    $tabla = $conexion->seleccionar($consulta);
+                        $consulta ="SELECT COUNT(citas_spinning.id_cita) as 'Asistentes', citas_spinning.hora,
+                        concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) AS entrenador
+                        from citas_spinning
+                        inner join servicios_empleados on
+                        servicios_empleados.id_empserv= citas_spinning.entrenador
+                        inner join empleado on
+                        empleado.id_empleado=servicios_empleados.empleado
+                        inner join persona on 
+                        persona.id_persona=empleado.id_empleado
+                        where citas_spinning.fecha= curdate() and citas_spinning.cliente = $id_per
+                         group by citas_spinning.hora ";
+                        $conexion->seleccionar($consulta);
+                        $tabla = $conexion->seleccionar($consulta);
+                        foreach($tabla as $registro)
+                        {
+                            $registro->Asistentes;
+               
+                            $cant_spin = $registro;
+                        }
 
-                    foreach ($tabla as $registro)
-                    {
-                        echo "<tr>";
-                        echo "<td> $registro->empleado</td> ";
-                        echo "<td> $registro->servicio</td> ";
-                        echo "<td> $registro->fecha</td> ";
-                        echo "<td> $registro->hora</td> ";
-                        echo "<td>$registro->estado</td>";
-                        echo "</tr>";
-                    }
-                    echo "</tbody>
-                    </table>";
-                    $conexion->desconectarBD();
-             }
-             else
-            {
-               echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No tienes citas pendientes para hoy!</h2>";
-            }
-            ?>
+                        if(isset($cant_spin) != '0')
+                        {
+                            echo 
+                            "
+                            <table class='table' style='border-radius: 5px;'>
+                            <thead class='table-dark'>
+                                <tr>
+                                <br>s
+                                    <th style='color: goldenrod;'>
+                                    Hora
+                                    </th>
+                                    <th style='color: goldenrod;'>
+                                    Entrenador
+                                    </th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>";
+                            foreach ($tabla as $registro)
+                            {
+                                echo "<tr>";
+                                echo "<td> $registro->hora</td> ";
+                                echo "<td> $registro->entrenador</td> ";
+                                echo "</tr>";
+                            }
+                            echo "</tbody>
+                            </table>";
+
+                        }
+                        else
+                        {
+                            echo "<h3 data-aos='fade-right' style='color: goldenrod'>No tienes clases agendadas el día de hoy </h3>";
+                        }
+                    ?>
             </div>
-        </div>
 
+            
         </div>
 
     </section>

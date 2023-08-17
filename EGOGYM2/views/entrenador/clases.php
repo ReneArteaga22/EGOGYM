@@ -60,13 +60,14 @@
 
     session_start();
     $email = $_SESSION["correo"];
-    $consulta = "SELECT tipo_empleado from persona inner join empleado on persona.id_persona = empleado.id_empleado
+    $consulta = "SELECT tipo_empleado, nombre from persona inner join empleado on persona.id_persona = empleado.id_empleado
         where correo ='$email'";
     $datos = $conexion -> seleccionar($consulta);
 
         foreach ($datos as $dato)
         {
           $tipo = $dato->tipo_empleado;
+          $name = $dato->nombre;
         }
 
     if(isset($email) and $tipo == 'entrenador' )
@@ -95,14 +96,14 @@
                         <a href="" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="clases.php" class="nav-link smoothScroll">Clases</a>
+                        <a href="" class="nav-link smoothScroll">Clases</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-lg-2">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false" >
-                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
+                          <?php echo "Hola".'  '."$name"; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="../entrenador/perfil_entre.php">Perfil</a></li>
@@ -158,6 +159,7 @@
             persona.id_persona=empleado.id_empleado
             where citas_spinning.fecha = curdate()
             and citas_spinning.entrenador= $ID
+            AND citas_spinning.estado='confirmada'
              group by citas_spinning.hora";
 
             $conexion->seleccionar($consulta);

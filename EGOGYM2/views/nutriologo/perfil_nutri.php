@@ -45,13 +45,14 @@ $(document).ready(function() {
 
     session_start();
     $email = $_SESSION["correo"];
-    $consulta = "SELECT tipo_empleado from persona inner join empleado on persona.id_persona = empleado.id_empleado
+    $consulta = "SELECT tipo_empleado, nombre from persona inner join empleado on persona.id_persona = empleado.id_empleado
         where correo ='$email'";
     $datos = $conexion -> seleccionar($consulta);
 
         foreach ($datos as $dato)
         {
           $tipo = $dato->tipo_empleado;
+          $name = $dato->nombre;
         }
 
     if(isset($email) and $tipo == 'nutri' )
@@ -88,7 +89,7 @@ $(document).ready(function() {
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false" >
-                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
+                          <?php echo "Hola".'  '."$name"; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="../nutriologo/perfil_nutri.php">Perfil</a></li>

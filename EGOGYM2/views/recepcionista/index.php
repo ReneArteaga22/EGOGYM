@@ -174,6 +174,8 @@ $(document).ready(function() {
                  <th style='color: goldenrod;'>
                  Empleado
                  </th>
+                 <th>
+                 </th>
              </tr>
          </thead>
          <tbody>";

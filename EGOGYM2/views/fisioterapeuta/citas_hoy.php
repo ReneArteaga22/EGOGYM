@@ -79,13 +79,14 @@ $(document).ready(function() {
 
     session_start();
     $email = $_SESSION["correo"];
-    $consulta = "SELECT tipo_empleado from persona inner join empleado on persona.id_persona = empleado.id_empleado
+    $consulta = "SELECT tipo_empleado, nombre from persona inner join empleado on persona.id_persona = empleado.id_empleado
         where correo ='$email'";
     $datos = $conexion -> seleccionar($consulta);
 
         foreach ($datos as $dato)
         {
           $tipo = $dato->tipo_empleado;
+          $name = $dato->nombre;
         }
 
     if(isset($email) and $tipo == 'fisio' )
@@ -115,14 +116,14 @@ $(document).ready(function() {
                         <a href="../fisioterapeuta/index.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="../fisioterapeuta/citasfisio.php" class="nav-link smoothScroll">Citas</a>
+                    <a href="citas_hoy.php" class="nav-link smoothScroll">Citas</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-lg-2">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false" >
-                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
+                          <?php echo "Hola".'  '."$name"; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="../fisioterapeuta/perfil_fisio.php">Perfil</a></li>
@@ -180,7 +181,7 @@ $(document).ready(function() {
              INNER JOIN persona ON empleado.id_empleado = persona.id_persona
              ) AS e ON citas.serv_emp = e.id_empserv 
              where citas.fecha = curdate() AND e.servicio='fisioterapia'
-             AND citas.serv_emp=$ID
+             AND citas.serv_emp=$ID and citas.estado = 'confirmada'
              GROUP BY nombre,apellido_paterno,apellido_materno, servicio,empleado,hora,fecha,estado,num
              ";
               $conexion->seleccionar($consulta);
@@ -208,6 +209,8 @@ $(document).ready(function() {
                             <th style='color: goldenrod;'>
                             Ficha medica
                             </th>
+                            <th>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>";
@@ -221,6 +224,7 @@ $(document).ready(function() {
                         echo "<td> $registro->cliente</td> ";
                         echo "<td> $registro->hora</td> ";
                         echo "<td><a href='modFichaFisio.php?id=" . $registro->id_ficha . "'>Generar ficha médica</a></td>";
+                        echo "<td><a href='../../scripts/noasistio-fisio.php?idcita=".$registro->num."'>No asistio</a></td>";
                         echo "</tr>";
                     }
                     echo "</tbody>

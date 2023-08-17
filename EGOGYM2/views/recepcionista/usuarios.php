@@ -131,7 +131,7 @@
         inner join cliente on
         cliente.id_cliente=persona.id_persona where concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) like '%$cliente%'
         AND persona.id_persona IN(select cliente.id_cliente from cliente )
-        group by nombre,apellido_paterno, apellido_materno";
+        group by nombre,apellido_paterno, apellido_materno, tipo_usuario, persona.telefono, persona.id_persona";
          $conexion->seleccionar($consulta);
          $tabla = $conexion->seleccionar($consulta);
          

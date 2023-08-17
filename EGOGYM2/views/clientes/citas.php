@@ -103,13 +103,15 @@
 
     session_start();
     $email = $_SESSION["correo"];
-    $consulta = "SELECT tipo_usuario from persona
+    $consulta = "SELECT tipo_usuario, nombre , id_persona from persona
         where correo ='$email'";
     $datos = $conexion -> seleccionar($consulta);
 
         foreach ($datos as $dato)
         {
           $tipo = $dato->tipo_usuario;
+          $name = $dato->nombre;
+          $id_per = $dato->id_persona;
         }
 
     if(isset($email) and $tipo == 'cliente' )
@@ -118,12 +120,13 @@
     }
     else 
     {
-        header("Location: ../../index.php");
+        header("Location:../../index.php");
     }
        
     ?>
 
-<nav class="navbar navbar-expand-lg fixed-top">
+    <!-- MENU BAR -->
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
             <a class="navbar-brand" href="Primera.php#home">EGO GYM</a>
@@ -136,15 +139,15 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                     <li class="nav-item">
-                        <a href="index.php#home" class="nav-link smoothScroll">Home</a>
+                        <a href="#home" class="nav-link smoothScroll">Home</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="index.php#about" class="nav-link smoothScroll">Sobre Nosotros</a>
+                        <a href="#about" class="nav-link smoothScroll">Sobre Nosotros</a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="index.php#serv" class="nav-link smoothScroll">Servicios</a>
+                        <a href="#serv" class="nav-link smoothScroll">Servicios</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -164,7 +167,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false" >
-                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
+                         <?php echo "Hola".'  '."$name"; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                           <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>
@@ -176,6 +179,7 @@
 
         </div>
     </nav>
+
 
 
     <section class="kiara">

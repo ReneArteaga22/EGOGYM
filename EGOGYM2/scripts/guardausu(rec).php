@@ -40,7 +40,7 @@
          $db->desconectarBD();
          echo "<div class='alert alert-success'>
          Usuario registrado exitosamente</div>";
-         header("refresh:3; ../views/recepcionista/principal.php");
+         header("refresh:3; ../views/recepcionista/index.php");
  
         ?>
     </div>

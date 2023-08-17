@@ -66,13 +66,15 @@
 
     session_start();
     $email = $_SESSION["correo"];
-    $consulta = "SELECT tipo_usuario from persona
+    $consulta = "SELECT tipo_usuario, nombre, id_persona from persona
         where correo ='$email'";
     $datos = $conexion -> seleccionar($consulta);
 
         foreach ($datos as $dato)
         {
           $tipo = $dato->tipo_usuario;
+          $name = $dato->nombre;
+          $id_per = $dato->id_persona;
         }
 
     if(isset($email) and $tipo == 'cliente' )
@@ -128,7 +130,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false" >
-                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
+                         <?php echo "Hola".'  '."$name"; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                           <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>

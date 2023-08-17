@@ -96,7 +96,7 @@ $(document).ready(function() {
 
     session_start();
     $email = $_SESSION["correo"];
-    $consulta = "SELECT tipo_usuario, id_persona from persona
+    $consulta = "SELECT tipo_usuario, id_persona, nombre from persona
         where correo ='$email'";
     $datos = $conexion -> seleccionar($consulta);
 
@@ -104,6 +104,7 @@ $(document).ready(function() {
         {
           $tipo = $dato->tipo_usuario;
           $id_per = $dato->id_persona;
+          $name = $dato->nombre;
         }
 
     if(isset($email) and $tipo == 'cliente' )
@@ -160,7 +161,7 @@ $(document).ready(function() {
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false" >
-                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
+                          <?php echo "Hola".'  '."$name"; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                           <li><a class="dropdown-item" href="../clientes/Perfil.php">Perfil</a></li>

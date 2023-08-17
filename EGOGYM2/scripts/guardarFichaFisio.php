@@ -30,17 +30,15 @@
          extract($_POST);
          $idFicha = $_POST['idFicha'];
 
-$pass= false;
-         $cadena ="UPDATE ficha_nutri set peso=$peso, altura=$altura, med_cintura=$cintura,
-          med_cadera=$cadera, med_cuello=$cuello, porc_grasa_corporal=$grasa, masa_corp_magra=$masa,
-          objetivo='$objetivo', observaciones='$observaciones', motivo='$motivo'
-           WHERE ficha_nutri.id_ficha=$idFicha";
+        $pass= false;
+         $cadena ="UPDATE ficha_fisio set peso=$peso, altura=$altura,observaciones='$observaciones', 
+           motivo='$motivo'
+           WHERE ficha_fisio.id_ficha=$idFicha";
         $parametros = array(':idFicha' => $idFicha);
-
 
         if($conexion->ejecutarSQL($cadena, $parametros))
         {
-            $pass= true;
+            $pass = true;
         }
 
         if($pass)
@@ -52,7 +50,7 @@ $pass= false;
         </div>
       </div>
       ";
-      header("refresh:2 ../views/nutriologo/modFicha.php?idcita=".$idFicha."");
+      header("refresh:2 ../views/fisioterapeuta/modFichaFisio.php?idcita=".$idFicha."");
     }
        else
        {
@@ -63,12 +61,10 @@ $pass= false;
            </div>
          </div>
          ";   
-         header("refresh:2 ../views/nutriologo/modFicha.php?idcita=".$idFicha."");
+         header("refresh:2 ../views/fisioterapeuta/modFichaFisio.php?idcita=".$idFicha."");
 
        }
-
         $conexion->desconectarBD();
-
  
         ?>
     </div>
