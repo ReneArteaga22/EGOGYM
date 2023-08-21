@@ -29,30 +29,9 @@
     $cita= $_GET['idcita'];
     $pass = false;
     $cadena= "update citas set estado = 'cancelada' where id_cita = $cita";
-    if($db->ejecutarSQL($cadena))
+    if($db->cancel3($cadena))
     {
         $pass = true;
-    }
-
-    if($pass)
-    {
-        echo"<div class='alert alert-success d-flex justify-content-center' role='alert' style='margin-top:3px';>
-        <svg class='bi flex-shrink-0 me-2' width='30' height='30' role='img' aria-label='Success:'><use xlink:href='#check-circle-fill'/></svg>
-        <div>
-          <p style='margin-left:13px; font-size: 20px;'>Se ha cancelado la cita correctamente
-        </div>
-      </div>
-      ";    header("refresh:2 ../views/recepcionista/citas_prox.php");
-    }
-    else
-    {
-        echo"<div class='alert alert-danger d-flex justify-content-center' role='alert'>
-        <svg class='bi flex-shrink-0 me-2' width='30' height='30' role='img' aria-label='Danger:'><use xlink:href='#exclamation-triangle-fill'/></svg>
-        <div>
-        <p style='margin-left:13px; font-size: 20px;'> No se ha podido cancelar la cita </p>
-        </div>
-      </div>
-      ";    header("refresh:2 ../views/recepcionista/citas_prox.php");
     }
     
 

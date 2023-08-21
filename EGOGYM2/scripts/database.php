@@ -146,7 +146,7 @@ class Database
         }
         
     }
-    public function cancel($cadena)
+    public function cancel1($cadena)
 {
         try
         {
@@ -155,7 +155,7 @@ class Database
             $this->desconectarBD();
             echo "<script language='javascript'>";
             echo "alert('Se canceló tu cita');";
-            echo "window.location.href='../views/clientes/vercitas.php';";
+            echo "window.location.href='../views/';";
             echo "</script>";
         }
         catch(PDOException $e)
@@ -176,6 +176,99 @@ class Database
         }
         
     }
+    public function cancel2($cadena)
+    {
+            try
+            {
+                $this->conectarDB();
+                $this->PDOLocal->exec($cadena);
+                $this->desconectarBD();
+                echo "<script language='javascript'>";
+                echo "alert('Se canceló tu cita');";
+                echo "window.location.href='../views/clientes/vercitas.php';";
+                echo "</script>";
+            }
+            catch(PDOException $e)
+            {
+                $errorCode = $e->getCode();
+                switch ($errorCode) {
+                    case 45000:
+                        echo "<script language='javascript'>";
+                        echo "alert('No se puede cancelar');";
+                        echo "window.location.href='../views/clientes/vercitas.php';";
+                        echo "</script>";
+                        break;
+                    
+                    default:
+                        echo "Error en la consulta: " . $e->getMessage();
+                }
+                return false;
+            }
+            
+        }
+        public function cancel3($cadena)
+        {
+                try
+                {
+                    $this->conectarDB();
+                    $this->PDOLocal->exec($cadena);
+                    $this->desconectarBD();
+                    echo "<script language='javascript'>";
+                    echo "alert('Se canceló tu cita');";
+                    echo "window.location.href='../views/clientes/vercitas.php';";
+                    echo "</script>";
+                }
+                catch(PDOException $e)
+                {
+                    $errorCode = $e->getCode();
+                    switch ($errorCode) {
+                        case 45000:
+                            echo "<script language='javascript'>";
+                            echo "alert('No se puede cancelar');";
+                            echo "window.location.href='../views/clientes/vercitas.php';";
+                            echo "</script>";
+                            break;
+                        
+                        default:
+                            echo "Error en la consulta: " . $e->getMessage();
+                    }
+                    return false;
+                }
+                
+            }
+            public function cancel($cadena)
+            {
+                    try
+                    {
+                        $this->conectarDB();
+                        $this->PDOLocal->exec($cadena);
+                        $this->desconectarBD();
+                        echo "<script language='javascript'>";
+                        echo "alert('Se canceló tu cita');";
+                        echo "window.location.href='../views/clientes/vercitas.php';";
+                        echo "</script>";
+                    }
+                    catch(PDOException $e)
+                    {
+                        $errorCode = $e->getCode();
+                        switch ($errorCode) {
+                            case 45000:
+                                echo "<script language='javascript'>";
+                                echo "alert('No se puede cancelar');";
+                                echo "window.location.href='../views/clientes/vercitas.php';";
+                                echo "</script>";
+                                break;
+                            
+                            default:
+                                echo "Error en la consulta: " . $e->getMessage();
+                        }
+                        return false;
+                    }
+                    
+                }
+            
+        
+    
 
    
 
@@ -226,11 +319,10 @@ class Database
 
                   
                     if (strtotime($fechaFinMembresia) < time()) {
-                      
-                        echo "<div class='alert alert-danger'>";
-                        echo "<h2 align='center'>La membresía ha expirado, no se permite el inicio de sesión.</h2>";
-                        echo "</div>";
-                        header("refresh:2 ../First.php");
+                        echo "<script language='javascript'>";
+                        echo "alert('La membresia no está activa');";
+                        echo "window.location.href='../index.php';";
+                        echo "</script>";
                         return;
                     }
                    
@@ -268,13 +360,11 @@ class Database
             }
             else
             {
-                echo "<div class='alert alert-danger'>";
-                echo "<h2 align='center'>Usuario o password incorrecto ...</h2>";
-                echo"</div";
-               
-            
-               
-                header("refresh:20 ../First.php#membershipForm");
+                echo "<script language='javascript'>";
+                echo "alert('CORREO O CONTRASEÑA INCORRECTOS');";
+                echo "window.location.href='../index.php#membershipForm';";
+                echo "</script>";  
+                
             }
             
             
@@ -289,11 +379,11 @@ class Database
             $_SESSION['inicio_exitoso'] = true;
             header("refresh:0 ../views/clientes/");
         } else {
-            echo "<div class='alert alert-danger'>";
-            echo "<h2 align='center'>Usuario o contraseña incorrecto ...</h2>";
-            echo "</div>";
-
-            header("refresh:20 ../First.php");
+            echo "<script language='javascript'>";
+            echo "alert('CORREO O CONTRASEÑA INCORRECTOS');";
+            echo "window.location.href='../index.php#membershipForm';";
+            echo "</script>";  
+            
         }
     } catch (PDOException $e) {
         echo $e->getMessage();

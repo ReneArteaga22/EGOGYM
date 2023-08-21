@@ -121,7 +121,7 @@ $(document).ready(function() {
 
     <section class="kiara d-flex flex-column justify-content-center align-items-center" id="home">
     <div class="container" ">
-        <h1 data-aos="fade-up" style="text-align: center;">EGOGYM </h1>
+        <h1 data-aos="fade-up" style="text-align: center;"> RECEPCIÓN EGOGYM </h1>
         <hr class="dropdown divider" style="height: 2px;">
 
         
