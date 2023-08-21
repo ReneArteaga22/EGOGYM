@@ -97,11 +97,10 @@ $(document).ready(function() {
     }
        
     ?>
-
-<nav class="navbar navbar-expand-lg fixed-top">
+ <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="index.php">EGO GYM</a>
+            <a  class="ego navbar-physio" href="index.php">PHYSIO EGO</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -111,39 +110,36 @@ $(document).ready(function() {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-
                         <a href="index.php" class="nav-link smoothScroll">Inicio</a>
-
                     </li>
                     <li class="nav-item">
-                        <a href="citasfisio.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="citas_hoy.php" class="nav-link smoothScroll">Citas</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-lg-2">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                           aria-haspopup="true" aria-expanded="false" >
-                         <?php echo "Hola".'  '.$_SESSION["correo"]; ?>
+                          <?php echo "Hola".'  '."$name"; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="../fisioterapeuta/perfil_fisio.php">Perfil</a></li>
                           <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
-
             </div>
         </div>
     </nav>
-
     <section class="kiara">
-    <!--Crea pills para todas las citas, citas canceladas, confirmadas, completadas, en las tres
-     filtrar citas por fecha, entrenador, servicio-->
+
    <div class="container" style="padding-top: 3%;"> 
         <h3 data-aos="fade-right">Citas agendadas</h3>
 
+     
         <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#citas_hoy">Citas del día de hoy</a></li>
-            <li class="active"><a data-toggle="tab" href="#citas_pr" style="margin-left: 20px;">Citas próximas</a></li>
-            <li><a data-toggle="tab" href="#citas" style="margin-left: 20px;">Citas pasadas</a></li>
+           
+        <li class="active"><a class="ego" data-toggle="tab" href="../fisioterapeuta/citas_hoy.php">Citas del día de hoy</a></li>
+            <li class="active"><a class="ego" href="../fisioterapeuta/citas_prox.php" style="margin-left: 20px;">Citas próximas</a></li>
+            <li><a class="ego" href="../fisioterapeuta/citas_pasadas.php" style="margin-left: 20px;">Citas pasadas</a></li>
         </ul>
         
 
@@ -204,19 +200,19 @@ $(document).ready(function() {
                 <thead class='table-dark' style='text-align:'center;''>
                     <tr>
                     <br>
-                        <th style='color: goldenrod'>
+                        <th style='color: rgb(0, 255, 255,0.8)'>
                         No.Cita
                         </th>
-                        <th style='color: goldenrod;'>
+                        <th style='color: rgb(0, 255, 255,0.8)'>
                         Cliente
                         </th>
-                        <th style='color: goldenrod;'>
+                        <th style='color: rgb(0, 255, 255,0.8)'>
                         Fecha
                         </th>
-                        <th style='color: goldenrod;'>
+                        <th style='color: rgb(0, 255, 255,0.8)'>
                         Hora
                         </th>
-                        <th style='color: goldenrod;'>
+                        <th style='color: rgb(0, 255, 255,0.8)'>
                         Ficha medica
                         </th>
                     </tr>
@@ -238,7 +234,7 @@ $(document).ready(function() {
             }
             else
             {
-                echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡Aún no hay citas agendadas!</h2>";
+                echo "<h2 data-aos='fade-right' style='color: rgb(0, 255, 255,0.8)'>¡Aún no hay citas agendadas!</h2>";
             }
                 ?>
             </div>
@@ -281,13 +277,13 @@ $(document).ready(function() {
                     <thead class='table-dark' style='text-align:'center;''>
                         <tr>
                         <br>
-                            <th style='color: goldenrod;'>
+                            <th style='color: rgb(0, 255, 255,0.8)''>
                             Cliente
                             </th>
-                            <th style='color: goldenrod;'>
+                            <th style='color: rgb(0, 255, 255,0.8)''>
                             Hora
                             </th>
-                            <th style='color: goldenrod;'>
+                            <th style='color: rgb(0, 255, 255,0.8)''>
                             Ficha medica
                             </th>
                         </tr>
@@ -311,7 +307,7 @@ $(document).ready(function() {
              }
              else
             {
-               echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay citas pendientes!</h2>";
+               echo "<h2 data-aos='fade-right'style='color: rgb(0, 255, 255,0.8)'>¡No hay citas pendientes!</h2>";
             }
             ?>
             </div>
@@ -373,16 +369,16 @@ $(document).ready(function() {
                     <thead class='table-dark' style='text-align:'center;''>
                         <tr>
                         <br>
-                            <th style='color: goldenrod;'>
+                            <th style='color: rgb(0, 255, 255,0.8)''>
                             Cliente
                             </th>
-                            <th style='color: goldenrod;'>
+                            <th style='color: rgb(0, 255, 255,0.8)''>
                             Fecha
                             </th>
-                            <th style='color: goldenrod;'>
+                            <th style='color: rgb(0, 255, 255,0.8)''>
                             Hora
                             </th>
-                            <th style='color: goldenrod;'>
+                            <th style='color: rgb(0, 255, 255,0.8)''>
                             Estatus
                             </th>
                             <th>
@@ -416,7 +412,7 @@ $(document).ready(function() {
              }
              else
             {
-               echo "<h5 data-aos='fade-right' style='color: goldenrod'>¡No existen citas agendadas para ese día!</h5>";
+               echo "<h5 data-aos='fade-right' style='color: rgb(0, 255, 255,0.8)'>¡No existen citas agendadas para ese día!</h5>";
             }
         }
             ?>

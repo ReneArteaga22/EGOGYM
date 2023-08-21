@@ -83,7 +83,7 @@
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../entrenador/index.php">EGO GYM</a>
+            <a class="navbar-brand" href="../entrenador/index.php">EGO SPINNING</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">

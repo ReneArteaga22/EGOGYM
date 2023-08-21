@@ -72,7 +72,7 @@ $(document).ready(function() {
 <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="index.php">EGO GYM</a>
+            <a  class="ego navbar-physio" href="index.php">PHYSIO EGO</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -85,7 +85,7 @@ $(document).ready(function() {
                         <a href="index.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                    <a href="citas_hoy.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="citas_hoy.php" class="nav-link smoothScroll">Citas</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-lg-2">

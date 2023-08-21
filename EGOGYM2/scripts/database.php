@@ -63,16 +63,39 @@ class Database
             return false;
         }
     }
+    public function exec($cadena)
+    {
+    
+        
+    
+            try
+            {
+                $this->conectarDB();
+                $this->PDOLocal->exec($cadena);
+                $this->desconectarBD();
+                
+            }
+            catch(PDOException $e)
+            {
+               
+                return false;
+            }
+            
+        }
     public function ejecutarcitas($cadena)
 {
+
+    
+
         try
         {
+           $id= $_GET['cliente_id'];
             $this->conectarDB();
             $this->PDOLocal->exec($cadena);
             $this->desconectarBD();
             echo "<script language='javascript'>";
             echo "alert('Agendado exitoso');";
-            echo "window.location.href='../views/recepcionista/citas.php';";
+            echo "window.location.href='../views/recepcionista/citas.php?id=$id';";
             echo "</script>";
         }
         catch(PDOException $e)
@@ -113,6 +136,36 @@ class Database
                     echo "<script language='javascript'>";
                     echo "alert('Horario no disponible o ya tienes una cita agendada el dia hoy');";
                     echo "window.location.href='../views/clientes/citas.php';";
+                    echo "</script>";
+                    break;
+                
+                default:
+                    echo "Error en la consulta: " . $e->getMessage();
+            }
+            return false;
+        }
+        
+    }
+    public function cancel($cadena)
+{
+        try
+        {
+            $this->conectarDB();
+            $this->PDOLocal->exec($cadena);
+            $this->desconectarBD();
+            echo "<script language='javascript'>";
+            echo "alert('Se canceló tu cita');";
+            echo "window.location.href='../views/clientes/vercitas.php';";
+            echo "</script>";
+        }
+        catch(PDOException $e)
+        {
+            $errorCode = $e->getCode();
+            switch ($errorCode) {
+                case 45000:
+                    echo "<script language='javascript'>";
+                    echo "alert('No se puede cancelar');";
+                    echo "window.location.href='../views/clientes/vercitas.php';";
                     echo "</script>";
                     break;
                 

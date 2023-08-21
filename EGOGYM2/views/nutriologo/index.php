@@ -71,7 +71,7 @@ $(document).ready(function() {
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../nutriologo/index.php">EGO GYM</a>
+            <a class="navbar-nutri nutri" href="../nutriologo/index.php">EGO NUTRITION</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -103,19 +103,32 @@ $(document).ready(function() {
             </div>
         </div>
     </nav>
+    <section class="hero-nutri d-flex flex-column justify-content-center align-items-center" id="home">
 
-    <section class="kiara">
-    <!--Inicio de recepcionista-->
-    <div class="container" >
-        <h1 style="text-align: center;" data-aos="fade-right">¡Hola!</h1>
-        <!--Tablas de citas registradas para el día actual-->
-    </div>
+<div class="bg-overlay"></div>
+
+   <div class="container">
+        <div class="row">
+
+             <div class="col-lg-8 col-md-10 mx-auto col-12">
+                  <div class="hero-text mt-5 text-center">
+                    <?php
+                    
+                    ?>
+                      <h1 class="text-white" data-aos="fade-up" data-aos-delay="500"> ¡Bienvenido!</h1>
+
+                        <h6 data-aos="fade-up" data-aos-delay="300"><?php echo "Nutriologo:".'  '."$name"; ?></h6>
+
+                  </div>
+             </div>
+
+        </div>
+   </div>
+</section>
+
     
-    </div>
-    <br>
-    <br>
-    </section>
     <?php
+    
  
  $conexion = new Database();
 $conexion->conectarDB();
@@ -154,7 +167,7 @@ try {
  
  $conexion->desconectarBD();
  ?>
- 
+ <section class="kiara">
 <div class="container">
     <div class="row">
         <div class="col-md-6">
@@ -178,8 +191,8 @@ try {
             datasets: [{
                 label: 'Citas de Nutrición',
                 data: citasNutricion,
-                backgroundColor: 'rgb(218, 165, 32,0.5)',
-                borderColor: 'rgb(218, 165, 32,1)',
+                backgroundColor: 'rgb(255, 165, 0,0.5)',
+                borderColor: 'rgb(255, 165, 0,1)',
                 borderWidth: 1
             }, ]
         },
@@ -189,7 +202,7 @@ try {
                 y: {
                     beginAtZero: true, 
                     ticks: {
-                        stepSize: 2
+                        stepSize: 5
                         ,fontSize: 10
                     }
                 }
@@ -249,16 +262,12 @@ $consultaCitasPorServicio = "SELECT servicios.nombre AS servicio, COUNT(*) AS ca
                     <p>Citas Confirmadas: <?php echo $citasConfirmadas; ?></p>
                     <p>Citas Canceladas: <?php echo $citasCanceladas; ?></p>
                     <p>Citas Completadas: <?php echo $citasCompletadas; ?></p>
-                    <h5>Citas por Servicio:</h5>
-                    <ul>
-                        <?php foreach ($citasPorServicio as $cita) : ?>
-                            <li><?php echo $cita->servicio; ?>: <?php echo $cita->cantidad; ?></li>
-                        <?php endforeach; ?>
-                    </ul>
+                    
                 </div>
             </div>
         </div>
     </div>
 </div>
+</section>
     </body>
 </html>

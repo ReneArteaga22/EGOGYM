@@ -68,7 +68,7 @@ $(document).ready(function() {
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="index.php">EGO GYM</a>
+            <a  class="ego navbar-physio" href="index.php">PHYSIO EGO</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -81,7 +81,7 @@ $(document).ready(function() {
                         <a href="index.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                    <a href="citas_hoy.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="citas_hoy.php" class="nav-link smoothScroll">Citas</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-lg-2">
@@ -91,7 +91,7 @@ $(document).ready(function() {
                           <?php echo "Hola".'  '."$name"; ?>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="../nutriologo/perfil_fisio.php">Perfil</a></li>
+                        <li><a class="dropdown-item" href="../fisioterapeuta/perfil_fisio.php">Perfil</a></li>
                           <li><a class="dropdown-item" href="../../scripts/cerrarsesion.php">Cerrar Sesion</a></li>
                         </ul>
             </div>
@@ -137,8 +137,7 @@ $(document).ready(function() {
             echo "<p>Telefono: $registro->telefono </p>";
             echo "<p>Fecha de nacimiento: $registro->fecha_nacimiento </p>";
             echo "<p>Sexo: $registro->sexo </p>";
-            echo "<p>Plan: $registro->plan </p>";
-            echo "<p>Periodo: $registro->periodo </p>";
+            
             echo "<a href='editarfisio.php'>Editar Perfil</a>";
 
 
@@ -148,144 +147,8 @@ $(document).ready(function() {
         
        
         </div>
-        <?php
+        
  
- $conexion = new Database();
-$conexion->conectarDB();
 
-// Obtener el primer día del mes actual
-$primerDiaMesActual = date('Y-m-01');
-
-// Consulta para obtener la cantidad de citas por servicio de nutrición y fisioterapia en los últimos 5 meses
-$consulta = "SELECT MONTH(citas.fecha) as mes,
-                   SUM(CASE WHEN servicios.nombre = 'nutricion' THEN 1 ELSE 0 END) as citas_nutricion,
-                   SUM(CASE WHEN servicios.nombre = 'fisioterapia' THEN 1 ELSE 0 END) as citas_fisioterapia
-            FROM citas
-            INNER JOIN servicios_empleados ON citas.serv_emp = servicios_empleados.id_empserv
-            INNER JOIN servicios ON servicios_empleados.servicio = servicios.codigo
-            WHERE citas.fecha >= DATE_SUB(:primerDiaMesActual, INTERVAL 3 MONTH) AND
-                  citas.fecha <= LAST_DAY(:primerDiaMesActual) + INTERVAL 1 MONTH
-            GROUP BY mes
-            ORDER BY mes";
-
-try {
-    $stmt = $conexion->obtenerConexion()->prepare($consulta);
-    $stmt->bindParam(':primerDiaMesActual', $primerDiaMesActual);
-    $stmt->execute();
-
-    $citasNutricion = array_fill(0, 5, 0);
-    $citasFisioterapia = array_fill(0, 5, 0);
-    $nombresMeses = array();
-
-    while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $mes = $fila['mes'];
-        $citasNutricion[(date('n') - $mes + 5) % 5] = $fila['citas_nutricion'];
-        $citasFisioterapia[(date('n') - $mes + 5) % 5] = $fila['citas_fisioterapia'];
-        $nombresMeses[] = $conexion->obtenerNombreMes($mes);
-    }
-
-} catch (PDOException $e) {
-    echo $e->getMessage();
-}
-
- 
- $conexion->desconectarBD();
- ?>
- 
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <h3 data-aos="fade-right">Gráfica de Citas por Servicio</h3>
-            <canvas data-aos="fade-right" id="graficaCitas" width="400" height="200"></canvas>
-
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-            <script>
-               var citasNutricion = <?php echo json_encode($citasNutricion); ?>;
-    var citasFisioterapia = <?php echo json_encode($citasFisioterapia); ?>;
-    var nombresMeses = <?php echo json_encode($nombresMeses); ?>;
-
-   
-    var ctx = document.getElementById('graficaCitas').getContext('2d');
-
-   
-    var grafica = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: nombresMeses,
-            datasets: [{
-                label: 'Citas de Nutrición',
-                data: citasNutricion,
-                backgroundColor: 'rgb(218, 165, 32,0.5)',
-                borderColor: 'rgb(218, 165, 32,1)',
-                borderWidth: 1
-            }, {
-                label: 'Citas de Fisioterapia',
-                data: citasFisioterapia,
-                backgroundColor: 'rgb(0, 0, 0,0.4)',
-                borderColor: 'rgb(0, 0, 0,1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: false, 
-            scales: {
-                y: {
-                    beginAtZero: true, 
-                    ticks: {
-                        stepSize: 1 
-                    }
-                }
-            }
-        }
-    });
-            </script>
-        </div>
-        <div class="col-md-6">
-            <h3 data-aos="fade-left">Resumen de Citas del mes</h3>
-            <?php
-           $conexion = new Database();
-           $conexion->conectarDB();
-       
-          
-           $consultaTotalCitas = "SELECT COUNT(*) AS total FROM citas
-           INNER JOIN servicios_empleados ON citas.serv_emp = servicios_empleados.id_empserv
-           INNER JOIN servicios ON servicios_empleados.servicio = servicios.codigo
-           WHERE MONTH(fecha) = MONTH(CURDATE()) AND YEAR(fecha) = YEAR(CURDATE())";
-           $consultaCitasConfirmadas = "SELECT COUNT(*) AS confirmadas FROM citas
-           INNER JOIN servicios_empleados ON citas.serv_emp = servicios_empleados.id_empserv
-           INNER JOIN servicios ON servicios_empleados.servicio = servicios.codigo
-           WHERE MONTH(fecha) = MONTH(CURDATE()) AND YEAR(fecha) = YEAR(CURDATE()) and estado = 'confirmada' ";
-           $consultaCitasCanceladas = "SELECT COUNT(*) AS canceladas FROM citas WHERE estado = 'cancelada'";
-           $consultaCitasCompletadas = "SELECT COUNT(*) AS completadas FROM citas WHERE estado = 'completada'";
-           $consultaCitasPorServicio = "SELECT servicios.nombre AS servicio, COUNT(*) AS cantidad
-           FROM citas
-           INNER JOIN servicios_empleados ON citas.serv_emp = servicios_empleados.id_empserv
-           INNER JOIN servicios ON servicios_empleados.servicio = servicios.codigo
-           WHERE MONTH(fecha) = MONTH(CURDATE()) AND YEAR(fecha) = YEAR(CURDATE())
-           GROUP BY servicio";
-       
-           $totalCitas = $conexion->seleccionar($consultaTotalCitas)[0]->total;
-           $citasConfirmadas = $conexion->seleccionar($consultaCitasConfirmadas)[0]->confirmadas;
-           $citasCanceladas = $conexion->seleccionar($consultaCitasCanceladas)[0]->canceladas;
-           $citasCompletadas = $conexion->seleccionar($consultaCitasCompletadas)[0]->completadas;
-           $citasPorServicio = $conexion->seleccionar($consultaCitasPorServicio);
-            ?>
-            <div class="card" data-aos="fade-left">
-                <div class="card-body">
-                    <p>Total de Citas: <?php echo $totalCitas; ?></p>
-                    <p>Citas Confirmadas: <?php echo $citasConfirmadas; ?></p>
-                    <p>Citas Canceladas: <?php echo $citasCanceladas; ?></p>
-                    <p>Citas Completadas: <?php echo $citasCompletadas; ?></p>
-                    <h5>Citas por Servicio:</h5>
-                    <ul>
-                        <?php foreach ($citasPorServicio as $cita) : ?>
-                            <li><?php echo $cita->servicio; ?>: <?php echo $cita->cantidad; ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 </body>
 </html>

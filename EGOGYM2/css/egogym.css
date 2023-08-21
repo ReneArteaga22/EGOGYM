@@ -29,7 +29,7 @@
   }
   
   :root {
-  --primary-color:        #f13a11;
+  --primary-color:        rgb(255, 165, 0);
   --white-color:          #ffffff;
   --dark-color:           #171819;
   --about-bg-color:       #f9f9f9;
@@ -37,6 +37,7 @@
   --gray-color:           #909090;
   --link-color:           #404040;
   --p-color:              #666262;
+  --blue: aqua;
   
   --base-font-family:     'Plain', sans-serif;
   --font-weight-bold:     bold;
@@ -198,6 +199,22 @@
   transition: all 0.3s ease;
   }
   
+  .ego:hover, 
+  .ego:active, 
+  .ego:focus {
+  color: var(--blue);
+  outline: none;
+  text-decoration: none;
+  }
+
+  .nutri:hover, 
+  .nutri:active, 
+  .nutri:focus {
+  color: var(--primary-color);
+  outline: none;
+  text-decoration: none;
+  }
+
   a:hover, 
   a:active, 
   a:focus {
@@ -273,6 +290,22 @@
   line-height: normal;
   padding-top: 0;
   }
+  
+  .navbar-physio {
+    color: var(--white-color);
+    font-size: var(--h3-font-size);
+    font-weight: var(--font-weight-bold);
+    line-height: normal;
+    padding-top: 0;
+    }
+
+    .navbar-nutri {
+      color: var(--white-color);
+      font-size: var(--h3-font-size);
+      font-weight: var(--font-weight-bold);
+      line-height: normal;
+      padding-top: 0;
+      }
   
   .nav-item .nav-link {
   display: block;
@@ -373,7 +406,34 @@
   min-height: 100vh;
   position: relative;
   }
-  
+  .hero-physio {
+    background-image: url('../images/team/log.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    min-height: 60vh;
+    position: relative;
+    }
+    .hero-nutri {
+      background-image: url('../images/class/nutri.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      vertical-align: middle;
+      min-height: 60vh;
+      position: relative;
+      }
+      .hero-train {
+        background-image: url('../images/class/spinm.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        vertical-align: middle;
+        min-height: 60vh;
+        position: relative;
+        }
+    
   
   /*---------------------------------------
    CLASS               

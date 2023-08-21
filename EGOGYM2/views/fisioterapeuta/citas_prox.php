@@ -103,7 +103,7 @@ $(document).ready(function() {
 <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../fisioterapeuta/index.php">EGO GYM</a>
+            <a  class="ego navbar-physio" href="index.php">PHYSIO EGO</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -113,10 +113,10 @@ $(document).ready(function() {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
-                        <a href="../fisioterapeuta/index.php" class="nav-link smoothScroll">Inicio</a>
+                        <a href="index.php" class="nav-link smoothScroll">Inicio</a>
                     </li>
                     <li class="nav-item">
-                    <a href="citas_hoy.php" class="nav-link smoothScroll">Citas</a>
+                        <a href="citas_hoy.php" class="nav-link smoothScroll">Citas</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-lg-2">
@@ -138,9 +138,9 @@ $(document).ready(function() {
         <h3 data-aos="fade-right">Citas agendadas</h3>
 
         <ul class="nav nav-tabs">
-            <li class="active"><a href="../fisioterapeuta/citas_hoy.php">Citas del día de hoy</a></li>
-            <li class="active"><a data-toggle="tab" href="#citas_pr" style="margin-left: 20px;">Citas próximas</a></li>
-            <li><a href="../fisioterapeuta/citas_pasadas.php" style="margin-left: 20px;">Citas pasadas</a></li>
+            <li class="active"><a class="ego" href="../fisioterapeuta/citas_hoy.php">Citas del día de hoy</a></li>
+            <li class="active"><a class="ego" data-toggle="tab" href="#citas_pr" style="margin-left: 20px;">Citas próximas</a></li>
+            <li><a class="ego" href="../fisioterapeuta/citas_pasadas.php" style="margin-left: 20px;">Citas pasadas</a></li>
         </ul>
 
         <?php
@@ -225,16 +225,16 @@ $(document).ready(function() {
         <thead class='table-dark' style='text-align:'center;''>
             <tr>
             <br>
-                <th style='color: goldenrod;'>
+                <th style='color: rgb(0, 255, 255,0.8)'>
                 Cliente
                 </th>
-                <th style='color: goldenrod;'>
+                <th style='color: rgb(0, 255, 255,0.8)'>
                 Fecha
                 </th>
-                <th style='color: goldenrod;'>
+                <th style='color: rgb(0, 255, 255,0.8)'>
                 Hora
                 </th>
-                <th style='color: goldenrod;'>
+                <th style='color: rgb(0, 255, 255,0.8)'>
                 Estatus
                 </th>
                 <th>
@@ -268,7 +268,7 @@ $(document).ready(function() {
         }
         else
         {
-            echo "<h3 data-aos='fade-right' style='color: goldenrod'>No existen citas con esas características</h3>";
+            echo "<h3 data-aos='fade-right' style='color: rgb(0, 255, 255,0.8)'>No existen citas con esas características</h3>";
         }
         }
         ?>

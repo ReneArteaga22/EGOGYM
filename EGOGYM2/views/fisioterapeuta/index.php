@@ -71,7 +71,7 @@ $(document).ready(function() {
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="index.php">EGO GYM</a>
+            <a  class="ego navbar-physio" href="index.php">PHYSIO EGO</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -100,17 +100,30 @@ $(document).ready(function() {
             </div>
         </div>
     </nav>
+    <section class="hero-physio d-flex flex-column justify-content-center align-items-center" id="home">
 
-    <section class="kiara">
-    <!--Inicio de recepcionista-->
-    <div class="container">
-        <h1 style="text-align: center;" data-aos="fade-right">¡Hola!</h1>
-        <!--Tablas de citas registradas para el día actual-->
-    </div>
-    
-    </div>
-   
-    </section>
+            <div class="bg-overlay"></div>
+
+               <div class="container">
+                    <div class="row">
+
+                         <div class="col-lg-8 col-md-10 mx-auto col-12">
+                              <div class="hero-text mt-5 text-center">
+                                <?php
+                                
+                                ?>
+                                  <h1 class="text-white" data-aos="fade-up" data-aos-delay="500"> ¡Bienvenido!</h1>
+
+                                    <h6 data-aos="fade-up" data-aos-delay="300"><?php echo "Fisioterapeuta:".'  '."$name"; ?></h6>
+
+                              </div>
+                         </div>
+
+                    </div>
+               </div>
+     </section>
+
+ 
 
     <?php
  
@@ -155,7 +168,7 @@ try {
  
  $conexion->desconectarBD();
  ?>
- 
+ <section class="kiara">
 <div class="container">
     <div class="row">
         <div class="col-md-6">
@@ -179,8 +192,8 @@ try {
             datasets: [ {
                 label: 'Citas de Fisioterapia',
                 data: citasFisioterapia,
-                backgroundColor: 'rgb(0, 0, 0,0.4)',
-                borderColor: 'rgb(0, 0, 0,1)',
+                backgroundColor: 'rgb(0, 255, 255,0.4)',
+                borderColor: 'rgb(0, 255, 255,1)',
                 borderWidth: 1
             }]
         },
@@ -250,16 +263,12 @@ $consultaCitasPorServicio = "SELECT servicios.nombre AS servicio, COUNT(*) AS ca
                     <p>Citas Confirmadas: <?php echo $citasConfirmadas; ?></p>
                     <p>Citas Canceladas: <?php echo $citasCanceladas; ?></p>
                     <p>Citas Completadas: <?php echo $citasCompletadas; ?></p>
-                    <h5>Citas por Servicio:</h5>
-                    <ul>
-                        <?php foreach ($citasPorServicio as $cita) : ?>
-                            <li><?php echo $cita->servicio; ?>: <?php echo $cita->cantidad; ?></li>
-                        <?php endforeach; ?>
-                    </ul>
+                   
                 </div>
             </div>
         </div>
     </div>
 </div>
+</section>
     </body>
 </html>

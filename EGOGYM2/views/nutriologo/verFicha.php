@@ -51,10 +51,10 @@
        
     ?>
 
-    <nav class="navbar navbar-expand-lg fixed-top">
+<nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../nutriologo/index.php">EGO GYM</a>
+            <a class="navbar-nutri nutri" href="../nutriologo/index.php">EGO NUTRITION</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -71,7 +71,6 @@
                     </li>
                 </ul>
 
-                
                 <ul class="navbar-nav ml-lg-2">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"

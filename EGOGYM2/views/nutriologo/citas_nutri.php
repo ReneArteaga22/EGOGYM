@@ -105,7 +105,7 @@ $(document).ready(function() {
 <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="../nutriologo/index.php">EGO GYM</a>
+            <a class="navbar-nutri nutri" href="../nutriologo/index.php">EGO NUTRITION</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -240,7 +240,7 @@ $(document).ready(function() {
              }
              else
             {
-               echo "<h2 data-aos='fade-right' style='color: goldenrod'>¡No hay citas pendientes!</h2>";
+               echo "<h2 data-aos='fade-right' style='color: rgb(255, 165, 0,1)'>¡No hay citas pendientes!</h2>";
             }
             ?>
             </div>

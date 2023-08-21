@@ -32,30 +32,19 @@
 
 
         extract($_POST);
-        $consulta= " SELECT persona.id_persona as cliente_id
-        from persona 
-        inner join cliente on
-        cliente.id_cliente=persona.id_persona where 
-        concat(persona.nombre,' ',persona.apellido_paterno,' ',persona.apellido_materno) like '%$cliente%'
-        AND persona.id_persona IN(select cliente.id_cliente from cliente )";
-        $conexion->seleccionar($consulta);
-        $tabla = $conexion->seleccionar($consulta);
-        
-        $tabla = $conexion->seleccionar($consulta);
-        foreach($tabla as $registro)
-        {
-            $cliente_id = $registro->cliente_id;
-        }
-
-        
-
-        $cadena = "call restriccion_citas_3($servicio, $cliente_id,'$fecha_cita','$hora')";
-
-        if ($conexion->ejecutarcitas($cadena)) {
+        $id= $_POST['cliente'];
+        $parametros = array('::cliente' => $id);
+        $cadena = "call restriccion_citas_3($servicio, $cliente,'$fecha_cita','$hora')";
+     
+        $conexion->exec($cadena, $parametros);
+        if ($conexion->exec($cadena, $parametros)) {
             echo "<div class='alert alert-success'>Cliente Registrado</div>";
-        header("refresh:2 ../index.php");
+        header("refresh:2 '../views/recepcionista/citas.php?id=$id'");
         }
-      
+        else
+        echo "<div class='alert alert-danger'>Cita mala</div>";
+        header("refresh:20'../views/recepcionista/citas.php?id=$id'");
+       
 
         $conexion->desconectarBD();
       
